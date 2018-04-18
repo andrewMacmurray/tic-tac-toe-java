@@ -1,6 +1,9 @@
 package ttt;
 
 import org.junit.Test;
+import ttt.core.Board;
+import ttt.core.Player;
+
 import static org.junit.Assert.*;
 
 public class BoardTest {
@@ -10,7 +13,7 @@ public class BoardTest {
         // assert all tiles are empty
         Board emptyBoard = new Board();
         for (Integer tile = 0; tile <= 8; tile++)
-            assertNull("no players at any position in empty board", emptyBoard.getTile(tile));
+            assertEquals("no players at any position in empty board", Player.Empty, emptyBoard.getTile(tile));
     }
 
     @Test
