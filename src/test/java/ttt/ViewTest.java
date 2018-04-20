@@ -2,7 +2,7 @@ package ttt;
 
 import org.junit.Test;
 import ttt.core.Player;
-import ttt.core.Board;
+import ttt.game.View;
 
 import java.util.Arrays;
 import static org.junit.Assert.*;

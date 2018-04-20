@@ -3,11 +3,12 @@ package ttt.core;
 import java.util.Arrays;
 
 public class Board {
-    private final int boardScale = 3;
+    private final int boardScale;
     private Player[] tiles;
     private final int[][] winningStates;
 
-    public Board () {
+    public Board (int boardScale) {
+        this.boardScale = boardScale;
         this.winningStates = generateWinningStates();
         this.tiles = fillBoard();
     }
@@ -20,8 +21,16 @@ public class Board {
         return this.tiles[tileIndex];
     }
 
+    public boolean tileTaken(int tileIndex) {
+       return this.tiles[tileIndex] != Player.Empty;
+    }
+
     public void takeTile(int tileIndex, Player player) {
         this.tiles[tileIndex] = player;
+    }
+
+    public int getBoardScale() {
+        return this.boardScale;
     }
 
     public Player winner() {

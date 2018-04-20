@@ -1,4 +1,4 @@
-package ttt;
+package ttt.game;
 
 import ttt.core.Player;
 
@@ -8,6 +8,7 @@ import java.util.stream.IntStream;
 public class View {
 
     private static String divider = "---*---*---";
+    private final String tileTakenMessage = "Tile already taken, try another tile";
 
     public String renderTile(Player player, int index) {
         Integer visibleIndex = index + 1;
@@ -38,6 +39,10 @@ public class View {
                 .range(0, boardTiles.length)
                 .mapToObj(i -> renderTileWithPadding(boardTiles[i], i, boardScale))
                 .collect(Collectors.joining(""));
+    }
+
+    public String getTileTakenMessage() {
+        return this.tileTakenMessage;
     }
 }
 
