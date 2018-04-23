@@ -1,8 +1,8 @@
 package tictactoe;
 
 import org.junit.Test;
-
-import java.util.stream.IntStream;
+import tictactoe.core.Board;
+import tictactoe.core.Player;
 
 import static org.junit.Assert.*;
 
@@ -12,9 +12,9 @@ public class BoardTest {
     @Test
     public void initializeBoard() {
         Board board = new Board(3);
-        Player[] tiles = board.tiles();
+        Player[] tiles = board.getTiles();
 
-        for (Player tile: tiles) {
+        for (Player tile : tiles) {
             assertEquals("tile should be empty", Player.Empty, tile);
         }
     }
@@ -53,9 +53,9 @@ public class BoardTest {
         assertFalse("should return false when board is not full", board.isFull());
 
         Board fullBoard = board;
-        for (int i = 0; i < board.tiles().length; i++) {
+        for (int i = 0; i < board.getTiles().length; i++) {
             fullBoard = fullBoard.makeMove(i, Player.X);
         }
-        assertTrue("should return true when all tiles are filled", fullBoard.isFull());
+        assertTrue("should return true when all getTiles are filled", fullBoard.isFull());
     }
 }

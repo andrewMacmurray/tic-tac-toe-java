@@ -1,6 +1,8 @@
 package tictactoe;
 
 import org.junit.Test;
+import tictactoe.core.Player;
+
 import static org.junit.Assert.*;
 
 public class PlayerTest {

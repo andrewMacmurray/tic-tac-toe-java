@@ -1,4 +1,4 @@
-package tictactoe;
+package tictactoe.core;
 
 import java.util.Arrays;
 
@@ -8,7 +8,7 @@ public class Board {
     private final int boardSize;
 
     public Board(int boardSize) {
-        this.tiles     = emptyTiles(boardSize);
+        this.tiles = emptyTiles(boardSize);
         this.boardSize = boardSize;
     }
 
@@ -18,35 +18,37 @@ public class Board {
     }
 
     public Player getTile(int tile) {
-       return this.tiles[tile];
+        return this.tiles[tile];
     }
 
-    public Player[] tiles() {
-       return this.tiles;
+    public Player[] getTiles() {
+        return this.tiles;
     }
 
     public boolean isFull() {
         boolean tilesFull = false;
-        for (Player tile: this.tiles)
+        for (Player tile : this.tiles)
             if (!tile.isEmpty())
                 tilesFull = true;
         return tilesFull;
     }
 
+
+    // Creates a new Board based on the existing board
     private Board(Player[] currentTiles, int boardSize) {
-        this.tiles     = currentTiles;
+        this.tiles = currentTiles;
         this.boardSize = boardSize;
     }
 
     private Player[] insertPlayerAt(int tile, Player player) {
         Player[] newTiles = Arrays.copyOf(this.tiles, this.tiles.length);
-        newTiles[tile]    = player;
+        newTiles[tile] = player;
         return newTiles;
     }
 
     private Player[] emptyTiles(int boardSize) {
-       Player[] tiles = new Player[(boardSize * boardSize)];
-       Arrays.fill(tiles, Player.Empty);
-       return tiles;
+        Player[] tiles = new Player[(boardSize * boardSize)];
+        Arrays.fill(tiles, Player.Empty);
+        return tiles;
     }
 }

@@ -1,4 +1,4 @@
-package tictactoe;
+package tictactoe.core;
 
 public enum Player {
 
@@ -7,8 +7,8 @@ public enum Player {
     private Player alternate;
 
     static {
-        X.alternate     = O;
-        O.alternate     = X;
+        X.alternate = O;
+        O.alternate = X;
         Empty.alternate = Empty;
     }
 
