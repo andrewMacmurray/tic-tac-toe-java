@@ -22,6 +22,10 @@ public class Board {
         return this.tiles[tile];
     }
 
+    public int getBoardSize() {
+        return this.boardSize;
+    }
+
     public Player[] getTiles() {
         return this.tiles;
     }

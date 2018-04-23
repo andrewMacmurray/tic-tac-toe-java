@@ -1,9 +1,8 @@
-package tictactoe;
+package tictactoe.game;
 
 import org.junit.Test;
 import tictactoe.core.Player;
 import tictactoe.core.Board;
-import tictactoe.game.View;
 
 import java.util.Arrays;
 
