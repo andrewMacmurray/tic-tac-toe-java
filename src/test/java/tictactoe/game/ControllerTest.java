@@ -52,6 +52,21 @@ public class ControllerTest {
     }
 
     @Test
+    public void printPlayerGuess() {
+        IOHelper io = new IOHelper();
+        Controller controller = new Controller(io.print, 3, Player.X);
+
+        controller.printPlayerGuess(0, Player.X);
+
+        String[] expectedLines = {
+                "Player X took tile 1",
+                "Your turn Player O"
+        };
+        String expected = io.joinLines(expectedLines);
+        assertEquals(expected, io.out.toString());
+    }
+
+    @Test
     public void nextGuess() {
         IOHelper io = new IOHelper();
         Controller controller = new Controller(io.print, 3, Player.X);
@@ -62,9 +77,47 @@ public class ControllerTest {
                 "---*---*---",
                 " 4 | 5 | 6",
                 "---*---*---",
-                " 7 | 8 | 9"
+                " 7 | 8 | 9",
+                "Player X took tile 2",
+                "Your turn Player O"
         };
         String expected = io.joinLines(expectedLines);
+        assertEquals(expected, io.out.toString());
+    }
+
+    @Test
+    public void printPlayerXWin() {
+        IOHelper io = new IOHelper();
+        Controller controller = new Controller(io.print, 3, Player.X);
+        int[] winMoves = {0, 1, 2, 3, 4, 5, 6};
+
+        for (int move: winMoves) {
+            controller.nextGuess(move);
+        }
+
+        io.reset();
+
+        controller.printStatus();
+
+        String expected = "Player X won!\n";
+        assertEquals(expected, io.out.toString());
+    }
+
+    @Test
+    public void printDraw() {
+        IOHelper io = new IOHelper();
+        Controller controller = new Controller(io.print, 3, Player.X);
+        int[] drawMoves = {0, 1, 2, 4, 3, 5, 7, 6, 8};
+
+        for (int move: drawMoves) {
+            controller.nextGuess(move);
+        }
+
+        io.reset();
+
+        controller.printStatus();
+
+        String expected = "It's a draw!\n";
         assertEquals(expected, io.out.toString());
     }
 }

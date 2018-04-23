@@ -16,4 +16,8 @@ public class IOHelper {
     public String joinLines(String[] lines) {
         return String.join("\n", lines) + "\n";
     }
+
+    public void reset() {
+        out.reset();
+    }
 }
