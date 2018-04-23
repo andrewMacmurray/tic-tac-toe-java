@@ -46,15 +46,18 @@ public class BoardTest {
     }
 
     @Test
-    public void fullBoard() {
-        Board board = new Board(3);
-        assertFalse("should return false when board is not full", board.isFull());
+    public void notFullBoard() {
+        Board notFullBoard = new Board(3).makeMove(0, Player.X).makeMove(1, Player.O);
+        assertFalse("should return false when not all tiles are filled", notFullBoard.isFull());
+    }
 
-        Board fullBoard = board;
-        for (int i = 0; i < board.getTiles().length; i++) {
+    @Test
+    public void fullBoard() {
+        Board fullBoard = new Board(3);
+        for (int i = 0; i < fullBoard.getTiles().length; i++) {
             fullBoard = fullBoard.makeMove(i, Player.X);
         }
-        assertTrue("should return true when all getTiles are filled", fullBoard.isFull());
+        assertTrue("should return true when all tiles are filled", fullBoard.isFull());
     }
 
     @Test

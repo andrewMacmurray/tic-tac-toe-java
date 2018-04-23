@@ -3,6 +3,7 @@ package tictactoe.game;
 import org.junit.Test;
 import tictactoe.core.Board;
 import tictactoe.core.Player;
+import tictactoe.core.Status;
 
 import static org.junit.Assert.*;
 
@@ -48,5 +49,36 @@ public class ModelTest {
 
         assertEquals("model1 should not be affected by changes to model2", Player.Empty, model1.getTiles()[2]);
         assertEquals("model2 should be updated correctly", Player.X, model2.getTiles()[2]);
+    }
+
+    @Test
+    public void getStatus() {
+        Model model = new Model(3, Player.X)
+                .makeMove(0)
+                .makeMove(1)
+                .makeMove(2);
+        assertEquals("game should be in NonTerminal State", Status.NonTerminal, model.getStatus());
+    }
+
+    @Test
+    public void winStatus() {
+        Model model = new Model(3, Player.X)
+                .makeMove(0)
+                .makeMove(3)
+                .makeMove(1)
+                .makeMove(4)
+                .makeMove(2);
+        assertEquals("game should be in Win state", Status.Win, model.getStatus());
+    }
+
+    @Test
+    public void drawStatus() {
+        int boardSize = 3;
+        int[] drawMoves = {0, 1, 2, 4, 3, 5, 7, 6, 8};
+        Model model = new Model(boardSize, Player.X);
+        for (int move: drawMoves) {
+            model = model.makeMove(move);
+        }
+        assertEquals("board should be in draw state", Status.Draw, model.getStatus());
     }
 }

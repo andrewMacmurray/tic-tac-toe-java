@@ -41,10 +41,10 @@ public class Board {
     }
 
     public boolean isFull() {
-        boolean tilesFull = false;
+        boolean tilesFull = true;
         for (Player tile : this.tiles)
-            if (!tile.isEmpty())
-                tilesFull = true;
+            if (tile.isEmpty())
+                tilesFull = false;
         return tilesFull;
     }
 
