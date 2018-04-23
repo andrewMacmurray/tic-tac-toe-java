@@ -14,17 +14,31 @@ public class ViewTest {
 
     @Test
     public void renderAllEmptyTiles() {
-        String renderedTiles = " 1 | 2 | 3\n---*---*---\n 4 | 5 | 6\n---*---*---\n 7 | 8 | 9\n";
+        String[] lines = {
+          " 1 | 2 | 3",
+          "---*---*---",
+          " 4 | 5 | 6",
+          "---*---*---",
+          " 7 | 8 | 9"
+        };
 
+        String expectedRenderedTiles = String.join("\n", lines);
         int boardSize = 3;
         Player[] actualTiles = new Board(boardSize).getTiles();
 
-        assertEquals("renders all empty tiles correctly", renderedTiles, view.renderTiles(actualTiles, boardSize));
+        assertEquals("renders all empty tiles correctly", expectedRenderedTiles, view.renderTiles(actualTiles, boardSize));
     }
 
     @Test
     public void renderTilesWithPlayers() {
-        String renderedTiles = " X | 2 | O\n---*---*---\n 4 | 5 | 6\n---*---*---\n 7 | 8 | 9\n";
+        String[] lines = {
+                " X | 2 | O",
+                "---*---*---",
+                " 4 | 5 | 6",
+                "---*---*---",
+                " 7 | 8 | 9"
+        };
+        String expectedRenderedTiles = String.join("\n", lines);
 
         int boardSize = 3;
         Player[] actualTiles = new Board(boardSize)
@@ -32,6 +46,6 @@ public class ViewTest {
                 .makeMove(2, Player.O)
                 .getTiles();
 
-        assertEquals("renders tiles with player moves correctly", renderedTiles, view.renderTiles(actualTiles, boardSize));
+        assertEquals("renders tiles with player moves correctly", expectedRenderedTiles, view.renderTiles(actualTiles, boardSize));
     }
 }

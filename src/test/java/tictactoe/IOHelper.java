@@ -1,4 +1,4 @@
-package tictactoe.game;
+package tictactoe;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -11,5 +11,9 @@ public class IOHelper {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         this.out = out;
         this.print = new PrintStream(out);
+    }
+
+    public String joinLines(String[] lines) {
+        return String.join("\n", lines) + "\n";
     }
 }

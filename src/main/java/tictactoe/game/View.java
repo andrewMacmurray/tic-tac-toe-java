@@ -23,7 +23,7 @@ public class View {
         boolean isLastTile = (index + visibleIndexOffset) == (boardSize * boardSize);
 
         if (isLastTile) {
-            return " " + tile + "\n";
+            return " " + tile;
         } else if (isEndOfRow) {
             return " " + tile + "\n" + divider + "\n";
         } else {
