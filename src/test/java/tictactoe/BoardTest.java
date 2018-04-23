@@ -58,4 +58,32 @@ public class BoardTest {
         }
         assertTrue("should return true when all getTiles are filled", fullBoard.isFull());
     }
+
+    @Test
+    public void noWinner() {
+        Board board = new Board(3)
+                .makeMove(0, Player.X)
+                .makeMove(1, Player.O)
+                .makeMove(2, Player.X);
+        assertEquals("No player should have won", Player.Empty, board.winner());
+    }
+
+    @Test
+    public void xWinner() {
+        Board board = new Board(3)
+                .makeMove(0, Player.X)
+                .makeMove(1, Player.X)
+                .makeMove(2, Player.X);
+        assertEquals("X should have won", Player.X, board.winner());
+    }
+
+    @Test
+    public void oWinner() {
+        Board board = new Board(3)
+                .makeMove(0, Player.O)
+                .makeMove(4, Player.O)
+                .makeMove(8, Player.O);
+        assertEquals("O should have won", Player.O, board.winner());
+
+    }
 }
