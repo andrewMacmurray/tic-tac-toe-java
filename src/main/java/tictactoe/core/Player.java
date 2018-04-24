@@ -1,8 +1,9 @@
 package tictactoe.core;
 
 public enum Player {
-
-    X, O, Empty;
+    X,
+    O,
+    Empty;
 
     private Player alternate;
 
