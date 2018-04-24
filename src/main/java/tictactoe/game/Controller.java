@@ -52,7 +52,7 @@ public class Controller {
         out.println("Your turn Player " + player.getAlternate().toString());
     }
 
-    public void printStatus() {
+    public void printTerminus() {
         if (isGameOver()) {
             out.println(status());
         }
@@ -70,6 +70,7 @@ public class Controller {
     private void printGuessResult(int guess, Player player) {
         GuessStatus status = this.model.getGuessStatus();
         if (status == GuessStatus.Valid) {
+            clearScreen();
             printValid(guess, player);
         } else if (status == GuessStatus.OutOfBounds) {
             printInstructions();

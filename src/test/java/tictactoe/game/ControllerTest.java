@@ -14,7 +14,7 @@ public class ControllerTest {
         Controller controller = new Controller(io.print,3, Player.X);
 
         controller.greetUser();
-        assertEquals("Welcome to Tic Tac Toe!\n", io.out.toString());
+        assertEquals("Welcome to Tic Tac Toe!\n", io.output());
     }
 
     @Test
@@ -23,7 +23,7 @@ public class ControllerTest {
         Controller controller = new Controller(io.print, 3, Player.X);
 
         controller.printInstructions();
-        assertEquals("Enter a number from 1-9\n", io.out.toString());
+        assertEquals("Enter a number from 1-9\n", io.output());
     }
 
     @Test
@@ -33,10 +33,9 @@ public class ControllerTest {
 
         controller.printInstructions();
         controller.clearScreen();
-        String output = io.out.toString();
         String clearSequence = "[H\u001B[2J";
 
-        assertTrue(output.contains(clearSequence));
+        assertTrue(io.output().contains(clearSequence));
     }
 
     @Test
@@ -53,7 +52,7 @@ public class ControllerTest {
                 " 7 | 8 | 9"
         };
         String expectedBoard = io.joinLines(expectedLines);
-        assertEquals(expectedBoard, io.out.toString());
+        assertEquals(expectedBoard, io.output());
     }
 
     @Test
@@ -76,7 +75,7 @@ public class ControllerTest {
                 "Your turn Player O"
         };
         String expected = io.joinLines(expectedLines);
-        assertEquals(expected, io.out.toString());
+        assertEquals(expected, io.output());
     }
 
     @Test
@@ -95,7 +94,7 @@ public class ControllerTest {
                 "Your turn Player O"
         };
         String expected = io.joinLines(expectedLines);
-        assertEquals(expected, io.out.toString());
+        assertTrue(io.output().contains(expected));
     }
 
     @Test
@@ -105,7 +104,7 @@ public class ControllerTest {
         controller.handleGuess("12");
 
         String expected = "Enter a number from 1-9\n";
-        assertEquals(expected, io.out.toString());
+        assertTrue(io.output().contains(expected));
     }
 
     @Test
@@ -117,7 +116,7 @@ public class ControllerTest {
         controller.handleGuess("1");
 
         String expected = "1 is already taken! Try another tile\n";
-        assertEquals(expected, io.out.toString());
+        assertTrue(io.output().contains(expected));
     }
 
     @Test
@@ -127,7 +126,7 @@ public class ControllerTest {
         controller.handleGuess("wut?");
 
         String expected = "Sorry I didn't recognise that\n";
-        assertEquals(expected, io.out.toString());
+        assertEquals(expected, io.output());
     }
 
     @Test
@@ -142,10 +141,10 @@ public class ControllerTest {
 
         io.reset();
 
-        controller.printStatus();
+        controller.printTerminus();
 
         String expected = "Player X won!\n";
-        assertEquals(expected, io.out.toString());
+        assertEquals(expected, io.output());
     }
 
     @Test
@@ -160,9 +159,9 @@ public class ControllerTest {
 
         io.reset();
 
-        controller.printStatus();
+        controller.printTerminus();
 
         String expected = "It's a draw!\n";
-        assertEquals(expected, io.out.toString());
+        assertEquals(expected, io.output());
     }
 }

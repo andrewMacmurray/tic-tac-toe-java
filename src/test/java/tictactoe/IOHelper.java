@@ -17,6 +17,10 @@ public class IOHelper {
         return String.join("\n", lines) + "\n";
     }
 
+    public String output() {
+        return out.toString();
+    }
+
     public void reset() {
         out.reset();
     }
