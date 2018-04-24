@@ -10,6 +10,7 @@ public class TicTacToe {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         Controller controller = new Controller(System.out, 3, Player.X);
+        controller.clearScreen();
         controller.greetUser();
         controller.printInstructions();
 
