@@ -27,6 +27,19 @@ public class ControllerTest {
     }
 
     @Test
+    public void clearScreen() {
+        IOHelper io = new IOHelper();
+        Controller controller = new Controller(io.print, 3, Player.X);
+
+        controller.printInstructions();
+        controller.clearScreen();
+        String output = io.out.toString();
+        String clearSequence = "[H\u001B[2J";
+
+        assertTrue(output.contains(clearSequence));
+    }
+
+    @Test
     public void printBoard() {
         IOHelper io = new IOHelper();
         Controller controller = new Controller(io.print, 3, Player.X);
@@ -56,7 +69,7 @@ public class ControllerTest {
         IOHelper io = new IOHelper();
         Controller controller = new Controller(io.print, 3, Player.X);
 
-        controller.printPlayerGuess(0, Player.X);
+        controller.printPlayerGuess(1, Player.X);
 
         String[] expectedLines = {
                 "Player X took tile 1",
@@ -73,12 +86,12 @@ public class ControllerTest {
         controller.nextGuess(1);
 
         String[] expectedLines = {
-                " 1 | X | 3",
+                " X | 2 | 3",
                 "---*---*---",
                 " 4 | 5 | 6",
                 "---*---*---",
                 " 7 | 8 | 9",
-                "Player X took tile 2",
+                "Player X took tile 1",
                 "Your turn Player O"
         };
         String expected = io.joinLines(expectedLines);
@@ -89,7 +102,7 @@ public class ControllerTest {
     public void printPlayerXWin() {
         IOHelper io = new IOHelper();
         Controller controller = new Controller(io.print, 3, Player.X);
-        int[] winMoves = {0, 1, 2, 3, 4, 5, 6};
+        int[] winMoves = {1, 2, 3, 4, 5, 6, 7};
 
         for (int move: winMoves) {
             controller.nextGuess(move);
@@ -107,7 +120,7 @@ public class ControllerTest {
     public void printDraw() {
         IOHelper io = new IOHelper();
         Controller controller = new Controller(io.print, 3, Player.X);
-        int[] drawMoves = {0, 1, 2, 4, 3, 5, 7, 6, 8};
+        int[] drawMoves = {1, 2, 3, 5, 4, 6, 8, 7, 9};
 
         for (int move: drawMoves) {
             controller.nextGuess(move);

@@ -1,6 +1,7 @@
 package tictactoe.game;
 
 import tictactoe.core.Player;
+import tictactoe.core.Status;
 
 import java.io.InputStream;
 import java.io.PrintStream;
@@ -18,7 +19,9 @@ public class Controller {
 
     public void nextGuess(int guess) {
         Player currentPlayer = this.model.getCurrentPlayer();
-        this.model = model.makeMove(guess);
+        int adjustedGuess = adjustGuessIndex(guess);
+
+        this.model = model.makeMove(adjustedGuess);
         printBoard();
         printPlayerGuess(guess, currentPlayer);
     }
@@ -37,28 +40,34 @@ public class Controller {
     }
 
     public void printPlayerGuess(int guess, Player player) {
-        out.println("Player " + player.toString() + " took tile " + String.valueOf(guess + 1));
+        out.println("Player " + player.toString() + " took tile " + String.valueOf(guess));
         out.println("Your turn Player " + player.getAlternate().toString());
     }
 
     public void printStatus() {
-       if (isGameOver()) {
-           out.println(status());
-       }
-    }
-
-    private String status() {
-        switch (model.getStatus()) {
-            case Win:
-                return "Player " + model.getWinner().toString() + " won!";
-            case Draw:
-                return "It's a draw!";
-            default:
-                return "";
+        if (isGameOver()) {
+            out.println(status());
         }
     }
 
     public boolean isGameOver() {
         return model.getStatus().isGameOver();
+    }
+
+    public void clearScreen() {
+        out.print("\033[H\033[2J");
+        out.flush();
+    }
+
+    private String status() {
+        if (model.getStatus() == Status.Win) {
+            return "Player " + model.getWinner().toString() + " won!";
+        } else {
+            return "It's a draw!";
+        }
+    }
+
+    private int adjustGuessIndex(int n) {
+        return n - 1;
     }
 }
