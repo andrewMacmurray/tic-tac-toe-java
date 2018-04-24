@@ -100,6 +100,6 @@ public class Model {
 
     private boolean isOutOfBounds(int move) {
         int upperBound = getBoardSize() * getBoardSize();
-        return move < 0 || move > upperBound;
+        return move < 0 || move > upperBound - 1;
     }
 }

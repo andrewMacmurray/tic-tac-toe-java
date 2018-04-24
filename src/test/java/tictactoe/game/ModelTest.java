@@ -63,7 +63,7 @@ public class ModelTest {
     @Test
     public void outOfBoundsMoveStatus() {
         Model beforeModel = new Model(3, Player.X);
-        Model afterModel = beforeModel.evalMove(12);
+        Model afterModel = beforeModel.evalMove(9);
 
         assertEquals("out of bounds guess should result in OutOfBounds guess status", GuessStatus.OutOfBounds, afterModel.getGuessStatus());
         assertArrayEquals("board should remain unmodified", beforeModel.getTiles(), afterModel.getTiles());
