@@ -30,6 +30,10 @@ public class Board {
         return this.tiles;
     }
 
+    public boolean isMoveAvailable(int tileIndex) {
+        return this.tiles[tileIndex].isEmpty();
+    }
+
     public Player winner() {
         if (hasWon(Player.X)) {
             return Player.X;

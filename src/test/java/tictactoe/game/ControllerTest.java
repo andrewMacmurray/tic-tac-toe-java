@@ -80,10 +80,10 @@ public class ControllerTest {
     }
 
     @Test
-    public void nextGuess() {
+    public void handleValidGuess() {
         IOHelper io = new IOHelper();
         Controller controller = new Controller(io.print, 3, Player.X);
-        controller.nextGuess(1);
+        controller.handleGuess("1");
 
         String[] expectedLines = {
                 " X | 2 | 3",
@@ -99,13 +99,45 @@ public class ControllerTest {
     }
 
     @Test
+    public void handleOutOfBound() {
+        IOHelper io = new IOHelper();
+        Controller controller = new Controller(io.print, 3, Player.X);
+        controller.handleGuess("12");
+
+        String expected = "Enter a number from 1-9\n";
+        assertEquals(expected, io.out.toString());
+    }
+
+    @Test
+    public void handleAlreadyTaken() {
+        IOHelper io = new IOHelper();
+        Controller controller = new Controller(io.print, 3, Player.X);
+        controller.handleGuess("1");
+        io.reset();
+        controller.handleGuess("1");
+
+        String expected = "1 is already taken! Try another tile\n";
+        assertEquals(expected, io.out.toString());
+    }
+
+    @Test
+    public void handleUnrecognised() {
+        IOHelper io = new IOHelper();
+        Controller controller = new Controller(io.print, 3, Player.X);
+        controller.handleGuess("wut?");
+
+        String expected = "Sorry I didn't recognise that\n";
+        assertEquals(expected, io.out.toString());
+    }
+
+    @Test
     public void printPlayerXWin() {
         IOHelper io = new IOHelper();
         Controller controller = new Controller(io.print, 3, Player.X);
-        int[] winMoves = {1, 2, 3, 4, 5, 6, 7};
+        String[] winMoves = {"1", "2", "3", "4", "5", "6", "7"};
 
-        for (int move: winMoves) {
-            controller.nextGuess(move);
+        for (String move: winMoves) {
+            controller.handleGuess(move);
         }
 
         io.reset();
@@ -120,10 +152,10 @@ public class ControllerTest {
     public void printDraw() {
         IOHelper io = new IOHelper();
         Controller controller = new Controller(io.print, 3, Player.X);
-        int[] drawMoves = {1, 2, 3, 5, 4, 6, 8, 7, 9};
+        String[] drawMoves = {"1", "2", "3", "5", "4", "6", "8", "7", "9"};
 
-        for (int move: drawMoves) {
-            controller.nextGuess(move);
+        for (String move: drawMoves) {
+            controller.handleGuess(move);
         }
 
         io.reset();

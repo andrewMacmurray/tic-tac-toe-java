@@ -1,6 +1,6 @@
 package tictactoe.core;
 
-public enum Status {
+public enum GameStatus {
     Win,
     Draw,
     NonTerminal;

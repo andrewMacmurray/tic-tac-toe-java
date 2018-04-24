@@ -1,23 +1,30 @@
 package tictactoe.game;
 
 import tictactoe.core.Board;
+import tictactoe.core.GuessStatus;
 import tictactoe.core.Player;
-import tictactoe.core.Status;
+import tictactoe.core.GameStatus;
 
 public class Model {
 
     private final Board board;
     private final Player currentPlayer;
-    private final Status status;
+    private final GameStatus gameStatus;
+    private final GuessStatus guessStatus;
 
     public Model(int boardSize, Player currentPlayer) {
         this.board = new Board(boardSize);
         this.currentPlayer = currentPlayer;
-        this.status = Status.NonTerminal;
+        this.gameStatus = GameStatus.NonTerminal;
+        this.guessStatus = GuessStatus.Valid;
     }
 
-    public Model makeMove(int move) {
-        return new Model(move, this.currentPlayer, this.board);
+    public Model evalMove(int move) {
+        return _evalMove(move, this.currentPlayer, this.board);
+    }
+
+    public boolean isMoveAvailable(int move) {
+        return this.board.isMoveAvailable(move);
     }
 
     public Player getCurrentPlayer() {
@@ -36,24 +43,63 @@ public class Model {
         return this.board.winner();
     }
 
-    public Status getStatus() {
-        return this.status;
+    public GameStatus getGameStatus() {
+        return this.gameStatus;
     }
 
+    public GuessStatus getGuessStatus() {
+        return this.guessStatus;
+    }
+
+    private Model _evalMove(int move, Player currentPlayer, Board board) {
+        GuessStatus guessStatus = evalGuessStatus(move);
+        if (guessStatus.isValid()) {
+            return new Model(move, currentPlayer, board);
+        } else {
+            return new Model(guessStatus, currentPlayer, board);
+        }
+    }
+
+    // Constructs new Model based on a valid move
     private Model(int move, Player currentPlayer, Board board) {
         Board nextBoard = board.makeMove(move, currentPlayer);
         this.board = nextBoard;
         this.currentPlayer = currentPlayer.getAlternate();
-        this.status = evaluateStatus(nextBoard);
+        this.gameStatus = evalGameStatus(nextBoard);
+        this.guessStatus = GuessStatus.Valid;
     }
 
-    private Status evaluateStatus(Board board) {
+    // Constructs new Model based on an invalid guess status
+    private Model(GuessStatus guessStatus, Player currentPlayer, Board board) {
+        this.board = board;
+        this.currentPlayer = currentPlayer;
+        this.gameStatus = GameStatus.NonTerminal;
+        this.guessStatus = guessStatus;
+    }
+
+
+    private GameStatus evalGameStatus(Board board) {
         if (!board.winner().isEmpty()) {
-            return Status.Win;
+            return GameStatus.Win;
         } else if (board.isFull()) {
-            return Status.Draw;
+            return GameStatus.Draw;
         } else {
-            return Status.NonTerminal;
+            return GameStatus.NonTerminal;
         }
+    }
+
+    private GuessStatus evalGuessStatus(int move) {
+        if (isOutOfBounds(move)) {
+            return GuessStatus.OutOfBounds;
+        } else if (!isMoveAvailable(move)) {
+            return GuessStatus.AlreadyTaken;
+        } else {
+            return GuessStatus.Valid;
+        }
+    }
+
+    private boolean isOutOfBounds(int move) {
+        int upperBound = getBoardSize() * getBoardSize();
+        return move < 0 || move > upperBound;
     }
 }

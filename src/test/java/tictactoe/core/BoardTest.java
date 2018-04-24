@@ -4,7 +4,6 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-
 public class BoardTest {
 
     @Test
@@ -58,6 +57,17 @@ public class BoardTest {
             fullBoard = fullBoard.makeMove(i, Player.X);
         }
         assertTrue("should return true when all tiles are filled", fullBoard.isFull());
+    }
+
+    @Test
+    public void isMoveAvailable() {
+        Board board = new Board(3)
+                .makeMove(1, Player.X)
+                .makeMove(2, Player.O);
+
+        assertFalse(board.isMoveAvailable(1));
+        assertFalse(board.isMoveAvailable(2));
+        assertTrue(board.isMoveAvailable(3));
     }
 
     @Test
