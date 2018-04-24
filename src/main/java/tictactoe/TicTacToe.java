@@ -15,9 +15,9 @@ public class TicTacToe {
         controller.printInstructions();
 
         while (!controller.isGameOver()) {
-            int guess = scanner.nextInt();
+            String input = scanner.next();
             controller.clearScreen();
-            controller.nextGuess(guess);
+            controller.handleGuess(input);
         }
 
         controller.printStatus();

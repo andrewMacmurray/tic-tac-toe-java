@@ -2,6 +2,8 @@ package tictactoe.game;
 
 import tictactoe.core.Player;
 import tictactoe.core.Status;
+import tictactoe.core.guess.GuessStatus;
+import tictactoe.core.guess.GuessValidator;
 
 import java.io.InputStream;
 import java.io.PrintStream;
@@ -9,12 +11,23 @@ import java.io.PrintStream;
 public class Controller {
 
     private Model model;
+    private GuessValidator guessValidator;
     private final View view = new View();
     private final PrintStream out;
 
     public Controller(PrintStream out, int boardSize, Player firstPlayer) {
         this.model = new Model(boardSize, firstPlayer);
+        this.guessValidator = new GuessValidator(1, boardSize * boardSize);
         this.out = out;
+    }
+
+    public void handleGuess(String input) {
+        this.guessValidator.validate(input);
+        if (this.guessValidator.isValid()) {
+            nextGuess(this.guessValidator.getValue());
+        } else {
+            handleInvalidGuess();
+        }
     }
 
     public void nextGuess(int guess) {
@@ -24,6 +37,15 @@ public class Controller {
         this.model = model.makeMove(adjustedGuess);
         printBoard();
         printPlayerGuess(guess, currentPlayer);
+    }
+
+    private void handleInvalidGuess() {
+        GuessStatus status = this.guessValidator.getStatus();
+        if (status == GuessStatus.OutOfBounds) {
+            out.println("Please enter a number from 1-9");
+        } else if (status == GuessStatus.Unrecognized) {
+            out.println("Sorry I didn't recognise that");
+        }
     }
 
     public void greetUser() {

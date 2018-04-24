@@ -1,8 +1,9 @@
 package tictactoe.core;
 
 public enum Status {
-
-    Win, Draw, NonTerminal;
+    Win,
+    Draw,
+    NonTerminal;
 
     private boolean gameOver;
 
