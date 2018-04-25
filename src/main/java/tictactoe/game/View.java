@@ -2,25 +2,26 @@ package tictactoe.game;
 
 import tictactoe.core.Player;
 
+import java.util.HashMap;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class View {
 
     private static String divider = "---*---*---";
-    private static int visibleIndexOffset = 1;
 
-    public String renderTiles(Player[] tiles, int boardSize) {
-        return IntStream
-                .range(0, tiles.length)
-                .mapToObj(i -> renderTileWithPadding(tiles[i], i, boardSize))
+    public String renderTiles(HashMap<Integer, Player> tiles, int boardSize) {
+        return tiles
+                .entrySet()
+                .stream()
+                .map(v -> renderTileWithPadding(v.getValue(), v.getKey(), boardSize))
                 .collect(Collectors.joining(""));
     }
 
     private String renderTileWithPadding(Player player, int index, int boardSize) {
         String tile = renderTile(player, index);
-        boolean isEndOfRow = (index + visibleIndexOffset) % boardSize == 0;
-        boolean isLastTile = (index + visibleIndexOffset) == (boardSize * boardSize);
+        boolean isEndOfRow = index % boardSize == 0;
+        boolean isLastTile = index == (boardSize * boardSize);
 
         if (isLastTile) {
             return " " + tile;
@@ -32,14 +33,13 @@ public class View {
     }
 
     private String renderTile(Player player, int index) {
-        int visibleIndex = index + visibleIndexOffset;
         switch (player) {
             case X:
                 return "X";
             case O:
                 return "O";
             default:
-                return String.valueOf(visibleIndex);
+                return String.valueOf(index);
         }
     }
 }

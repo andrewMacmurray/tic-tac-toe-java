@@ -5,6 +5,7 @@ import tictactoe.core.Player;
 import tictactoe.core.Board;
 
 import java.util.Arrays;
+import java.util.HashMap;
 
 import static org.junit.Assert.*;
 
@@ -24,7 +25,7 @@ public class ViewTest {
 
         String expectedRenderedTiles = String.join("\n", lines);
         int boardSize = 3;
-        Player[] actualTiles = new Board(boardSize).getTiles();
+        HashMap<Integer, Player> actualTiles = new Board(boardSize).getTiles();
 
         assertEquals("renders all empty tiles correctly", expectedRenderedTiles, view.renderTiles(actualTiles, boardSize));
     }
@@ -41,9 +42,9 @@ public class ViewTest {
         String expectedRenderedTiles = String.join("\n", lines);
 
         int boardSize = 3;
-        Player[] actualTiles = new Board(boardSize)
-                .makeMove(0, Player.X)
-                .makeMove(2, Player.O)
+        HashMap<Integer, Player> actualTiles = new Board(boardSize)
+                .makeMove(1, Player.X)
+                .makeMove(3, Player.O)
                 .getTiles();
 
         assertEquals("renders tiles with player moves correctly", expectedRenderedTiles, view.renderTiles(actualTiles, boardSize));

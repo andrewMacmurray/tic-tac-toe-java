@@ -5,6 +5,8 @@ import tictactoe.core.GuessStatus;
 import tictactoe.core.Player;
 import tictactoe.core.GameStatus;
 
+import java.util.HashMap;
+
 public class Model {
 
     private final Board board;
@@ -35,7 +37,7 @@ public class Model {
         return this.board.getBoardSize();
     }
 
-    public Player[] getTiles() {
+    public HashMap<Integer, Player> getTiles() {
        return this.board.getTiles();
     }
 
@@ -100,6 +102,6 @@ public class Model {
 
     private boolean isOutOfBounds(int move) {
         int upperBound = getBoardSize() * getBoardSize();
-        return move < 0 || move > upperBound - 1;
+        return move < 1 || move > upperBound;
     }
 }

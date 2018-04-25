@@ -1,10 +1,13 @@
 package tictactoe.core;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.IntStream;
 
 public class Board {
 
-    private final Player[] tiles;
+    private final HashMap<Integer, Player> tiles;
     private final int boardSize;
     private final int[][] winningStates = generateWinningStates();
 
@@ -14,24 +17,24 @@ public class Board {
     }
 
     public Board makeMove(int tile, Player player) {
-        Player[] nextTiles = insertPlayerAt(tile, player);
+        HashMap<Integer, Player> nextTiles = insertPlayerAt(tile, player);
         return new Board(nextTiles, this.boardSize);
     }
 
     public Player getTile(int tile) {
-        return this.tiles[tile];
+        return this.tiles.get(tile);
     }
 
     public int getBoardSize() {
         return this.boardSize;
     }
 
-    public Player[] getTiles() {
+    public HashMap<Integer, Player> getTiles() {
         return this.tiles;
     }
 
     public boolean isMoveAvailable(int tileIndex) {
-        return this.tiles[tileIndex].isEmpty();
+        return this.tiles.get(tileIndex).isEmpty();
     }
 
     public Player winner() {
@@ -46,27 +49,30 @@ public class Board {
 
     public boolean isFull() {
         boolean tilesFull = true;
-        for (Player tile : this.tiles)
-            if (tile.isEmpty())
+        for (Map.Entry<Integer, Player> tile : this.tiles.entrySet())
+            if (tile.getValue().isEmpty())
                 tilesFull = false;
         return tilesFull;
     }
 
     // Creates a new Board based on the existing board
-    private Board(Player[] currentTiles, int boardSize) {
+    private Board(HashMap<Integer, Player> currentTiles, int boardSize) {
         this.tiles = currentTiles;
         this.boardSize = boardSize;
     }
 
-    private Player[] insertPlayerAt(int tile, Player player) {
-        Player[] newTiles = Arrays.copyOf(this.tiles, this.tiles.length);
-        newTiles[tile] = player;
+    private HashMap<Integer, Player> insertPlayerAt(int tile, Player player) {
+        HashMap<Integer, Player> newTiles = new HashMap<>(this.tiles);
+        newTiles.put(tile, player);
         return newTiles;
     }
 
-    private Player[] emptyTiles(int boardSize) {
-        Player[] tiles = new Player[(boardSize * boardSize)];
-        Arrays.fill(tiles, Player.Empty);
+    private HashMap<Integer, Player> emptyTiles(int boardSize) {
+        Integer lastTile = (Integer) (boardSize * boardSize);
+        HashMap<Integer, Player> tiles = new HashMap<>();
+        for (Integer i = 1; i <= lastTile; i++) {
+            tiles.put(i, Player.Empty);
+        }
         return tiles;
     }
 
@@ -82,9 +88,9 @@ public class Board {
 
     private int[][] generateWinningStates () {
         int[][] winStates = {
-                {0, 1, 2}, {3, 4, 5}, {6, 7, 8},
-                {0, 3, 6}, {1, 4, 7}, {2, 5, 8},
-                {0, 4, 8}, {2, 4, 6}
+                {1, 2, 3}, {4, 5, 6}, {7, 8, 9},
+                {1, 4, 7}, {2, 5, 8}, {3, 6, 9},
+                {1, 5, 9}, {3, 5, 7}
         };
         return winStates;
     }

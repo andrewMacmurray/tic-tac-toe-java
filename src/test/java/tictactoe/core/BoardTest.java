@@ -2,6 +2,9 @@ package tictactoe.core;
 
 import org.junit.Test;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.junit.Assert.*;
 
 public class BoardTest {
@@ -9,30 +12,30 @@ public class BoardTest {
     @Test
     public void initializeBoard() {
         Board board = new Board(3);
-        Player[] tiles = board.getTiles();
+        HashMap<Integer, Player> tiles = board.getTiles();
 
-        for (Player tile : tiles) {
-            assertEquals("tile should be empty", Player.Empty, tile);
+        for (Map.Entry<Integer, Player> tile : tiles.entrySet()) {
+            assertEquals("tile should be empty", Player.Empty, tile.getValue());
         }
     }
 
     @Test
     public void makeFirstMove() {
         Player tile = new Board(3)
-                .makeMove(0, Player.X)
-                .getTile(0);
+                .makeMove(1, Player.X)
+                .getTile(1);
 
-        assertEquals("Tile at 0 should be X", Player.X, tile);
+        assertEquals("Tile at 1 should be X", Player.X, tile);
     }
 
     @Test
     public void makeMultipleMoves() {
         Board board = new Board(3)
-                .makeMove(0, Player.X)
-                .makeMove(1, Player.O);
+                .makeMove(1, Player.X)
+                .makeMove(2, Player.O);
 
-        assertEquals("Tile at 0 should be X", Player.X, board.getTile(0));
-        assertEquals("Tile at 1 should be O", Player.O, board.getTile(1));
+        assertEquals("Tile at 1 should be X", Player.X, board.getTile(1));
+        assertEquals("Tile at 2 should be O", Player.O, board.getTile(2));
     }
 
     @Test
@@ -53,7 +56,7 @@ public class BoardTest {
     @Test
     public void fullBoard() {
         Board fullBoard = new Board(3);
-        for (int i = 0; i < fullBoard.getTiles().length; i++) {
+        for (int i = 0; i < fullBoard.getTiles().size(); i++) {
             fullBoard = fullBoard.makeMove(i, Player.X);
         }
         assertTrue("should return true when all tiles are filled", fullBoard.isFull());
@@ -82,18 +85,18 @@ public class BoardTest {
     @Test
     public void xWinner() {
         Board board = new Board(3)
-                .makeMove(0, Player.X)
                 .makeMove(1, Player.X)
-                .makeMove(2, Player.X);
+                .makeMove(2, Player.X)
+                .makeMove(3, Player.X);
         assertEquals("X should have won", Player.X, board.winner());
     }
 
     @Test
     public void oWinner() {
         Board board = new Board(3)
-                .makeMove(0, Player.O)
-                .makeMove(4, Player.O)
-                .makeMove(8, Player.O);
+                .makeMove(1, Player.O)
+                .makeMove(5, Player.O)
+                .makeMove(9, Player.O);
         assertEquals("O should have won", Player.O, board.winner());
 
     }

@@ -28,9 +28,8 @@ public class Controller {
 
     private void handleParsedGuess(int guess) {
         Player currentPlayer = this.model.getCurrentPlayer();
-        int adjustedGuess = adjustGuessIndex(guess);
 
-        this.model = model.evalMove(adjustedGuess);
+        this.model = model.evalMove(guess);
         printGuessResult(guess, currentPlayer);
     }
 
@@ -98,9 +97,5 @@ public class Controller {
         } else {
             return "It's a draw!";
         }
-    }
-
-    private int adjustGuessIndex(int n) {
-        return n - 1;
     }
 }
