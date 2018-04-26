@@ -37,6 +37,11 @@ public class Board {
         return this.tiles.get(tileIndex).isEmpty();
     }
 
+    public boolean isOutOfBounds(int tileIndex) {
+        int upperBound = this.boardSize * this.boardSize;
+        return tileIndex < 1 || tileIndex > upperBound;
+    }
+
     public Player winner() {
         if (hasWon(Player.X)) {
             return Player.X;

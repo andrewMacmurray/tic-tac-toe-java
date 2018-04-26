@@ -25,10 +25,6 @@ public class Model {
         return _evalMove(move, this.currentPlayer, this.board);
     }
 
-    public boolean isMoveAvailable(int move) {
-        return this.board.isMoveAvailable(move);
-    }
-
     public Player getCurrentPlayer() {
         return this.currentPlayer;
     }
@@ -91,17 +87,12 @@ public class Model {
     }
 
     private GuessStatus evalGuessStatus(int move) {
-        if (isOutOfBounds(move)) {
+        if (this.board.isOutOfBounds(move)) {
             return GuessStatus.OutOfBounds;
-        } else if (!isMoveAvailable(move)) {
+        } else if (!this.board.isMoveAvailable(move)) {
             return GuessStatus.AlreadyTaken;
         } else {
             return GuessStatus.Valid;
         }
-    }
-
-    private boolean isOutOfBounds(int move) {
-        int upperBound = getBoardSize() * getBoardSize();
-        return move < 1 || move > upperBound;
     }
 }
