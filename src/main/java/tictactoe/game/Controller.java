@@ -9,14 +9,13 @@ import java.io.PrintStream;
 public class Controller {
 
     private Model model;
-    private final View view = new View();
     private final PrintStream out;
 
     public Controller(PrintStream out, int boardSize, Player firstPlayer) {
         this.model = new Model(boardSize, firstPlayer);
         this.out = out;
     }
-
+    
     public void handleGuess(String input) {
         try {
             int guess = Integer.parseInt(input);
@@ -42,7 +41,7 @@ public class Controller {
     }
 
     public void printBoard() {
-        String boardString = view.renderTiles(model.getTiles(), model.getBoardSize());
+        String boardString = View.renderTiles(model.getTiles(), model.getBoardSize());
         out.println(boardString);
     }
 

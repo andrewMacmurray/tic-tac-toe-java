@@ -8,9 +8,9 @@ import java.util.stream.IntStream;
 
 public class View {
 
-    private static String divider = "---*---*---";
+    public static String divider = "---*---*---";
 
-    public String renderTiles(HashMap<Integer, Player> tiles, int boardSize) {
+    public static String renderTiles(HashMap<Integer, Player> tiles, int boardSize) {
         return tiles
                 .entrySet()
                 .stream()
@@ -18,7 +18,7 @@ public class View {
                 .collect(Collectors.joining(""));
     }
 
-    private String renderTileWithPadding(Player player, int index, int boardSize) {
+    private static String renderTileWithPadding(Player player, int index, int boardSize) {
         String tile = renderTile(player, index);
         boolean isEndOfRow = index % boardSize == 0;
         boolean isLastTile = index == (boardSize * boardSize);
@@ -32,7 +32,7 @@ public class View {
         }
     }
 
-    private String renderTile(Player player, int index) {
+    private static String renderTile(Player player, int index) {
         switch (player) {
             case X:
                 return "X";

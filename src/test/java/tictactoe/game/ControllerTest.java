@@ -46,9 +46,9 @@ public class ControllerTest {
         controller.printBoard();
         String[] expectedLines = {
                 " 1 | 2 | 3",
-                "---*---*---",
+                View.divider,
                 " 4 | 5 | 6",
-                "---*---*---",
+                View.divider,
                 " 7 | 8 | 9"
         };
         String expectedBoard = io.joinLines(expectedLines);
@@ -86,9 +86,9 @@ public class ControllerTest {
 
         String[] expectedLines = {
                 " X | 2 | 3",
-                "---*---*---",
+                View.divider,
                 " 4 | 5 | 6",
-                "---*---*---",
+                View.divider,
                 " 7 | 8 | 9",
                 "Player X took tile 1",
                 "Your turn Player O"
