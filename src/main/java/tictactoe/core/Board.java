@@ -9,7 +9,6 @@ public class Board {
 
     private final HashMap<Integer, Player> tiles;
     private final int boardSize;
-    private final int[][] winningStates = generateWinningStates();
 
     public Board(int boardSize) {
         this.tiles = emptyTiles(boardSize);
@@ -43,13 +42,7 @@ public class Board {
     }
 
     public Player winner() {
-        if (hasWon(Player.X)) {
-            return Player.X;
-        } else if (hasWon(Player.O)) {
-            return Player.O;
-        } else {
-            return Player.Empty;
-        }
+        return Winner.getWinner(this);
     }
 
     public boolean isFull() {
@@ -79,24 +72,5 @@ public class Board {
             tiles.put(i, Player.Empty);
         }
         return tiles;
-    }
-
-    private boolean hasWon(Player player) {
-        for (int[] st: this.winningStates) {
-            boolean matchesWinningState = Arrays
-                    .stream(st)
-                    .allMatch(i -> getTile(i) == player);
-            if (matchesWinningState) return true;
-        }
-        return false;
-    }
-
-    private int[][] generateWinningStates () {
-        int[][] winStates = {
-                {1, 2, 3}, {4, 5, 6}, {7, 8, 9},
-                {1, 4, 7}, {2, 5, 8}, {3, 6, 9},
-                {1, 5, 9}, {3, 5, 7}
-        };
-        return winStates;
     }
 }
