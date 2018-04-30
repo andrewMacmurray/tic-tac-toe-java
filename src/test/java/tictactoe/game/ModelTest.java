@@ -1,48 +1,38 @@
 package tictactoe.game;
 
 import org.junit.Test;
-import tictactoe.core.Board;
-import tictactoe.core.GuessStatus;
-import tictactoe.core.Player;
-import tictactoe.core.GameStatus;
+import tictactoe.core.*;
 
 import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 
 import static org.junit.Assert.*;
 
 public class ModelTest {
 
     @Test
-    public void emptyTiles() {
-        HashMap<Integer, Player> modelTiles = new Model(3, Player.X).getTiles();
-        HashMap<Integer, Player> boardTiles = new Board(3).getTiles();
-        assertEquals("new model should contain a collection of empty tiles", boardTiles, modelTiles);
-    }
-
-    @Test
     public void currentPlayer() {
-       Model model = new Model(3, Player.X);
-       assertEquals("model should contain a currentPlayer", Player.X, model.getCurrentPlayer());
+        Model model = new Model(3, PlayerSymbol.X);
+        assertEquals("model should contain a currentPlayer", PlayerSymbol.X, model.getCurrentPlayer());
     }
 
     @Test
     public void boardSize() {
-        Model model = new Model(3, Player.X);
+        Model model = new Model(3, PlayerSymbol.X);
         assertEquals("model should contain the board size", 3, model.getBoardSize());
     }
 
     @Test
     public void evalMove() {
-        Model model = new Model(3, Player.X);
-        Model newModel = model.evalMove(1);
-        HashMap<Integer, Player> tiles = newModel.getTiles();
-        assertEquals("Player X should have made first move", Player.X, tiles.get(1));
-        assertEquals("Player O should be the next player", Player.O, newModel.getCurrentPlayer());
+        Model model = new Model(3, PlayerSymbol.X).evalMove(1);
+        assertTrue("PlayerSymbol X should have made first move", moveTakenBy(1, PlayerSymbol.X, model));
+        assertEquals("PlayerSymbol O should be the next player", PlayerSymbol.O, model.getCurrentPlayer());
     }
 
     @Test
     public void immutableModel() {
-        Model model1 = new Model(3, Player.X)
+        Model model1 = new Model(3, PlayerSymbol.X)
                 .evalMove(1)
                 .evalMove(2);
 
@@ -50,21 +40,21 @@ public class ModelTest {
                 .evalMove(3)
                 .evalMove(4);
 
-        assertEquals("model1 should not be affected by changes to model2", Player.Empty, model1.getTiles().get(3));
-        assertEquals("model2 should be updated correctly", Player.X, model2.getTiles().get(3));
+        assertFalse("model1 should not be affected by changes to model2", moveTakenBy(3, PlayerSymbol.X, model1));
+        assertTrue("model2 should be updated correctly", moveTakenBy(3, PlayerSymbol.X, model2));
     }
 
     @Test
     public void validMoveStatus() {
-        Model model = new Model(3, Player.X).evalMove(1);
+        Model model = new Model(3, PlayerSymbol.X).evalMove(1);
 
         assertEquals("valid guess should result in a valid guess status", GuessStatus.Valid, model.getGuessStatus());
-        assertEquals("board should be updated correctly", Player.X, model.getTiles().get(1));
+        assertTrue("board should be updated correctly", moveTakenBy(1, PlayerSymbol.X, model));
     }
 
     @Test
     public void outOfBoundsMoveStatus() {
-        Model beforeModel = new Model(3, Player.X);
+        Model beforeModel = new Model(3, PlayerSymbol.X);
         Model afterModel = beforeModel.evalMove(10);
 
         assertEquals("out of bounds guess should result in OutOfBounds guess status", GuessStatus.OutOfBounds, afterModel.getGuessStatus());
@@ -73,7 +63,7 @@ public class ModelTest {
 
     @Test
     public void alreadyTakenStatus() {
-        Model beforeModel = new Model(3, Player.X).evalMove(1);
+        Model beforeModel = new Model(3, PlayerSymbol.X).evalMove(1);
         Model afterModel = beforeModel.evalMove(1);
 
         assertEquals("attempting to take a previously taken tile should result in AlreadyTaken guess status", GuessStatus.AlreadyTaken, afterModel.getGuessStatus());
@@ -82,7 +72,7 @@ public class ModelTest {
 
     @Test
     public void getGameStatus() {
-        Model model = new Model(3, Player.X)
+        Model model = new Model(3, PlayerSymbol.X)
                 .evalMove(1)
                 .evalMove(2)
                 .evalMove(3);
@@ -91,7 +81,7 @@ public class ModelTest {
 
     @Test
     public void winStatus() {
-        Model model = new Model(3, Player.X)
+        Model model = new Model(3, PlayerSymbol.X)
                 .evalMove(1)
                 .evalMove(4)
                 .evalMove(2)
@@ -104,10 +94,18 @@ public class ModelTest {
     public void drawStatus() {
         int boardSize = 3;
         int[] drawMoves = {1, 2, 3, 5, 4, 6, 8, 7, 9};
-        Model model = new Model(boardSize, Player.X);
-        for (int move: drawMoves) {
+        Model model = new Model(boardSize, PlayerSymbol.X);
+        for (int move : drawMoves) {
             model = model.evalMove(move);
         }
         assertEquals("board should be in draw state", GameStatus.Draw, model.getGameStatus());
+    }
+
+
+    private boolean moveTakenBy(int index, PlayerSymbol playerSymbol, Model model) {
+        return model
+                .getTiles()
+                .get(index)
+                .isTakenBy(playerSymbol);
     }
 }

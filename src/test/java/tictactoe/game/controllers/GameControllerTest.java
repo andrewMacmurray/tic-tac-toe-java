@@ -1,37 +1,28 @@
-package tictactoe.game;
+package tictactoe.game.controllers;
 
 import org.junit.Test;
-import tictactoe.IOHelper;
-import tictactoe.core.Player;
+import tictactoe.core.PlayerSymbol;
+import tictactoe.game.views.BoardView;
 
 import static org.junit.Assert.*;
 
-public class ControllerTest {
-
-    @Test
-    public void greet() {
-        IOHelper io = new IOHelper();
-        Controller controller = new Controller(io.print,3, Player.X);
-
-        controller.greetUser();
-        assertEquals("Welcome to Tic Tac Toe!\n", io.output());
-    }
+public class GameControllerTest {
 
     @Test
     public void instructions() {
         IOHelper io = new IOHelper();
-        Controller controller = new Controller(io.print, 3, Player.X);
+        GameController controller = new GameController(io.print, 3, PlayerSymbol.X);
 
-        controller.printInstructions();
+        controller.enterNumberInstructions();
         assertEquals("Enter a number from 1-9\n", io.output());
     }
 
     @Test
     public void clearScreen() {
         IOHelper io = new IOHelper();
-        Controller controller = new Controller(io.print, 3, Player.X);
+        GameController controller = new GameController(io.print, 3, PlayerSymbol.X);
 
-        controller.printInstructions();
+        controller.enterNumberInstructions();
         controller.clearScreen();
         String clearSequence = "[H\u001B[2J";
 
@@ -41,14 +32,14 @@ public class ControllerTest {
     @Test
     public void printBoard() {
         IOHelper io = new IOHelper();
-        Controller controller = new Controller(io.print, 3, Player.X);
+        GameController controller = new GameController(io.print, 3, PlayerSymbol.X);
 
         controller.printBoard();
         String[] expectedLines = {
                 " 1 | 2 | 3",
-                View.divider,
+                BoardView.divider,
                 " 4 | 5 | 6",
-                View.divider,
+                BoardView.divider,
                 " 7 | 8 | 9"
         };
         String expectedBoard = io.joinLines(expectedLines);
@@ -58,7 +49,7 @@ public class ControllerTest {
     @Test
     public void isGameOver() {
         IOHelper io = new IOHelper();
-        Controller controller = new Controller(io.print, 3, Player.X);
+        GameController controller = new GameController(io.print, 3, PlayerSymbol.X);
 
         assertFalse("gameOver should be false if game unfinished", controller.isGameOver());
     }
@@ -66,9 +57,9 @@ public class ControllerTest {
     @Test
     public void printPlayerGuess() {
         IOHelper io = new IOHelper();
-        Controller controller = new Controller(io.print, 3, Player.X);
+        GameController controller = new GameController(io.print, 3, PlayerSymbol.X);
 
-        controller.printPlayerGuess(1, Player.X);
+        controller.printPlayerGuess(1, PlayerSymbol.X);
 
         String[] expectedLines = {
                 "Player X took tile 1",
@@ -81,14 +72,14 @@ public class ControllerTest {
     @Test
     public void handleValidGuess() {
         IOHelper io = new IOHelper();
-        Controller controller = new Controller(io.print, 3, Player.X);
+        GameController controller = new GameController(io.print, 3, PlayerSymbol.X);
         controller.handleGuess("1");
 
         String[] expectedLines = {
                 " X | 2 | 3",
-                View.divider,
+                BoardView.divider,
                 " 4 | 5 | 6",
-                View.divider,
+                BoardView.divider,
                 " 7 | 8 | 9",
                 "Player X took tile 1",
                 "Your turn Player O"
@@ -100,7 +91,7 @@ public class ControllerTest {
     @Test
     public void handleOutOfBound() {
         IOHelper io = new IOHelper();
-        Controller controller = new Controller(io.print, 3, Player.X);
+        GameController controller = new GameController(io.print, 3, PlayerSymbol.X);
         controller.handleGuess("12");
 
         String expected = "Enter a number from 1-9\n";
@@ -110,7 +101,7 @@ public class ControllerTest {
     @Test
     public void handleAlreadyTaken() {
         IOHelper io = new IOHelper();
-        Controller controller = new Controller(io.print, 3, Player.X);
+        GameController controller = new GameController(io.print, 3, PlayerSymbol.X);
         controller.handleGuess("1");
         io.reset();
         controller.handleGuess("1");
@@ -122,7 +113,7 @@ public class ControllerTest {
     @Test
     public void handleUnrecognised() {
         IOHelper io = new IOHelper();
-        Controller controller = new Controller(io.print, 3, Player.X);
+        GameController controller = new GameController(io.print, 3, PlayerSymbol.X);
         controller.handleGuess("wut?");
 
         String expected = "Sorry I didn't recognise that\n";
@@ -132,7 +123,7 @@ public class ControllerTest {
     @Test
     public void printPlayerXWin() {
         IOHelper io = new IOHelper();
-        Controller controller = new Controller(io.print, 3, Player.X);
+        GameController controller = new GameController(io.print, 3, PlayerSymbol.X);
         String[] winMoves = {"1", "2", "3", "4", "5", "6", "7"};
 
         for (String move: winMoves) {
@@ -150,7 +141,7 @@ public class ControllerTest {
     @Test
     public void printDraw() {
         IOHelper io = new IOHelper();
-        Controller controller = new Controller(io.print, 3, Player.X);
+        GameController controller = new GameController(io.print, 3, PlayerSymbol.X);
         String[] drawMoves = {"1", "2", "3", "5", "4", "6", "8", "7", "9"};
 
         for (String move: drawMoves) {

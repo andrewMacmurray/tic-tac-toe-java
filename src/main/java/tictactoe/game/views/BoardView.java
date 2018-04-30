@@ -1,16 +1,15 @@
-package tictactoe.game;
+package tictactoe.game.views;
 
-import tictactoe.core.Player;
+import tictactoe.core.Tile;
 
-import java.util.HashMap;
+import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
-public class View {
+public class BoardView {
 
     public static String divider = "---*---*---";
 
-    public static String renderTiles(HashMap<Integer, Player> tiles, int boardSize) {
+    public static String renderTiles(Map<Integer, Tile> tiles, int boardSize) {
         return tiles
                 .entrySet()
                 .stream()
@@ -18,8 +17,8 @@ public class View {
                 .collect(Collectors.joining(""));
     }
 
-    private static String renderTileWithPadding(Player player, int index, int boardSize) {
-        String tile = renderTile(player, index);
+    private static String renderTileWithPadding(Tile myTile, int index, int boardSize) {
+        String tile = myTile.toString(index);
         boolean isEndOfRow = index % boardSize == 0;
         boolean isLastTile = index == (boardSize * boardSize);
 
@@ -29,17 +28,6 @@ public class View {
             return " " + tile + "\n" + divider + "\n";
         } else {
             return " " + tile + " |";
-        }
-    }
-
-    private static String renderTile(Player player, int index) {
-        switch (player) {
-            case X:
-                return "X";
-            case O:
-                return "O";
-            default:
-                return String.valueOf(index);
         }
     }
 }

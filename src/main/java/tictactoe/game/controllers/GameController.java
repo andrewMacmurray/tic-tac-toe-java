@@ -1,21 +1,31 @@
-package tictactoe.game;
+package tictactoe.game.controllers;
 
 import tictactoe.core.GuessStatus;
-import tictactoe.core.Player;
+import tictactoe.core.PlayerSymbol;
 import tictactoe.core.GameStatus;
+import tictactoe.game.Model;
+import tictactoe.game.views.BoardView;
+import tictactoe.game.views.Messages;
 
 import java.io.PrintStream;
+import java.util.Scanner;
 
-public class Controller {
+public class GameController {
 
     private Model model;
     private final PrintStream out;
 
-    public Controller(PrintStream out, int boardSize, Player firstPlayer) {
+    public GameController(PrintStream out, int boardSize, PlayerSymbol firstPlayer) {
         this.model = new Model(boardSize, firstPlayer);
         this.out = out;
     }
-    
+
+    public void run(Scanner scanner) {
+        enterNumberInstructions();
+        while (!isGameOver()) handleGuess(scanner.next());
+        printTerminus();
+    }
+
     public void handleGuess(String input) {
         try {
             int guess = Integer.parseInt(input);
@@ -26,28 +36,24 @@ public class Controller {
     }
 
     private void handleParsedGuess(int guess) {
-        Player currentPlayer = this.model.getCurrentPlayer();
+        PlayerSymbol currentPlayer = this.model.getCurrentPlayer();
 
         this.model = model.evalMove(guess);
         printGuessResult(guess, currentPlayer);
     }
 
-    public void greetUser() {
-        out.println("Welcome to Tic Tac Toe!");
-    }
-
-    public void printInstructions() {
-        out.println("Enter a number from 1-9");
+    public void enterNumberInstructions() {
+        out.println(Messages.enterNumbers(model.getBoardSize()));
     }
 
     public void printBoard() {
-        String boardString = View.renderTiles(model.getTiles(), model.getBoardSize());
+        String boardString = BoardView.renderTiles(model.getTiles(), model.getBoardSize());
         out.println(boardString);
     }
 
-    public void printPlayerGuess(int guess, Player player) {
-        out.println("Player " + player.toString() + " took tile " + String.valueOf(guess));
-        out.println("Your turn Player " + player.getAlternate().toString());
+    public void printPlayerGuess(int guess, PlayerSymbol player) {
+        Messages.playerGuess(guess, player)
+                .forEach(out::println);
     }
 
     public void printTerminus() {
@@ -65,36 +71,43 @@ public class Controller {
         out.flush();
     }
 
-    private void printGuessResult(int guess, Player player) {
+    private void printGuessResult(int guess, PlayerSymbol player) {
         GuessStatus status = this.model.getGuessStatus();
         if (status == GuessStatus.Valid) {
             clearScreen();
             printValid(guess, player);
         } else if (status == GuessStatus.OutOfBounds) {
-            printInstructions();
+            enterNumberInstructions();
         } else {
             printAlreadyTaken(guess);
         }
     }
 
     private void printUnrecognised() {
-        out.println("Sorry I didn't recognise that");
+        out.println(Messages.unrecognised);
     }
 
     private void printAlreadyTaken(int guess) {
-        out.println(String.valueOf(guess) + " is already taken! Try another tile");
+        out.println(Messages.alreadyTaken(guess));
     }
 
-    private void printValid(int guess, Player currentPlayer) {
+    private void printValid(int guess, PlayerSymbol currentPlayer) {
         printBoard();
         printPlayerGuess(guess, currentPlayer);
     }
 
     private String status() {
         if (model.getGameStatus() == GameStatus.Win) {
-            return "Player " + model.getWinner().toString() + " won!";
+            return renderWinner();
         } else {
-            return "It's a draw!";
+            return Messages.draw;
         }
+    }
+
+    private String renderWinner() {
+        return model
+                .getWinner()
+                .map(Messages::winner)
+                .orElse("");
     }
 }
