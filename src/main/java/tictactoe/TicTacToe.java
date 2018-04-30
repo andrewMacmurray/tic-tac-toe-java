@@ -2,23 +2,18 @@ package tictactoe;
 
 import tictactoe.core.PlayerSymbol;
 import tictactoe.game.controllers.GameController;
+import tictactoe.game.controllers.GameTypeController;
 
 import java.util.Scanner;
 
 public class TicTacToe {
 
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        GameController controller = new GameController(System.out, 3, PlayerSymbol.X);
-        controller.clearScreen();
-        controller.greetUser();
-        controller.printInstructions();
+        GameTypeController gameTypeController = new GameTypeController(System.in, System.out);
+        GameController gameController = new GameController(System.out, 3, PlayerSymbol.X);
 
-        while (!controller.isGameOver()) {
-            String input = scanner.next();
-            controller.handleGuess(input);
-        }
-
-        controller.printTerminus();
+        gameController.clearScreen();
+        gameTypeController.run();
+        gameController.run(new Scanner(System.in));
     }
 }

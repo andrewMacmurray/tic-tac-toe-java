@@ -20,15 +20,15 @@ public class Board {
 
     public Board makeMove(int tile, PlayerSymbol player) {
         Map<Integer, Tile> nextTiles = insertPlayerAt(tile, player);
-        return new Board(nextTiles, this.boardSize);
+        return new Board(nextTiles, boardSize);
     }
 
     public Tile getTile(int tile) {
-        return this.tiles.get(tile);
+        return tiles.get(tile);
     }
 
     public int getBoardSize() {
-        return this.boardSize;
+        return boardSize;
     }
 
     public Map<Integer, Tile> getTiles() {
@@ -40,7 +40,7 @@ public class Board {
     }
 
     public boolean isOutOfBounds(int tileIndex) {
-        int upperBound = this.boardSize * this.boardSize;
+        int upperBound = boardSize * boardSize;
         return tileIndex < 1 || tileIndex > upperBound;
     }
 

@@ -2,27 +2,18 @@ package tictactoe.game.controllers;
 
 import org.junit.Test;
 import tictactoe.core.PlayerSymbol;
-import tictactoe.game.View;
+import tictactoe.game.views.BoardView;
 
 import static org.junit.Assert.*;
 
 public class GameControllerTest {
 
     @Test
-    public void greet() {
-        IOHelper io = new IOHelper();
-        GameController controller = new GameController(io.print,3, PlayerSymbol.X);
-
-        controller.greetUser();
-        assertEquals("Welcome to Tic Tac Toe!\n", io.output());
-    }
-
-    @Test
     public void instructions() {
         IOHelper io = new IOHelper();
         GameController controller = new GameController(io.print, 3, PlayerSymbol.X);
 
-        controller.printInstructions();
+        controller.enterNumberInstructions();
         assertEquals("Enter a number from 1-9\n", io.output());
     }
 
@@ -31,7 +22,7 @@ public class GameControllerTest {
         IOHelper io = new IOHelper();
         GameController controller = new GameController(io.print, 3, PlayerSymbol.X);
 
-        controller.printInstructions();
+        controller.enterNumberInstructions();
         controller.clearScreen();
         String clearSequence = "[H\u001B[2J";
 
@@ -46,9 +37,9 @@ public class GameControllerTest {
         controller.printBoard();
         String[] expectedLines = {
                 " 1 | 2 | 3",
-                View.divider,
+                BoardView.divider,
                 " 4 | 5 | 6",
-                View.divider,
+                BoardView.divider,
                 " 7 | 8 | 9"
         };
         String expectedBoard = io.joinLines(expectedLines);
@@ -71,8 +62,8 @@ public class GameControllerTest {
         controller.printPlayerGuess(1, PlayerSymbol.X);
 
         String[] expectedLines = {
-                "PlayerSymbol X took tile 1",
-                "Your turn PlayerSymbol O"
+                "Player X took tile 1",
+                "Your turn Player O"
         };
         String expected = io.joinLines(expectedLines);
         assertEquals(expected, io.output());
@@ -86,12 +77,12 @@ public class GameControllerTest {
 
         String[] expectedLines = {
                 " X | 2 | 3",
-                View.divider,
+                BoardView.divider,
                 " 4 | 5 | 6",
-                View.divider,
+                BoardView.divider,
                 " 7 | 8 | 9",
-                "PlayerSymbol X took tile 1",
-                "Your turn PlayerSymbol O"
+                "Player X took tile 1",
+                "Your turn Player O"
         };
         String expected = io.joinLines(expectedLines);
         assertTrue(io.output().contains(expected));
@@ -143,7 +134,7 @@ public class GameControllerTest {
 
         controller.printTerminus();
 
-        String expected = "PlayerSymbol X won!\n";
+        String expected = "Player X won!\n";
         assertEquals(expected, io.output());
     }
 
