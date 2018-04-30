@@ -13,8 +13,8 @@ public class ModelTest {
 
     @Test
     public void currentPlayer() {
-       Model model = new Model(3, PlayerSymbol.X);
-       assertEquals("model should contain a currentPlayer", PlayerSymbol.X, model.getCurrentPlayer());
+        Model model = new Model(3, PlayerSymbol.X);
+        assertEquals("model should contain a currentPlayer", PlayerSymbol.X, model.getCurrentPlayer());
     }
 
     @Test
@@ -25,11 +25,9 @@ public class ModelTest {
 
     @Test
     public void evalMove() {
-        Model model = new Model(3, PlayerSymbol.X);
-        Model newModel = model.evalMove(1);
-        Map<Integer, Tile> tiles = newModel.getTiles();
-        assertTrue("PlayerSymbol X should have made first move", tiles.get(1).isTakenBy(PlayerSymbol.X));
-        assertEquals("PlayerSymbol O should be the next player", PlayerSymbol.O, newModel.getCurrentPlayer());
+        Model model = new Model(3, PlayerSymbol.X).evalMove(1);
+        assertTrue("PlayerSymbol X should have made first move", moveTakenBy(1, PlayerSymbol.X, model));
+        assertEquals("PlayerSymbol O should be the next player", PlayerSymbol.O, model.getCurrentPlayer());
     }
 
     @Test
@@ -42,8 +40,8 @@ public class ModelTest {
                 .evalMove(3)
                 .evalMove(4);
 
-        assertFalse("model1 should not be affected by changes to model2",  model1.getTiles().get(3).isTakenBy(PlayerSymbol.X));
-        assertTrue("model2 should be updated correctly",  model2.getTiles().get(3).isTakenBy(PlayerSymbol.X));
+        assertFalse("model1 should not be affected by changes to model2", moveTakenBy(3, PlayerSymbol.X, model1));
+        assertTrue("model2 should be updated correctly", moveTakenBy(3, PlayerSymbol.X, model2));
     }
 
     @Test
@@ -51,7 +49,7 @@ public class ModelTest {
         Model model = new Model(3, PlayerSymbol.X).evalMove(1);
 
         assertEquals("valid guess should result in a valid guess status", GuessStatus.Valid, model.getGuessStatus());
-        assertTrue("board should be updated correctly", model.getTiles().get(1).isTakenBy(PlayerSymbol.X));
+        assertTrue("board should be updated correctly", moveTakenBy(1, PlayerSymbol.X, model));
     }
 
     @Test
@@ -97,9 +95,17 @@ public class ModelTest {
         int boardSize = 3;
         int[] drawMoves = {1, 2, 3, 5, 4, 6, 8, 7, 9};
         Model model = new Model(boardSize, PlayerSymbol.X);
-        for (int move: drawMoves) {
+        for (int move : drawMoves) {
             model = model.evalMove(move);
         }
         assertEquals("board should be in draw state", GameStatus.Draw, model.getGameStatus());
+    }
+
+
+    private boolean moveTakenBy(int index, PlayerSymbol playerSymbol, Model model) {
+        return model
+                .getTiles()
+                .get(index)
+                .isTakenBy(playerSymbol);
     }
 }

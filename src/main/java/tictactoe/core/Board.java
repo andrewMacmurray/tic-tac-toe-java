@@ -68,7 +68,7 @@ public class Board {
     }
 
     private Map<Integer, Tile> emptyTiles(int boardSize) {
-        Integer lastTile = (Integer) (boardSize * boardSize) + 1;
+        int lastTile = (boardSize * boardSize) + 1;
         return IntStream
                 .range(1, lastTile)
                 .boxed()
