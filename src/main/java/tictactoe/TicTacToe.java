@@ -1,7 +1,7 @@
 package tictactoe;
 
-import tictactoe.core.Player;
-import tictactoe.game.Controller;
+import tictactoe.core.PlayerSymbol;
+import tictactoe.game.controllers.GameController;
 
 import java.util.Scanner;
 
@@ -9,7 +9,7 @@ public class TicTacToe {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        Controller controller = new Controller(System.out, 3, Player.X);
+        GameController controller = new GameController(System.out, 3, PlayerSymbol.X);
         controller.clearScreen();
         controller.greetUser();
         controller.printInstructions();

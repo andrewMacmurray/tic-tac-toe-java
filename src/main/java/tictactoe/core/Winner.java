@@ -1,24 +1,25 @@
 package tictactoe.core;
 
 import java.util.Arrays;
+import java.util.Optional;
 
 public class Winner {
 
-    public static Player getWinner(Board board) {
-        if (hasWon(Player.X, board)) {
-            return Player.X;
-        } else if (hasWon(Player.O, board)) {
-            return Player.O;
+    public static Optional<PlayerSymbol> getWinner(Board board) {
+        if (hasWon(PlayerSymbol.X, board)) {
+            return Optional.of(PlayerSymbol.X);
+        } else if (hasWon(PlayerSymbol.O, board)) {
+            return Optional.of(PlayerSymbol.O);
         } else {
-            return Player.Empty;
+            return Optional.empty();
         }
     }
 
-    private static boolean hasWon(Player player, Board board) {
+    private static boolean hasWon(PlayerSymbol player, Board board) {
         for (int[] st: winningStates()) {
             boolean matchesWinningState = Arrays
                     .stream(st)
-                    .allMatch(i -> board.getTile(i) == player);
+                    .allMatch(i -> board.getTile(i).isTakenBy(player));
             if (matchesWinningState) return true;
         }
         return false;
