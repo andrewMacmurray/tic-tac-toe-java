@@ -1,22 +1,22 @@
-package tictactoe.game.controllers;
+package tictactoe.cli.controllers;
 
 import tictactoe.core.GuessStatus;
 import tictactoe.core.PlayerSymbol;
 import tictactoe.core.GameStatus;
-import tictactoe.game.Model;
-import tictactoe.game.views.BoardView;
-import tictactoe.game.views.Messages;
+import tictactoe.core.Game;
+import tictactoe.cli.views.BoardView;
+import tictactoe.cli.views.Messages;
 
 import java.io.PrintStream;
 import java.util.Scanner;
 
 public class GameController {
 
-    private Model model;
+    private Game game;
     private final PrintStream out;
 
     public GameController(PrintStream out, int boardSize, PlayerSymbol firstPlayer) {
-        this.model = new Model(boardSize, firstPlayer);
+        this.game = new Game(boardSize, firstPlayer);
         this.out = out;
     }
 
@@ -36,18 +36,18 @@ public class GameController {
     }
 
     private void handleParsedGuess(int guess) {
-        PlayerSymbol currentPlayer = this.model.getCurrentPlayer();
+        PlayerSymbol currentPlayer = this.game.getCurrentPlayer();
 
-        this.model = model.evalMove(guess);
+        this.game = game.evalMove(guess);
         printGuessResult(guess, currentPlayer);
     }
 
     public void enterNumberInstructions() {
-        out.println(Messages.enterNumbers(model.getBoardSize()));
+        out.println(Messages.enterNumbers(game.getBoardSize()));
     }
 
     public void printBoard() {
-        String boardString = BoardView.renderTiles(model.getTiles(), model.getBoardSize());
+        String boardString = BoardView.renderTiles(game.getTiles(), game.getBoardSize());
         out.println(boardString);
     }
 
@@ -63,7 +63,7 @@ public class GameController {
     }
 
     public boolean isGameOver() {
-        return model.getGameStatus().isGameOver();
+        return game.getGameStatus().isGameOver();
     }
 
     public void clearScreen() {
@@ -72,7 +72,7 @@ public class GameController {
     }
 
     private void printGuessResult(int guess, PlayerSymbol player) {
-        GuessStatus status = this.model.getGuessStatus();
+        GuessStatus status = this.game.getGuessStatus();
         if (status == GuessStatus.Valid) {
             clearScreen();
             printValid(guess, player);
@@ -97,7 +97,7 @@ public class GameController {
     }
 
     private String status() {
-        if (model.getGameStatus() == GameStatus.Win) {
+        if (game.getGameStatus() == GameStatus.Win) {
             return renderWinner();
         } else {
             return Messages.draw;
@@ -105,7 +105,7 @@ public class GameController {
     }
 
     private String renderWinner() {
-        return model
+        return game
                 .getWinner()
                 .map(Messages::winner)
                 .orElse("");

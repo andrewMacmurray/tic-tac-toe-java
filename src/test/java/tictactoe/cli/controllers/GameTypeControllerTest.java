@@ -1,4 +1,4 @@
-package tictactoe.game.controllers;
+package tictactoe.cli.controllers;
 
 import org.junit.Test;
 import tictactoe.core.GameType;
@@ -14,7 +14,7 @@ public class GameTypeControllerTest {
 
         controller.gameTypeInstructions();
         String[] lines = {
-                "Select a game to play:",
+                "Select a cli to play:",
                 "-----------------------",
                 "1. Human vs Human",
                 "2. Human vs Computer",

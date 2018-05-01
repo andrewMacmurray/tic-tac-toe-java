@@ -1,9 +1,8 @@
-package tictactoe.game.controllers;
+package tictactoe.cli.controllers;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
-import java.util.Scanner;
 
 public class IOHelper {
     public static ByteArrayOutputStream out;

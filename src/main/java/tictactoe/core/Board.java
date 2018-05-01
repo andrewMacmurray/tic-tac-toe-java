@@ -1,12 +1,13 @@
 package tictactoe.core;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 public class Board {
 
@@ -14,7 +15,7 @@ public class Board {
     private final int boardSize;
 
     public Board(int boardSize) {
-        this.tiles = emptyTiles(boardSize);
+        this.tiles = createEmptyTiles(boardSize);
         this.boardSize = boardSize;
     }
 
@@ -23,32 +24,28 @@ public class Board {
         return new Board(nextTiles, boardSize);
     }
 
-    public Tile getTile(int tile) {
-        return tiles.get(tile);
-    }
-
-    public int getBoardSize() {
-        return boardSize;
-    }
-
     public Map<Integer, Tile> getTiles() {
         return tiles;
     }
 
-    public boolean isMoveAvailable(int tileIndex) {
+    Tile getTile(int tile) {
+        return tiles.get(tile);
+    }
+
+    int getBoardSize() {
+        return boardSize;
+    }
+
+    boolean isMoveAvailable(int tileIndex) {
         return tiles.get(tileIndex).isEmpty();
     }
 
-    public boolean isOutOfBounds(int tileIndex) {
+    boolean isMoveOutOfBounds(int tileIndex) {
         int upperBound = boardSize * boardSize;
         return tileIndex < 1 || tileIndex > upperBound;
     }
 
-    public Optional<PlayerSymbol> winner() {
-        return Winner.getWinner(this);
-    }
-
-    public boolean isFull() {
+    boolean isFull() {
         return tiles
                 .entrySet()
                 .stream()
@@ -67,11 +64,43 @@ public class Board {
         return newTiles;
     }
 
-    private Map<Integer, Tile> emptyTiles(int boardSize) {
+    private static Map<Integer, Tile> createEmptyTiles(int boardSize) {
         int lastTile = (boardSize * boardSize) + 1;
         return IntStream
                 .range(1, lastTile)
                 .boxed()
                 .collect(Collectors.toMap(Function.identity(), x -> new Tile()));
+    }
+
+    boolean hasWinner() {
+        return hasWon(PlayerSymbol.X) || hasWon(PlayerSymbol.O);
+    }
+
+    Optional<PlayerSymbol> getWinner() {
+        if (hasWon(PlayerSymbol.X)) {
+            return Optional.of(PlayerSymbol.X);
+        } else if (hasWon(PlayerSymbol.O)) {
+            return Optional.of(PlayerSymbol.O);
+        } else {
+            return Optional.empty();
+        }
+    }
+
+    private boolean hasWon(PlayerSymbol player) {
+        Predicate<Integer[]> isWinningState =
+                st -> Arrays
+                        .stream(st)
+                        .allMatch(i -> getTile(i).isTakenBy(player));
+        return Arrays
+                .stream(winningStates())
+                .anyMatch(isWinningState);
+    }
+
+    private static Integer[][] winningStates() {
+        return new Integer[][]  {
+                {1, 2, 3}, {4, 5, 6}, {7, 8, 9},
+                {1, 4, 7}, {2, 5, 8}, {3, 6, 9},
+                {1, 5, 9}, {3, 5, 7}
+        };
     }
 }

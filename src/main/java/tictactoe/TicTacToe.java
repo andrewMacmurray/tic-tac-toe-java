@@ -1,8 +1,8 @@
 package tictactoe;
 
 import tictactoe.core.PlayerSymbol;
-import tictactoe.game.controllers.GameController;
-import tictactoe.game.controllers.GameTypeController;
+import tictactoe.cli.controllers.GameController;
+import tictactoe.cli.controllers.GameTypeController;
 
 import java.util.Scanner;
 

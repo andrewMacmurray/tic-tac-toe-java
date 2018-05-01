@@ -1,64 +1,61 @@
-package tictactoe.game;
+package tictactoe.core;
 
-import tictactoe.core.*;
-
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-public class Model {
+public class Game {
 
     private final Board board;
     private final PlayerSymbol currentPlayer;
     private final GameStatus gameStatus;
     private final GuessStatus guessStatus;
 
-    public Model(int boardSize, PlayerSymbol currentPlayer) {
+    public Game(int boardSize, PlayerSymbol currentPlayer) {
         this.board = new Board(boardSize);
         this.currentPlayer = currentPlayer;
         this.gameStatus = GameStatus.NonTerminal;
         this.guessStatus = GuessStatus.Valid;
     }
 
-    public Model evalMove(int move) {
-        return _evalMove(move, this.currentPlayer, this.board);
+    public Game evalMove(int move) {
+        return _evalMove(move, currentPlayer, board);
     }
 
     public PlayerSymbol getCurrentPlayer() {
-        return this.currentPlayer;
+        return currentPlayer;
     }
 
     public int getBoardSize() {
-        return this.board.getBoardSize();
+        return board.getBoardSize();
     }
 
     public Map<Integer, Tile> getTiles() {
-       return this.board.getTiles();
+       return board.getTiles();
     }
 
     public Optional<PlayerSymbol> getWinner() {
-        return this.board.winner();
+        return board.getWinner();
     }
 
     public GameStatus getGameStatus() {
-        return this.gameStatus;
+        return gameStatus;
     }
 
     public GuessStatus getGuessStatus() {
-        return this.guessStatus;
+        return guessStatus;
     }
 
-    private Model _evalMove(int move, PlayerSymbol currentPlayer, Board board) {
+    private Game _evalMove(int move, PlayerSymbol currentPlayer, Board board) {
         GuessStatus guessStatus = evalGuessStatus(move);
         if (guessStatus.isValid()) {
-            return new Model(move, currentPlayer, board);
+            return new Game(move, currentPlayer, board);
         } else {
-            return new Model(guessStatus, currentPlayer, board);
+            return new Game(guessStatus, currentPlayer, board);
         }
     }
 
-    // Constructs new Model based on a valid move
-    private Model(int move, PlayerSymbol currentPlayer, Board board) {
+    // Constructs new Game based on a valid move
+    private Game(int move, PlayerSymbol currentPlayer, Board board) {
         Board nextBoard = board.makeMove(move, currentPlayer);
         this.board = nextBoard;
         this.currentPlayer = currentPlayer.getAlternate();
@@ -66,17 +63,16 @@ public class Model {
         this.guessStatus = GuessStatus.Valid;
     }
 
-    // Constructs new Model based on an invalid guess status
-    private Model(GuessStatus guessStatus, PlayerSymbol currentPlayer, Board board) {
+    // Constructs new Game based on an invalid guess status
+    private Game(GuessStatus guessStatus, PlayerSymbol currentPlayer, Board board) {
         this.board = board;
         this.currentPlayer = currentPlayer;
         this.gameStatus = GameStatus.NonTerminal;
         this.guessStatus = guessStatus;
     }
 
-
     private GameStatus evalGameStatus(Board board) {
-        if (board.winner().isPresent()) {
+        if (board.hasWinner()) {
             return GameStatus.Win;
         } else if (board.isFull()) {
             return GameStatus.Draw;
@@ -86,9 +82,9 @@ public class Model {
     }
 
     private GuessStatus evalGuessStatus(int move) {
-        if (this.board.isOutOfBounds(move)) {
+        if (board.isMoveOutOfBounds(move)) {
             return GuessStatus.OutOfBounds;
-        } else if (!this.board.isMoveAvailable(move)) {
+        } else if (!board.isMoveAvailable(move)) {
             return GuessStatus.AlreadyTaken;
         } else {
             return GuessStatus.Valid;

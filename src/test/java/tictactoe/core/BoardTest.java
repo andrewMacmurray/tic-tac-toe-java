@@ -81,7 +81,7 @@ public class BoardTest {
                 .makeMove(0, PlayerSymbol.X)
                 .makeMove(1, PlayerSymbol.O)
                 .makeMove(2, PlayerSymbol.X);
-        assertEquals("No player should have won", Optional.empty(), board.winner());
+        assertEquals("No player should have won", Optional.empty(), board.getWinner());
     }
 
     @Test
@@ -90,7 +90,7 @@ public class BoardTest {
                 .makeMove(1, PlayerSymbol.X)
                 .makeMove(2, PlayerSymbol.X)
                 .makeMove(3, PlayerSymbol.X);
-        assertEquals("X should have won", Optional.of(PlayerSymbol.X), board.winner());
+        assertEquals("X should have won", Optional.of(PlayerSymbol.X), board.getWinner());
     }
 
     @Test
@@ -99,7 +99,7 @@ public class BoardTest {
                 .makeMove(1, PlayerSymbol.O)
                 .makeMove(5, PlayerSymbol.O)
                 .makeMove(9, PlayerSymbol.O);
-        assertEquals("O should have won", Optional.of(PlayerSymbol.O), board.winner());
+        assertEquals("O should have won", Optional.of(PlayerSymbol.O), board.getWinner());
 
     }
 }

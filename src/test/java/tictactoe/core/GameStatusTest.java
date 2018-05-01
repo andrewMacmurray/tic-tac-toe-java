@@ -8,16 +8,16 @@ public class GameStatusTest {
 
     @Test
     public void winGameOver() {
-        assertTrue("win should signal game over", GameStatus.Win.isGameOver());
+        assertTrue("win should signal cli over", GameStatus.Win.isGameOver());
     }
 
     @Test
     public void drawGameOver() {
-        assertTrue("draw should signal game over", GameStatus.Draw.isGameOver());
+        assertTrue("draw should signal cli over", GameStatus.Draw.isGameOver());
     }
 
     @Test
     public void nonTerminalGameOver() {
-        assertFalse("non terminal state should not be game over", GameStatus.NonTerminal.isGameOver());
+        assertFalse("non terminal state should not be cli over", GameStatus.NonTerminal.isGameOver());
     }
 }

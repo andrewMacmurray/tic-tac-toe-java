@@ -1,8 +1,8 @@
-package tictactoe.game.controllers;
+package tictactoe.cli.controllers;
 
 import org.junit.Test;
 import tictactoe.core.PlayerSymbol;
-import tictactoe.game.views.BoardView;
+import tictactoe.cli.views.BoardView;
 
 import static org.junit.Assert.*;
 
@@ -51,7 +51,7 @@ public class GameControllerTest {
         IOHelper io = new IOHelper();
         GameController controller = new GameController(io.print, 3, PlayerSymbol.X);
 
-        assertFalse("gameOver should be false if game unfinished", controller.isGameOver());
+        assertFalse("gameOver should be false if cli unfinished", controller.isGameOver());
     }
 
     @Test

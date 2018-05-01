@@ -1,4 +1,4 @@
-package tictactoe.game.views;
+package tictactoe.cli.views;
 
 import tictactoe.core.Tile;
 

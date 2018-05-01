@@ -1,10 +1,9 @@
-package tictactoe.game.views;
+package tictactoe.cli.views;
 
 import org.junit.Test;
 import tictactoe.core.PlayerSymbol;
 import tictactoe.core.Board;
 import tictactoe.core.Tile;
-import tictactoe.game.views.BoardView;
 
 import java.util.Map;
 

@@ -1,4 +1,4 @@
-package tictactoe.game.views;
+package tictactoe.cli.views;
 
 import tictactoe.core.PlayerSymbol;
 
@@ -39,7 +39,7 @@ public class Messages {
 
     public static Stream<String> gameTypeOptions() {
         return Stream.of(
-                "Select a game to play:",
+                "Select a cli to play:",
                 "-----------------------",
                 "1. Human vs Human",
                 "2. Human vs Computer",

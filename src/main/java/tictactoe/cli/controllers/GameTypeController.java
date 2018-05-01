@@ -1,14 +1,12 @@
-package tictactoe.game.controllers;
+package tictactoe.cli.controllers;
 
 import tictactoe.core.GameType;
-import tictactoe.game.views.Messages;
+import tictactoe.cli.views.Messages;
 
-import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.Optional;
 import java.util.Scanner;
-import java.util.stream.Stream;
 
 public class GameTypeController {
 
