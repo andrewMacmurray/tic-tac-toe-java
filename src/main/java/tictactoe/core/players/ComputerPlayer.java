@@ -9,24 +9,28 @@ public class ComputerPlayer implements Player {
 
     private final PlayerSymbol playerSymbol;
 
-    public ComputerPlayer(PlayerSymbol playerSymbol) {
+    ComputerPlayer(PlayerSymbol playerSymbol) {
         this.playerSymbol = playerSymbol;
     }
 
     @Override
     public Integer chooseNextMove(Board board) {
+        pause(1000);
         ArrayList<Integer> moves = board.allAvailableMoves();
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-
-        }
         return randomMove(moves);
     }
 
     @Override
     public PlayerSymbol getSymbol() {
         return playerSymbol;
+    }
+
+    private void pause(Integer ms) {
+        try {
+            Thread.sleep(ms);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
     }
 
     private Integer randomMove(ArrayList<Integer> moves) {

@@ -15,9 +15,9 @@ public class PlayersFactory {
             case 1:
                 return humanVsHuman(ui);
             case 2:
-                return computerVsComputer();
-            case 3:
                 return humanVsComputer(ui);
+            case 3:
+                return computerVsComputer();
             default:
                 return humanVsHuman(ui);
         }

@@ -46,6 +46,11 @@ public class Console implements UIRequest, UIShow {
     }
 
     @Override
+    public void clear() {
+        io.clearScreen();
+    }
+
+    @Override
     public Players requestPlayers() {
         return PlayersFactory.createPlayers(readPlayerOption(), this);
     }

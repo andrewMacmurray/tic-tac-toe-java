@@ -25,11 +25,13 @@ public class Game {
     }
 
     private void initialBoard() {
+        ui.clear();
         ui.showBoard(board);
         ui.showMoveInstructions(board.getBoardSize(), players.currentPlayerSymbol());
     }
 
     private void summary() {
+        ui.clear();
         ui.showBoard(board);
         if (board.xWin()) {
             ui.showWin(PlayerSymbol.X);
@@ -60,6 +62,7 @@ public class Game {
         Integer move = players.chooseNextMove(board);
         Board newBoard = board.makeMove(move, players.currentPlayerSymbol());
 
+        ui.clear();
         ui.showBoard(newBoard);
         ui.showMoveSummary(move, board, players.currentPlayerSymbol());
 
