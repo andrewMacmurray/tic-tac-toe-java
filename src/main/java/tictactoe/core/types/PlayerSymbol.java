@@ -1,4 +1,4 @@
-package tictactoe.core;
+package tictactoe.core.types;
 
 public enum PlayerSymbol {
     X,

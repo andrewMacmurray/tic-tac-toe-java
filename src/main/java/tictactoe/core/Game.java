@@ -1,5 +1,9 @@
 package tictactoe.core;
 
+import tictactoe.core.types.GameStatus;
+import tictactoe.core.types.GuessStatus;
+import tictactoe.core.types.PlayerSymbol;
+
 import java.util.Map;
 import java.util.Optional;
 

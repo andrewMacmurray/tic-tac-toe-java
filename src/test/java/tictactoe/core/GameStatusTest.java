@@ -1,6 +1,7 @@
 package tictactoe.core;
 
 import org.junit.Test;
+import tictactoe.core.types.GameStatus;
 
 import static org.junit.Assert.*;
 

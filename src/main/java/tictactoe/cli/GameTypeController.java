@@ -1,7 +1,6 @@
-package tictactoe.cli.controllers;
+package tictactoe.cli;
 
-import tictactoe.core.GameType;
-import tictactoe.cli.views.Messages;
+import tictactoe.core.types.GameType;
 
 import java.io.InputStream;
 import java.io.PrintStream;

@@ -1,6 +1,7 @@
 package tictactoe.core;
 
 import org.junit.Test;
+import tictactoe.core.types.PlayerSymbol;
 
 import java.util.Map;
 import java.util.Optional;

@@ -1,11 +1,9 @@
-package tictactoe.cli.controllers;
+package tictactoe.cli;
 
-import tictactoe.core.GuessStatus;
-import tictactoe.core.PlayerSymbol;
-import tictactoe.core.GameStatus;
+import tictactoe.core.types.GuessStatus;
+import tictactoe.core.types.PlayerSymbol;
+import tictactoe.core.types.GameStatus;
 import tictactoe.core.Game;
-import tictactoe.cli.views.BoardView;
-import tictactoe.cli.views.Messages;
 
 import java.io.PrintStream;
 import java.util.Scanner;
@@ -47,7 +45,7 @@ public class GameController {
     }
 
     public void printBoard() {
-        String boardString = BoardView.renderTiles(game.getTiles(), game.getBoardSize());
+        String boardString = BoardSerializer.render(game.getTiles(), game.getBoardSize());
         out.println(boardString);
     }
 

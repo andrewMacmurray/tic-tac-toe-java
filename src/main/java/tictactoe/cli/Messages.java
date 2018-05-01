@@ -1,6 +1,6 @@
-package tictactoe.cli.views;
+package tictactoe.cli;
 
-import tictactoe.core.PlayerSymbol;
+import tictactoe.core.types.PlayerSymbol;
 
 import java.util.stream.Stream;
 

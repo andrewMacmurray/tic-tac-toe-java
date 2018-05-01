@@ -1,7 +1,9 @@
 package tictactoe.core;
 
 import org.junit.Test;
-import tictactoe.core.*;
+import tictactoe.core.types.GameStatus;
+import tictactoe.core.types.GuessStatus;
+import tictactoe.core.types.PlayerSymbol;
 
 import static org.junit.Assert.*;
 

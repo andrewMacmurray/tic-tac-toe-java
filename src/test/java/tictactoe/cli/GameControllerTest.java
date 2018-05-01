@@ -1,8 +1,7 @@
-package tictactoe.cli.controllers;
+package tictactoe.cli;
 
 import org.junit.Test;
-import tictactoe.core.PlayerSymbol;
-import tictactoe.cli.views.BoardView;
+import tictactoe.core.types.PlayerSymbol;
 
 import static org.junit.Assert.*;
 
@@ -37,9 +36,9 @@ public class GameControllerTest {
         controller.printBoard();
         String[] expectedLines = {
                 " 1 | 2 | 3",
-                BoardView.divider,
+                BoardSerializer.divider,
                 " 4 | 5 | 6",
-                BoardView.divider,
+                BoardSerializer.divider,
                 " 7 | 8 | 9"
         };
         String expectedBoard = io.joinLines(expectedLines);
@@ -77,9 +76,9 @@ public class GameControllerTest {
 
         String[] expectedLines = {
                 " X | 2 | 3",
-                BoardView.divider,
+                BoardSerializer.divider,
                 " 4 | 5 | 6",
-                BoardView.divider,
+                BoardSerializer.divider,
                 " 7 | 8 | 9",
                 "Player X took tile 1",
                 "Your turn Player O"

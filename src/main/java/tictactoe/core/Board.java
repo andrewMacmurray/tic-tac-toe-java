@@ -1,5 +1,7 @@
 package tictactoe.core;
 
+import tictactoe.core.types.PlayerSymbol;
+
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;

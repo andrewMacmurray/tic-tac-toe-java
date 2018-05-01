@@ -1,7 +1,7 @@
-package tictactoe.cli.controllers;
+package tictactoe.cli;
 
 import org.junit.Test;
-import tictactoe.core.GameType;
+import tictactoe.core.types.GameType;
 
 import static org.junit.Assert.*;
 

@@ -1,4 +1,4 @@
-package tictactoe.cli.controllers;
+package tictactoe.cli;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
