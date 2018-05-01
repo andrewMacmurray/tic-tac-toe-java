@@ -1,7 +1,7 @@
 package tictactoe.core;
 
 import org.junit.Test;
-import tictactoe.core.types.PlayerSymbol;
+import tictactoe.core.players.PlayerSymbol;
 
 import static org.junit.Assert.*;
 

@@ -1,7 +1,7 @@
 package tictactoe.core;
 
 import org.junit.Test;
-import tictactoe.core.types.PlayerSymbol;
+import tictactoe.core.players.PlayerSymbol;
 
 import java.util.Map;
 import java.util.Optional;
@@ -13,10 +13,10 @@ public class BoardTest {
     @Test
     public void initializeBoard() {
         Board board = new Board(3);
-        Map<Integer, Tile> tiles = board.getTiles();
 
-        for (Map.Entry<Integer, Tile> tile : tiles.entrySet()) {
-            assertTrue("tile should be empty", tile.getValue().isEmpty());
+
+        for (int i = 1; i <= 9; i++) {
+            assertTrue("tile should be empty", board.getTile(i).isEmpty());
         }
     }
 
@@ -59,7 +59,7 @@ public class BoardTest {
     @Test
     public void fullBoard() {
         Board fullBoard = new Board(3);
-        for (int i = 0; i < fullBoard.getTiles().size(); i++) {
+        for (int i = 1; i <= 9; i++) {
             fullBoard = fullBoard.makeMove(i, PlayerSymbol.X);
         }
         assertTrue("should return true when all tiles are filled", fullBoard.isFull());
@@ -77,12 +77,12 @@ public class BoardTest {
     }
 
     @Test
-    public void noWinner() {
+    public void nonTerminal() {
         Board board = new Board(3)
                 .makeMove(0, PlayerSymbol.X)
                 .makeMove(1, PlayerSymbol.O)
                 .makeMove(2, PlayerSymbol.X);
-        assertEquals("No player should have won", Optional.empty(), board.getWinner());
+        assertFalse("No player should have won or drawn", board.isTerminal());
     }
 
     @Test
@@ -91,7 +91,8 @@ public class BoardTest {
                 .makeMove(1, PlayerSymbol.X)
                 .makeMove(2, PlayerSymbol.X)
                 .makeMove(3, PlayerSymbol.X);
-        assertEquals("X should have won", Optional.of(PlayerSymbol.X), board.getWinner());
+        assertTrue("X should have won", board.xWin());
+        assertFalse("O should not have won", board.oWin());
     }
 
     @Test
@@ -100,7 +101,8 @@ public class BoardTest {
                 .makeMove(1, PlayerSymbol.O)
                 .makeMove(5, PlayerSymbol.O)
                 .makeMove(9, PlayerSymbol.O);
-        assertEquals("O should have won", Optional.of(PlayerSymbol.O), board.getWinner());
+        assertTrue("O should have won", board.oWin());
+        assertFalse("X should not have won", board.xWin());
 
     }
 }

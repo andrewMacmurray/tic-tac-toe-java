@@ -2,8 +2,6 @@ package tictactoe.cli;
 
 import org.junit.Test;
 
-import java.util.Optional;
-
 import static org.junit.Assert.*;
 
 public class IOTest {
@@ -23,15 +21,16 @@ public class IOTest {
         IOHelper ioHelper = new IOHelper("1");
         IO io = new IO(ioHelper.in, ioHelper.print);
 
-        assertEquals(Optional.of(1), io.readInt());
+        assertEquals(1, io.readIntWithRetry("something went wrong"));
     }
 
     @Test
-    public void intReaderNotFound() {
-        IOHelper ioHelper = new IOHelper("unrecognised input");
+    public void readRetry() {
+        IOHelper ioHelper = new IOHelper("unrecognised input 2");
         IO io = new IO(ioHelper.in, ioHelper.print);
 
-        assertEquals(Optional.empty(), io.readInt());
+        assertEquals(2, io.readIntWithRetry("something went wrong"));
+        assertTrue(ioHelper.output().contains("something went wrong"));
     }
 
     @Test

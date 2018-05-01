@@ -1,15 +1,13 @@
 package tictactoe.core;
 
-import tictactoe.core.types.PlayerSymbol;
+import tictactoe.core.players.PlayerSymbol;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class Board {
 
@@ -26,32 +24,40 @@ public class Board {
         return new Board(nextTiles, boardSize);
     }
 
-    public Map<Integer, Tile> getTiles() {
-        return tiles;
-    }
-
     Tile getTile(int tile) {
         return tiles.get(tile);
     }
 
-    int getBoardSize() {
+    public int getBoardSize() {
         return boardSize;
     }
 
-    boolean isMoveAvailable(int tileIndex) {
+    public ArrayList<Integer> allAvailableMoves() {
+        return tilesStream()
+                .filter(entry -> entry.getValue().isEmpty())
+                .map(Map.Entry::getKey)
+                .collect(Collectors.toCollection(ArrayList::new));
+    }
+
+    public boolean isMoveAvailable(int tileIndex) {
         return tiles.get(tileIndex).isEmpty();
     }
 
-    boolean isMoveOutOfBounds(int tileIndex) {
+    public boolean isMoveOutOfBounds(int tileIndex) {
         int upperBound = boardSize * boardSize;
         return tileIndex < 1 || tileIndex > upperBound;
     }
 
+    public boolean isValidMove(int tileIndex) {
+        return !isMoveOutOfBounds(tileIndex) && isMoveAvailable(tileIndex);
+    }
+
+    boolean isTerminal() {
+        return xWin() || oWin() || isFull();
+    }
+
     boolean isFull() {
-        return tiles
-                .entrySet()
-                .stream()
-                .noneMatch(t -> t.getValue().isEmpty());
+        return tilesStream().noneMatch(t -> t.getValue().isEmpty());
     }
 
     // Creates a new Board based on the existing board
@@ -74,18 +80,16 @@ public class Board {
                 .collect(Collectors.toMap(Function.identity(), x -> new Tile()));
     }
 
-    boolean hasWinner() {
-        return hasWon(PlayerSymbol.X) || hasWon(PlayerSymbol.O);
+    public Stream<Map.Entry<Integer, Tile>> tilesStream() {
+       return tiles.entrySet().stream();
     }
 
-    Optional<PlayerSymbol> getWinner() {
-        if (hasWon(PlayerSymbol.X)) {
-            return Optional.of(PlayerSymbol.X);
-        } else if (hasWon(PlayerSymbol.O)) {
-            return Optional.of(PlayerSymbol.O);
-        } else {
-            return Optional.empty();
-        }
+    boolean xWin() {
+        return hasWon(PlayerSymbol.X);
+    }
+
+    boolean oWin() {
+        return hasWon(PlayerSymbol.O);
     }
 
     private boolean hasWon(PlayerSymbol player) {

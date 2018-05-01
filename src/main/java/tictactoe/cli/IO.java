@@ -2,7 +2,6 @@ package tictactoe.cli;
 
 import java.io.InputStream;
 import java.io.PrintStream;
-import java.util.Optional;
 import java.util.Scanner;
 
 public class IO {
@@ -30,12 +29,22 @@ public class IO {
         out.flush();
     }
 
-    public Optional<Integer> readInt() {
+    public Integer readIntInRange(Integer lower, Integer upper, String errorMessage) {
+        Integer i = readIntWithRetry(errorMessage);
+        if (i >= lower && i <= upper) {
+            return i;
+        } else {
+            println(errorMessage);
+            return readIntInRange(lower, upper, errorMessage);
+        }
+    }
+
+    public int readIntWithRetry(String errorMessage) {
         try {
-            Integer i = parseNextInt();
-            return Optional.of(i);
+            return parseNextInt();
         } catch (NumberFormatException e) {
-            return Optional.empty();
+            println(errorMessage);
+            return readIntWithRetry(errorMessage);
         }
     }
 

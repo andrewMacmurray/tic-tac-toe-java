@@ -1,6 +1,6 @@
 package tictactoe.cli;
 
-import tictactoe.core.types.PlayerSymbol;
+import tictactoe.core.players.PlayerSymbol;
 
 import java.util.stream.Stream;
 
@@ -20,6 +20,10 @@ public class Messages {
 
     public static String alreadyTaken(int guess) {
         return String.format("%d is already taken! Try another tile", guess);
+    }
+
+    public static String outOfBounds(int guess) {
+        return String.format("%guess is not on the board! Try another tile", guess);
     }
 
     public static Stream<String> playerGuess(int guess, PlayerSymbol playerSymbol) {
