@@ -13,4 +13,6 @@ public interface UIShow {
 
     void showMoveSummary(Integer move, Board board, PlayerSymbol playerSymbol);
 
+    void showMoveInstructions(Integer boardSize, PlayerSymbol playerSymbol);
+
 }

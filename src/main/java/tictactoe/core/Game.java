@@ -19,8 +19,14 @@ public class Game {
     }
 
     public void run() {
+        initialBoard();
         playMoves();
         summary();
+    }
+
+    private void initialBoard() {
+        ui.showBoard(board);
+        ui.showMoveInstructions(board.getBoardSize(), players.currentPlayerSymbol());
     }
 
     private void summary() {
@@ -51,7 +57,7 @@ public class Game {
     }
 
     private Board evalNextMove() {
-        Integer move   = players.chooseNextMove(board);
+        Integer move = players.chooseNextMove(board);
         Board newBoard = board.makeMove(move, players.currentPlayerSymbol());
 
         ui.showBoard(newBoard);

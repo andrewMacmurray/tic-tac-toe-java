@@ -5,11 +5,11 @@ import tictactoe.core.Tile;
 
 import java.util.stream.Collectors;
 
-public class BoardSerializer {
+class BoardSerializer {
 
-    public static String divider = "---*---*---";
+    static String divider = "---*---*---";
 
-    public static String render(Board board) {
+    static String render(Board board) {
         return board
                 .tilesStream()
                 .map(v -> renderTileWithPadding(v.getValue(), v.getKey(), board.getBoardSize()))

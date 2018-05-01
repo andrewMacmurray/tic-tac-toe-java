@@ -14,7 +14,7 @@ public class Console implements UIRequest, UIShow {
 
     private final IO io;
 
-    public Console(InputStream in, PrintStream print) {
+    Console(InputStream in, PrintStream print) {
         io = new IO(in, print);
     }
 
@@ -41,6 +41,11 @@ public class Console implements UIRequest, UIShow {
     }
 
     @Override
+    public void showMoveInstructions(Integer boardSize, PlayerSymbol playerSymbol) {
+        io.println(Messages.enterNumbers(boardSize, playerSymbol));
+    }
+
+    @Override
     public Players requestPlayers() {
         return PlayersFactory.createPlayers(readPlayerOption(), this);
     }
@@ -50,7 +55,11 @@ public class Console implements UIRequest, UIShow {
         io.println(BoardSerializer.render(board));
     }
 
-    public void showInstructions() {
+    void greetUser() {
+        io.println(Messages.welcome);
+    }
+
+    void showInstructions() {
         Messages.gameTypeOptions()
                 .forEach(io::println);
     }
@@ -66,7 +75,7 @@ public class Console implements UIRequest, UIShow {
     }
 
     private void printOutOfBounds(Integer guess) {
-        io.println(Messages.enterNumbers(guess));
+        io.println(Messages.outOfBounds(guess));
     }
 
     private void printUnrecognised() {
