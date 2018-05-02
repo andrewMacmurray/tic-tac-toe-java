@@ -1,97 +1,72 @@
 package tictactoe.core;
 
-import tictactoe.core.types.GameStatus;
-import tictactoe.core.types.GuessStatus;
-import tictactoe.core.types.PlayerSymbol;
-
-import java.util.Map;
-import java.util.Optional;
+import tictactoe.cli.Console;
+import tictactoe.core.players.PlayerSymbol;
+import tictactoe.core.players.Players;
+import tictactoe.core.players.PlayersFactory;
+import tictactoe.core.ui.UIShow;
 
 public class Game {
 
-    private final Board board;
-    private final PlayerSymbol currentPlayer;
-    private final GameStatus gameStatus;
-    private final GuessStatus guessStatus;
+    private Board board;
+    private final Players players;
+    private final UIShow ui;
 
-    public Game(int boardSize, PlayerSymbol currentPlayer) {
+    public Game(int boardSize, UIShow ui, Players players) {
         this.board = new Board(boardSize);
-        this.currentPlayer = currentPlayer;
-        this.gameStatus = GameStatus.NonTerminal;
-        this.guessStatus = GuessStatus.Valid;
+        this.ui = ui;
+        this.players = players;
     }
 
-    public Game evalMove(int move) {
-        return _evalMove(move, currentPlayer, board);
+    public void run() {
+        initialBoard();
+        playMoves();
+        summary();
     }
 
-    public PlayerSymbol getCurrentPlayer() {
-        return currentPlayer;
+    private void initialBoard() {
+        ui.clear();
+        ui.showBoard(board);
+        ui.showMoveInstructions(board.getBoardSize(), players.currentPlayerSymbol());
     }
 
-    public int getBoardSize() {
-        return board.getBoardSize();
-    }
-
-    public Map<Integer, Tile> getTiles() {
-       return board.getTiles();
-    }
-
-    public Optional<PlayerSymbol> getWinner() {
-        return board.getWinner();
-    }
-
-    public GameStatus getGameStatus() {
-        return gameStatus;
-    }
-
-    public GuessStatus getGuessStatus() {
-        return guessStatus;
-    }
-
-    private Game _evalMove(int move, PlayerSymbol currentPlayer, Board board) {
-        GuessStatus guessStatus = evalGuessStatus(move);
-        if (guessStatus.isValid()) {
-            return new Game(move, currentPlayer, board);
-        } else {
-            return new Game(guessStatus, currentPlayer, board);
-        }
-    }
-
-    // Constructs new Game based on a valid move
-    private Game(int move, PlayerSymbol currentPlayer, Board board) {
-        Board nextBoard = board.makeMove(move, currentPlayer);
-        this.board = nextBoard;
-        this.currentPlayer = currentPlayer.getAlternate();
-        this.gameStatus = evalGameStatus(nextBoard);
-        this.guessStatus = GuessStatus.Valid;
-    }
-
-    // Constructs new Game based on an invalid guess status
-    private Game(GuessStatus guessStatus, PlayerSymbol currentPlayer, Board board) {
-        this.board = board;
-        this.currentPlayer = currentPlayer;
-        this.gameStatus = GameStatus.NonTerminal;
-        this.guessStatus = guessStatus;
-    }
-
-    private GameStatus evalGameStatus(Board board) {
-        if (board.hasWinner()) {
-            return GameStatus.Win;
+    private void summary() {
+        ui.clear();
+        ui.showBoard(board);
+        if (board.xWin()) {
+            ui.showWin(PlayerSymbol.X);
+        } else if (board.oWin()) {
+            ui.showWin(PlayerSymbol.O);
         } else if (board.isFull()) {
-            return GameStatus.Draw;
-        } else {
-            return GameStatus.NonTerminal;
+            ui.showDraw();
         }
     }
 
-    private GuessStatus evalGuessStatus(int move) {
-        if (board.isMoveOutOfBounds(move)) {
-            return GuessStatus.OutOfBounds;
-        } else if (!board.isMoveAvailable(move)) {
-            return GuessStatus.AlreadyTaken;
-        } else {
-            return GuessStatus.Valid;
+    private void playMoves() {
+        while (!board.isTerminal()) {
+            playMove();
         }
     }
+
+    private void playMove() {
+        Board newBoard = evalNextMove();
+        nextState(newBoard);
+    }
+
+    private void nextState(Board board) {
+        this.board = board;
+        players.switchPlayers();
+    }
+
+    private Board evalNextMove() {
+        Integer move = players.chooseNextMove(board);
+        Board newBoard = board.makeMove(move, players.currentPlayerSymbol());
+
+        ui.clear();
+        ui.showBoard(newBoard);
+        ui.showMoveSummary(move, board, players.currentPlayerSymbol());
+
+        return newBoard;
+    }
+
 }

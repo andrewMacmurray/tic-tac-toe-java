@@ -5,6 +5,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
 public class IOHelper {
+
     public static ByteArrayOutputStream out;
     public static ByteArrayInputStream in;
     public static PrintStream print;

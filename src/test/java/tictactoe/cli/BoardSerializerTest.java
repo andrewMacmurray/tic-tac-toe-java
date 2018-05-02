@@ -1,7 +1,7 @@
 package tictactoe.cli;
 
 import org.junit.Test;
-import tictactoe.core.types.PlayerSymbol;
+import tictactoe.core.players.PlayerSymbol;
 import tictactoe.core.Board;
 import tictactoe.core.Tile;
 
@@ -23,9 +23,9 @@ public class BoardSerializerTest {
 
         String expectedRenderedTiles = String.join("\n", lines);
         int boardSize = 3;
-        Map<Integer, Tile> actualTiles = new Board(boardSize).getTiles();
+        Board board = new Board(boardSize);
 
-        assertEquals("renders all empty tiles correctly", expectedRenderedTiles, BoardSerializer.render(actualTiles, boardSize));
+        assertEquals("renders all empty tiles correctly", expectedRenderedTiles, BoardSerializer.render(board));
     }
 
     @Test
@@ -40,11 +40,10 @@ public class BoardSerializerTest {
         String expectedRenderedTiles = String.join("\n", lines);
 
         int boardSize = 3;
-        Map<Integer, Tile> actualTiles = new Board(boardSize)
+       Board board= new Board(boardSize)
                 .makeMove(1, PlayerSymbol.X)
-                .makeMove(3, PlayerSymbol.O)
-                .getTiles();
+                .makeMove(3, PlayerSymbol.O);
 
-        assertEquals("renders tiles with player moves correctly", expectedRenderedTiles, BoardSerializer.render(actualTiles, boardSize));
+        assertEquals("renders tiles with player moves correctly", expectedRenderedTiles, BoardSerializer.render(board));
     }
 }
