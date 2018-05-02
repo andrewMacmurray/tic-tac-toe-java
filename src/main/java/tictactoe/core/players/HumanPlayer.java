@@ -1,14 +1,14 @@
 package tictactoe.core.players;
 
 import tictactoe.core.Board;
-import tictactoe.core.ui.UIRequest;
+import tictactoe.core.UI;
 
 public class HumanPlayer implements Player {
 
     private final PlayerSymbol playerSymbol;
-    private final UIRequest ui;
+    private final UI ui;
 
-    public HumanPlayer(PlayerSymbol playerSymbol, UIRequest ui) {
+    public HumanPlayer(PlayerSymbol playerSymbol, UI ui) {
         this.playerSymbol = playerSymbol;
         this.ui = ui;
     }

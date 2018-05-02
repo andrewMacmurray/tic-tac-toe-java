@@ -9,6 +9,8 @@ class Messages {
     static final String welcome = "Welcome to Tic Tac Toe!";
     static final String unrecognised = "Sorry I didn't recognise that";
     static final String draw = "It's a draw!";
+    static final String goodbye = "Ok bye!";
+    static final String playAgain = "Play again? Enter Y or N";
 
     static String enterNumbers(int boardSize, PlayerSymbol playerSymbol) {
         return String.format(

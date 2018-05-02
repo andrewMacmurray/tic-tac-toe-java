@@ -1,24 +1,21 @@
 package tictactoe.core;
 
-import tictactoe.cli.Console;
 import tictactoe.core.players.PlayerSymbol;
 import tictactoe.core.players.Players;
-import tictactoe.core.players.PlayersFactory;
-import tictactoe.core.ui.UIShow;
 
 public class Game {
 
     private Board board;
     private final Players players;
-    private final UIShow ui;
+    private final UI ui;
 
-    public Game(int boardSize, UIShow ui, Players players) {
+    public Game(int boardSize, UI ui, Players players) {
         this.board = new Board(boardSize);
         this.ui = ui;
         this.players = players;
     }
 
-    public void run() {
+    public void play() {
         initialBoard();
         playMoves();
         summary();

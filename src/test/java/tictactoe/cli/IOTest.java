@@ -56,6 +56,7 @@ public class IOTest {
         );
     }
 
+    @Test
     public void readUntilInRange() {
         IOHelper ioHelper = new IOHelper("5 blah 3");
         IO io = new IO(ioHelper.in, ioHelper.print);
@@ -66,5 +67,44 @@ public class IOTest {
                 io.readIntInRange(1, 3, "something went wrong")
         );
         assertTrue(ioHelper.output().contains("something went wrong"));
+    }
+
+    @Test
+    public void readYesNoWithRetry() {
+        IOHelper ioHelper = new IOHelper("huh Y");
+        IO io = new IO(ioHelper.in, ioHelper.print);
+
+        boolean result = io.readYesNoWithRetry("something went wrong");
+        assertTrue(
+                "Prints error message if doesn't find a yes or no",
+                ioHelper.output().contains("something went wrong")
+        );
+        assertEquals(
+                "should read input until it reaches Y and returns true", true, result
+        );
+    }
+
+    @Test
+    public void readSomethingLikeYes() {
+        IOHelper ioHelper = new IOHelper("yeee");
+        IO io = new IO(ioHelper.in, ioHelper.print);
+
+        boolean result = io.readYesNoWithRetry("something went wrong");
+        assertEquals(
+                "should read anything starting with a y (lowercase or upper)", true, result
+        );
+    }
+
+    @Test
+    public void readNo() {
+        IOHelper ioHelper = new IOHelper("nahh");
+        IO io = new IO(ioHelper.in, ioHelper.print);
+
+        boolean result = io.readYesNoWithRetry("something went wrong");
+        assertEquals(
+                "should return false if input starts with an n",
+                false,
+                result
+        );
     }
 }

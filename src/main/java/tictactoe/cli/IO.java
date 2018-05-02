@@ -3,6 +3,7 @@ package tictactoe.cli;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.Scanner;
+import java.util.function.Predicate;
 
 public class IO {
 
@@ -41,6 +42,24 @@ public class IO {
             println(errorMessage);
             return readIntWithRetry(errorMessage);
         }
+    }
+
+    boolean readYesNoWithRetry(String errorMessage) {
+        String input = scanner.next();
+        if (!isYesNo(input)) {
+            println(errorMessage);
+            return readYesNoWithRetry(errorMessage);
+        } else {
+            return startsWith("Y").test(input);
+        }
+    }
+
+    private Predicate<String> startsWith(String letter) {
+        return input -> input.toUpperCase().startsWith(letter);
+    }
+
+    private boolean isYesNo(String input) {
+        return startsWith("Y").test(input) || startsWith("N").test(input);
     }
 
     private int parseNextInt() throws NumberFormatException {

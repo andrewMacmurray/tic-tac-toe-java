@@ -3,7 +3,7 @@ package tictactoe.core;
 import org.junit.Test;
 import tictactoe.core.players.*;
 import tictactoe.mocks.MockTime;
-import tictactoe.mocks.MockRequestUI;
+import tictactoe.mocks.MockUI;
 
 import static org.junit.Assert.*;
 
@@ -74,7 +74,7 @@ public class PlayersTest {
     }
 
     private Players setupPlayers() {
-        Player human = new HumanPlayer(PlayerSymbol.X, new MockRequestUI(1));
+        Player human = new HumanPlayer(PlayerSymbol.X, new MockUI(1));
         Player computer = new ComputerPlayer(PlayerSymbol.O, new MockTime());
         return new Players(human, computer);
     }

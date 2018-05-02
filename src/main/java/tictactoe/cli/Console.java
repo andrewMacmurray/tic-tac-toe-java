@@ -4,13 +4,12 @@ import tictactoe.core.Board;
 import tictactoe.core.players.Players;
 import tictactoe.core.players.PlayersFactory;
 import tictactoe.core.players.PlayerSymbol;
-import tictactoe.core.ui.UIRequest;
-import tictactoe.core.ui.UIShow;
+import tictactoe.core.UI;
 
 import java.io.InputStream;
 import java.io.PrintStream;
 
-public class Console implements UIRequest, UIShow {
+public class Console implements UI {
 
     private final IO io;
 
@@ -32,6 +31,12 @@ public class Console implements UIRequest, UIShow {
     @Override
     public Players requestPlayers() {
         return PlayersFactory.createPlayers(readPlayerOption(), this);
+    }
+
+    @Override
+    public boolean requestPlayAgain() {
+        io.println(Messages.playAgain);
+        return io.readYesNoWithRetry(Messages.unrecognised);
     }
 
     @Override
@@ -61,11 +66,18 @@ public class Console implements UIRequest, UIShow {
         io.println(BoardSerializer.render(board));
     }
 
-    void greetUser() {
+    @Override
+    public void greetUser() {
         io.println(Messages.welcome);
     }
 
-    void showInstructions() {
+    @Override
+    public void goodbye() {
+        io.println(Messages.goodbye);
+    }
+
+    @Override
+    public void showInstructions() {
         Messages.gameTypeOptions()
                 .forEach(io::println);
     }

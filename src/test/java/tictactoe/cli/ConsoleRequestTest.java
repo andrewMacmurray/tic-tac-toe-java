@@ -4,7 +4,7 @@ import org.junit.Test;
 import tictactoe.core.Board;
 import tictactoe.core.players.PlayerSymbol;
 import tictactoe.core.players.Players;
-import tictactoe.core.ui.UIRequest;
+import tictactoe.core.UI;
 
 import static org.junit.Assert.*;
 
@@ -13,7 +13,7 @@ public class ConsoleRequestTest {
     @Test
     public void requestMove() {
         IOHelper io = new IOHelper("3");
-        UIRequest console = new Console(io.in, io.print);
+        UI console = new Console(io.in, io.print);
         Board board = new Board(3);
 
         assertEquals(
@@ -26,7 +26,7 @@ public class ConsoleRequestTest {
     @Test
     public void notifyUnrecognisedMove() {
         IOHelper io = new IOHelper("blah 3");
-        UIRequest console = new Console(io.in, io.print);
+        UI console = new Console(io.in, io.print);
         Board board = new Board(3);
 
         int move = console.requestMove(board, PlayerSymbol.X);
@@ -43,7 +43,7 @@ public class ConsoleRequestTest {
     @Test
     public void notifyInvalidMove() {
         IOHelper io = new IOHelper("1 2");
-        UIRequest console = new Console(io.in, io.print);
+        UI console = new Console(io.in, io.print);
         Board board = new Board(3).makeMove(1, PlayerSymbol.X);
 
         int move = console.requestMove(board, PlayerSymbol.O);
@@ -59,7 +59,7 @@ public class ConsoleRequestTest {
     @Test
     public void requestPlayers() {
         IOHelper io = new IOHelper("1");
-        UIRequest console = new Console(io.in, io.print);
+        UI console = new Console(io.in, io.print);
 
         Players players = console.requestPlayers();
         assertEquals(
@@ -72,7 +72,7 @@ public class ConsoleRequestTest {
     @Test
     public void requestPlayers2() {
         IOHelper io = new IOHelper("2");
-        UIRequest console = new Console(io.in, io.print);
+        UI console = new Console(io.in, io.print);
 
         Players players = console.requestPlayers();
         assertEquals(
@@ -85,7 +85,7 @@ public class ConsoleRequestTest {
     @Test
     public void requestInvalidOption() {
         IOHelper io = new IOHelper("8 5 blah 3");
-        UIRequest console = new Console(io.in, io.print);
+        UI console = new Console(io.in, io.print);
 
         Players players = console.requestPlayers();
         assertEquals(

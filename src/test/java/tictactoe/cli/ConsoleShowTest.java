@@ -3,7 +3,7 @@ package tictactoe.cli;
 import org.junit.Test;
 import tictactoe.core.Board;
 import tictactoe.core.players.PlayerSymbol;
-import tictactoe.core.ui.UIShow;
+import tictactoe.core.UI;
 
 import static org.junit.Assert.*;
 
@@ -12,7 +12,7 @@ public class ConsoleShowTest {
     @Test
     public void showValidMoveSummary() {
         IOHelper io = new IOHelper();
-        UIShow console = new Console(io.in, io.print);
+        UI console = new Console(io.in, io.print);
 
         console.showMoveSummary(1, new Board(3), PlayerSymbol.X);
         assertTrue(
@@ -24,7 +24,7 @@ public class ConsoleShowTest {
     @Test
     public void showOutOfBoundsMoveSummary() {
         IOHelper io = new IOHelper();
-        UIShow console = new Console(io.in, io.print);
+        UI console = new Console(io.in, io.print);
 
         console.showMoveSummary(12, new Board(3), PlayerSymbol.X);
         assertTrue(
@@ -36,7 +36,7 @@ public class ConsoleShowTest {
     @Test
     public void showMoveAlreadyTakenSummary() {
         IOHelper io = new IOHelper();
-        UIShow console = new Console(io.in, io.print);
+        UI console = new Console(io.in, io.print);
 
         Board board = new Board(3)
                 .makeMove(1, PlayerSymbol.X);
@@ -51,7 +51,7 @@ public class ConsoleShowTest {
     @Test
     public void showMoveInstructions() {
         IOHelper io = new IOHelper();
-        UIShow console = new Console(io.in, io.print);
+        UI console = new Console(io.in, io.print);
 
         console.showMoveInstructions(3, PlayerSymbol.X);
         assertTrue(
@@ -63,7 +63,7 @@ public class ConsoleShowTest {
     @Test
     public void showBoard() {
         IOHelper io = new IOHelper();
-        UIShow console = new Console(io.in, io.print);
+        UI console = new Console(io.in, io.print);
         Board board = new Board(3);
 
         console.showBoard(board);
@@ -76,7 +76,7 @@ public class ConsoleShowTest {
     @Test
     public void clearScreen() {
         IOHelper io = new IOHelper();
-        UIShow console = new Console(io.in, io.print);
+        UI console = new Console(io.in, io.print);
 
         console.clear();
         assertTrue(
@@ -88,7 +88,7 @@ public class ConsoleShowTest {
     @Test
     public void showWinner() {
         IOHelper io = new IOHelper();
-        UIShow console = new Console(io.in, io.print);
+        UI console = new Console(io.in, io.print);
 
         console.showWin(PlayerSymbol.X);
         assertTrue(
@@ -100,12 +100,12 @@ public class ConsoleShowTest {
     @Test
     public void showDraw() {
         IOHelper io = new IOHelper();
-        UIShow console = new Console(io.in, io.print);
+        UI console = new Console(io.in, io.print);
 
         console.showDraw();
         assertTrue(
-          "prints draw",
-          io.output().contains("It's a draw!")
+                "prints draw",
+                io.output().contains("It's a draw!")
         );
     }
 }
