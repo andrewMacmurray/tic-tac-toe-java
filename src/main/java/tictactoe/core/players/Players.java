@@ -14,7 +14,7 @@ public class Players {
         this.currentPlayer = player1;
     }
 
-    public Integer chooseNextMove(Board board) {
+    public int chooseNextMove(Board board) {
         return currentPlayer.chooseNextMove(board);
     }
 

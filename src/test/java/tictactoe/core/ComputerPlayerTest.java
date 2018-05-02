@@ -5,7 +5,7 @@ import org.junit.Test;
 import tictactoe.core.players.ComputerPlayer;
 import tictactoe.core.players.Player;
 import tictactoe.core.players.PlayerSymbol;
-import tictactoe.core.util.ThreadControl;
+import tictactoe.mocks.MockTime;
 
 import java.util.ArrayList;
 
@@ -53,14 +53,3 @@ public class ComputerPlayerTest {
     }
 }
 
-class MockTime implements ThreadControl {
-
-    public String timeLog = "";
-
-
-    @Override
-    public void pause(int ms) {
-        timeLog = "some time has passed";
-    }
-
-}
