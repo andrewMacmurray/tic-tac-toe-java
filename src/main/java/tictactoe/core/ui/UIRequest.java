@@ -6,7 +6,7 @@ import tictactoe.core.players.PlayerSymbol;
 
 public interface UIRequest {
 
-    Integer requestMove(Board board, PlayerSymbol playerSymbol);
+    int requestMove(Board board, PlayerSymbol playerSymbol);
 
     Players requestPlayers();
 

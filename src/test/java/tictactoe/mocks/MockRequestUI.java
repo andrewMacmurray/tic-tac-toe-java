@@ -5,16 +5,16 @@ import tictactoe.core.players.PlayerSymbol;
 import tictactoe.core.players.Players;
 import tictactoe.core.ui.UIRequest;
 
-public class MockUI implements UIRequest {
+public class MockRequestUI implements UIRequest {
 
     private int currentMove;
 
-    public MockUI(int firstMove) {
+    public MockRequestUI(int firstMove) {
         this.currentMove = firstMove;
     }
 
     @Override
-    public Integer requestMove(Board board, PlayerSymbol playerSymbol) {
+    public int requestMove(Board board, PlayerSymbol playerSymbol) {
         return currentMove;
     }
 

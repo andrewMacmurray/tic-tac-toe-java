@@ -9,11 +9,6 @@ public class IO {
     private final PrintStream out;
     private final Scanner scanner;
 
-    public IO() {
-        out = System.out;
-        scanner = new Scanner(System.in);
-    }
-
     IO(InputStream in, PrintStream out) {
         this.out = out;
         this.scanner = new Scanner(in);

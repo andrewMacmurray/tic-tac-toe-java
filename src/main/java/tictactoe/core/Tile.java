@@ -15,11 +15,6 @@ public class Tile {
         this.playerSymbol = Optional.of(playerSymbol);
     }
 
-    public Tile setPlayerSymbol(PlayerSymbol playerSymbol) {
-        this.playerSymbol = Optional.of(playerSymbol);
-        return this;
-    }
-
     boolean isTakenBy(PlayerSymbol p) {
         return playerSymbol.map(s -> s == p).orElse(false);
     }

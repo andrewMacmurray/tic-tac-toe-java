@@ -19,8 +19,8 @@ public class Console implements UIRequest, UIShow {
     }
 
     @Override
-    public Integer requestMove(Board board, PlayerSymbol playerSymbol) {
-        Integer move = readIntWithMessage();
+    public int requestMove(Board board, PlayerSymbol playerSymbol) {
+        int move = readIntWithMessage();
         if (!board.isValidMove(move)) {
             showMoveSummary(move, board, playerSymbol);
             return requestMove(board, playerSymbol);

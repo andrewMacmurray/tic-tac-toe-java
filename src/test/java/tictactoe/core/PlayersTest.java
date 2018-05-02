@@ -3,9 +3,7 @@ package tictactoe.core;
 import org.junit.Test;
 import tictactoe.core.players.*;
 import tictactoe.mocks.MockTime;
-import tictactoe.mocks.MockUI;
-
-import java.util.stream.Stream;
+import tictactoe.mocks.MockRequestUI;
 
 import static org.junit.Assert.*;
 
@@ -62,8 +60,21 @@ public class PlayersTest {
 
     }
 
+    @Test
+    public void switchBack() {
+        Players players = setupPlayers();
+        players.switchPlayers();
+        players.switchPlayers();
+
+        assertEquals(
+                "should switch back to player X",
+                PlayerSymbol.X,
+                players.currentPlayerSymbol()
+        );
+    }
+
     private Players setupPlayers() {
-        Player human = new HumanPlayer(PlayerSymbol.X, new MockUI(1));
+        Player human = new HumanPlayer(PlayerSymbol.X, new MockRequestUI(1));
         Player computer = new ComputerPlayer(PlayerSymbol.O, new MockTime());
         return new Players(human, computer);
     }
