@@ -14,23 +14,23 @@ public class IO {
         scanner = new Scanner(System.in);
     }
 
-    public IO(InputStream in, PrintStream out) {
+    IO(InputStream in, PrintStream out) {
         this.out = out;
         this.scanner = new Scanner(in);
     }
 
-    public void println(String string) {
+    void println(String string) {
         out.println(string);
     }
 
-    public void clearScreen() {
+    void clearScreen() {
         final String clearSequence = "\033[H\033[2J";
         out.print(clearSequence);
         out.flush();
     }
 
-    public Integer readIntInRange(Integer lower, Integer upper, String errorMessage) {
-        Integer i = readIntWithRetry(errorMessage);
+    int readIntInRange(Integer lower, Integer upper, String errorMessage) {
+        int i = readIntWithRetry(errorMessage);
         if (i >= lower && i <= upper) {
             return i;
         } else {
@@ -39,7 +39,7 @@ public class IO {
         }
     }
 
-    public int readIntWithRetry(String errorMessage) {
+    int readIntWithRetry(String errorMessage) {
         try {
             return parseNextInt();
         } catch (NumberFormatException e) {
@@ -48,7 +48,7 @@ public class IO {
         }
     }
 
-    private Integer parseNextInt() throws NumberFormatException {
+    private int parseNextInt() throws NumberFormatException {
         String input = scanner.next();
         return Integer.parseInt(input);
     }
