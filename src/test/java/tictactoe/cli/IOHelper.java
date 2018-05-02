@@ -6,11 +6,11 @@ import java.io.PrintStream;
 
 public class IOHelper {
 
-    static ByteArrayOutputStream out;
-    static ByteArrayInputStream in;
-    static PrintStream print;
+    public static ByteArrayOutputStream out;
+    public static ByteArrayInputStream in;
+    public static PrintStream print;
 
-    IOHelper() {
+    public IOHelper() {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         ByteArrayInputStream in = new ByteArrayInputStream("".getBytes());
         this.out = out;
@@ -18,7 +18,7 @@ public class IOHelper {
         this.print = new PrintStream(out);
     }
 
-    IOHelper(String input) {
+    public IOHelper(String input) {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         ByteArrayInputStream in = new ByteArrayInputStream(input.getBytes());
         this.out = out;

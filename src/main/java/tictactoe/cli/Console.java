@@ -14,7 +14,7 @@ public class Console implements UIRequest, UIShow {
 
     private final IO io;
 
-    Console(InputStream in, PrintStream print) {
+    public Console(InputStream in, PrintStream print) {
         io = new IO(in, print);
     }
 
@@ -82,10 +82,6 @@ public class Console implements UIRequest, UIShow {
 
     private void printOutOfBounds(Integer guess) {
         io.println(Messages.outOfBounds(guess));
-    }
-
-    private void printUnrecognised() {
-        io.println(Messages.unrecognised);
     }
 
     private void showAlreadyTaken(Integer guess) {

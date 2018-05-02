@@ -24,19 +24,35 @@ public class ConsoleRequestTest {
     }
 
     @Test
-    public void notifyInvalidMove() {
+    public void notifyUnrecognisedMove() {
         IOHelper io = new IOHelper("blah 3");
         UIRequest console = new Console(io.in, io.print);
         Board board = new Board(3);
 
         int move = console.requestMove(board, PlayerSymbol.X);
         assertTrue(
-                "console notifies user of invalid move",
+                "console notifies user of an unrecognised move",
                 io.output().contains("I didn't recognise that")
         );
 
         assertEquals(
                 "eventually returns a valid move", 3, move
+        );
+    }
+
+    @Test
+    public void notifyInvalidMove() {
+        IOHelper io = new IOHelper("1 2");
+        UIRequest console = new Console(io.in, io.print);
+        Board board = new Board(3).makeMove(1, PlayerSymbol.X);
+
+        int move = console.requestMove(board, PlayerSymbol.O);
+        assertTrue(
+                "console notifies user of an invalid move",
+                io.output().contains("1 is already taken!")
+        );
+        assertEquals(
+                "eventually returns a valid move", 2, move
         );
     }
 
