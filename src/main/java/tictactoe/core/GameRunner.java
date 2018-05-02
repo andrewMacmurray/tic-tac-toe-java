@@ -11,6 +11,7 @@ public class GameRunner {
     }
 
     public void run() {
+        ui.clear();
         ui.greetUser();
         gameLoop();
     }
@@ -26,7 +27,8 @@ public class GameRunner {
 
     private void playAgain() {
         if (ui.requestPlayAgain()) {
-           gameLoop();
+            ui.clear();
+            gameLoop();
         } else {
             ui.goodbye();
         }
