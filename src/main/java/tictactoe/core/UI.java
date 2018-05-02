@@ -1,9 +1,16 @@
-package tictactoe.core.ui;
+package tictactoe.core;
 
 import tictactoe.core.Board;
 import tictactoe.core.players.PlayerSymbol;
+import tictactoe.core.players.Players;
 
-public interface UIShow {
+public interface UI {
+
+    Players requestPlayers();
+
+    int requestMove(Board board, PlayerSymbol playerSymbol);
+
+    boolean requestPlayAgain();
 
     void showBoard(Board board);
 
@@ -14,6 +21,12 @@ public interface UIShow {
     void showMoveSummary(Integer move, Board board, PlayerSymbol playerSymbol);
 
     void showMoveInstructions(Integer boardSize, PlayerSymbol playerSymbol);
+
+    void greetUser();
+
+    void goodbye();
+
+    void showInstructions();
 
     void clear();
 

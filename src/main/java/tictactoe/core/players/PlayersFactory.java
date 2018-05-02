@@ -1,6 +1,6 @@
 package tictactoe.core.players;
 
-import tictactoe.core.ui.UIRequest;
+import tictactoe.core.UI;
 import tictactoe.core.util.ThreadControl;
 import tictactoe.core.util.Time;
 
@@ -13,7 +13,7 @@ public class PlayersFactory {
     public static int maxOption = 3;
     private static ThreadControl time = new Time();
 
-    public static Players createPlayers(int option, UIRequest ui) {
+    public static Players createPlayers(int option, UI ui) {
         switch (option) {
             case 1:
                 return humanVsHuman(ui);
@@ -26,14 +26,14 @@ public class PlayersFactory {
         }
     }
 
-    private static Players humanVsHuman(UIRequest ui) {
+    private static Players humanVsHuman(UI ui) {
         return new Players(
                 new HumanPlayer(X, ui),
                 new HumanPlayer(O, ui)
         );
     }
 
-    private static Players humanVsComputer(UIRequest ui) {
+    private static Players humanVsComputer(UI ui) {
         return new Players(
                 new HumanPlayer(X, ui),
                 new ComputerPlayer(O, time)
