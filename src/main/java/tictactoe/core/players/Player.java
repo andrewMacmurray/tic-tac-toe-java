@@ -4,7 +4,7 @@ import tictactoe.core.Board;
 
 public interface Player {
 
-    Integer chooseNextMove(Board board);
+    int chooseNextMove(Board board);
 
     PlayerSymbol getSymbol();
 

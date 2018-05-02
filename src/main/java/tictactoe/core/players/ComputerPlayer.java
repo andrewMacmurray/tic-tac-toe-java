@@ -1,6 +1,7 @@
 package tictactoe.core.players;
 
 import tictactoe.core.Board;
+import tictactoe.core.util.ThreadControl;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -8,14 +9,16 @@ import java.util.Random;
 public class ComputerPlayer implements Player {
 
     private final PlayerSymbol playerSymbol;
+    private final ThreadControl time;
 
-    ComputerPlayer(PlayerSymbol playerSymbol) {
+    public ComputerPlayer(PlayerSymbol playerSymbol, ThreadControl time) {
         this.playerSymbol = playerSymbol;
+        this.time = time;
     }
 
     @Override
-    public Integer chooseNextMove(Board board) {
-        pause(1000);
+    public int chooseNextMove(Board board) {
+        time.pause(1000);
         ArrayList<Integer> moves = board.allAvailableMoves();
         return randomMove(moves);
     }
@@ -25,15 +28,7 @@ public class ComputerPlayer implements Player {
         return playerSymbol;
     }
 
-    private void pause(Integer ms) {
-        try {
-            Thread.sleep(ms);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
-    }
-
-    private Integer randomMove(ArrayList<Integer> moves) {
+    private int randomMove(ArrayList<Integer> moves) {
         Random random = new Random();
         int i = random.nextInt(moves.size());
         return moves.get(i);

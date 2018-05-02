@@ -30,6 +30,11 @@ public class Console implements UIRequest, UIShow {
     }
 
     @Override
+    public Players requestPlayers() {
+        return PlayersFactory.createPlayers(readPlayerOption(), this);
+    }
+
+    @Override
     public void showMoveSummary(Integer move, Board board, PlayerSymbol playerSymbol) {
         if (board.isMoveOutOfBounds(move)) {
             printOutOfBounds(move);
@@ -50,10 +55,6 @@ public class Console implements UIRequest, UIShow {
         io.clearScreen();
     }
 
-    @Override
-    public Players requestPlayers() {
-        return PlayersFactory.createPlayers(readPlayerOption(), this);
-    }
 
     @Override
     public void showBoard(Board board) {

@@ -14,7 +14,7 @@ public class HumanPlayer implements Player {
     }
 
     @Override
-    public Integer chooseNextMove(Board board) {
+    public int chooseNextMove(Board board) {
         return ui.requestMove(board, playerSymbol);
     }
 
