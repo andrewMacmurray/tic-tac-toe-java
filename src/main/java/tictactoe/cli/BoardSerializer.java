@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 
 class BoardSerializer {
 
-    static String divider = "---*---*---";
+    static String divider = "-----------";
 
     static String render(Board board) {
         return board
@@ -18,7 +18,7 @@ class BoardSerializer {
     }
 
     private static String renderTileWithPadding(Tile tile, int index, int boardSize) {
-        String tileString = tile.toString(index);
+        String tileString = colorize(tile.toString(index));
         boolean isEndOfRow = index % boardSize == 0;
         boolean isLastTile = index == (boardSize * boardSize);
 
@@ -37,5 +37,16 @@ class BoardSerializer {
 
     private static String midRow(String tileString) {
         return String.format(" %s |", tileString);
+    }
+
+    private static String colorize(String tile) {
+        switch (tile) {
+            case "X":
+                return Colors.toLightBlue(tile);
+            case "O":
+                return Colors.toGreen(tile);
+            default:
+                return tile;
+        }
     }
 }

@@ -1,9 +1,9 @@
-package tictactoe;
+package tictactoe.cli;
 
 import tictactoe.cli.Console;
 import tictactoe.core.GameRunner;
 
-public class TicTacToe {
+public class Main {
 
     public static void main(String[] args) {
         Console console = new Console(System.in, System.out);

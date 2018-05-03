@@ -25,7 +25,9 @@ public class BoardSerializerTest {
         int boardSize = 3;
         Board board = new Board(boardSize);
 
-        assertEquals("renders all empty tiles correctly", expectedRenderedTiles, BoardSerializer.render(board));
+        String actualRendered = stripAnsi(BoardSerializer.render(board));
+
+        assertEquals("renders all empty tiles correctly", expectedRenderedTiles, actualRendered);
     }
 
     @Test
@@ -44,6 +46,12 @@ public class BoardSerializerTest {
                 .makeMove(1, PlayerSymbol.X)
                 .makeMove(3, PlayerSymbol.O);
 
-        assertEquals("renders tiles with player moves correctly", expectedRenderedTiles, BoardSerializer.render(board));
+       String actualRendered = stripAnsi(BoardSerializer.render(board));
+
+        assertEquals("renders tiles with player moves correctly", expectedRenderedTiles, actualRendered);
+    }
+
+    private String stripAnsi(String input) {
+        return input.replaceAll("\u001B\\[[\\d;]*[^\\d;]","");
     }
 }

@@ -1,8 +1,10 @@
 package tictactoe.core;
 
+import tictactoe.core.players.Player;
 import tictactoe.core.players.PlayerSymbol;
 
 import java.util.Optional;
+import java.util.function.Function;
 
 public class Tile {
     private Optional<PlayerSymbol> playerSymbol;
@@ -24,8 +26,12 @@ public class Tile {
     }
 
     public String toString(int index) {
+        return toStringWith(PlayerSymbol::toString, index);
+    }
+
+    public String toStringWith(Function<PlayerSymbol, String> toStringF, int index) {
         return playerSymbol
-                .map(PlayerSymbol::toString)
+                .map(toStringF)
                 .orElse(Integer.toString(index));
     }
 }
