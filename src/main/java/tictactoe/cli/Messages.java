@@ -11,6 +11,7 @@ class Messages {
     static final String draw = "It's a draw!";
     static final String goodbye = "Ok bye!";
     static final String playAgain = "Play again? Enter Y or N";
+    static final String boardSize = "Which size of board would you like? enter 3 or 4";
 
     static String enterNumbers(int boardSize, PlayerSymbol playerSymbol) {
         return String.format(

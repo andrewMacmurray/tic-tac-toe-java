@@ -99,4 +99,35 @@ public class ConsoleRequestTest {
                 io.output().contains("I didn't recognise that")
         );
     }
+
+    @Test
+    public void requestBoardSize() {
+        IOHelper io = new IOHelper("3");
+        UI console = new Console(io.in, io.print);
+
+        int boardSize = console.requestBoardSize();
+        assertEquals(
+                "player can choose a board size of 3",
+                3,
+                boardSize
+        );
+    }
+
+    @Test
+    public void requestInvalidBoardSize() {
+        IOHelper io = new IOHelper("wut? 5 4");
+        UI console = new Console(io.in, io.print);
+
+        int finalBoardSize = console.requestBoardSize();
+        assertTrue(
+                "console notifies user of invalid input or options",
+                io.output().contains("I didn't recognise that")
+        );
+
+        assertEquals(
+                "eventually returns valid input",
+                4,
+                finalBoardSize
+        );
+    }
 }

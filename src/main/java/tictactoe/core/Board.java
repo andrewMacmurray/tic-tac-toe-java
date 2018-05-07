@@ -2,7 +2,10 @@ package tictactoe.core;
 
 import tictactoe.core.players.PlayerSymbol;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -52,7 +55,7 @@ public class Board {
         return !isMoveOutOfBounds(tileIndex) && isMoveAvailable(tileIndex);
     }
 
-    boolean isTerminal() {
+    public boolean isTerminal() {
         return xWin() || oWin() || isFull();
     }
 
@@ -92,21 +95,14 @@ public class Board {
         return hasWon(PlayerSymbol.O);
     }
 
-    private boolean hasWon(PlayerSymbol player) {
-        Predicate<Integer[]> isWinningState =
-                st -> Arrays
-                        .stream(st)
-                        .allMatch(i -> getTile(i).isTakenBy(player));
-        return Arrays
-                .stream(winningStates())
-                .anyMatch(isWinningState);
+    public boolean hasWon(PlayerSymbol player) {
+        Predicate<Stream<Integer>> isWinningState =
+                st -> st.allMatch(i -> getTile(i).isTakenBy(player));
+
+        return winningStates().anyMatch(isWinningState);
     }
 
-    private static Integer[][] winningStates() {
-        return new Integer[][]  {
-                {1, 2, 3}, {4, 5, 6}, {7, 8, 9},
-                {1, 4, 7}, {2, 5, 8}, {3, 6, 9},
-                {1, 5, 9}, {3, 5, 7}
-        };
+    private Stream<Stream<Integer>> winningStates() {
+        return new WinStates(boardSize).generate();
     }
 }

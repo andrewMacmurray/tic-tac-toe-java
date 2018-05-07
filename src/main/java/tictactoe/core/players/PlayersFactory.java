@@ -19,10 +19,8 @@ public class PlayersFactory {
                 return humanVsHuman(ui);
             case 2:
                 return humanVsComputer(ui);
-            case 3:
-                return computerVsComputer();
             default:
-                return humanVsHuman(ui);
+                return computerVsComputer();
         }
     }
 
@@ -36,14 +34,14 @@ public class PlayersFactory {
     private static Players humanVsComputer(UI ui) {
         return new Players(
                 new HumanPlayer(X, ui),
-                new ComputerPlayer(O, time)
+                new UnbeatablePlayer(O)
         );
     }
 
     private static Players computerVsComputer() {
         return new Players(
-                new ComputerPlayer(X, time),
-                new ComputerPlayer(O, time)
+                new UnbeatablePlayer(X),
+                new UnbeatablePlayer(O)
         );
     }
 }

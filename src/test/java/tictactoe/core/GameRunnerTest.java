@@ -8,9 +8,11 @@ import static org.junit.Assert.*;
 
 public class GameRunnerTest {
 
+    private String human3by3Game = "1 3 ";
+
     @Test
     public void runOneGame() {
-        String oneGameSequence = "1 1 4 2 5 3 No";
+        String oneGameSequence = human3by3Game + "1 4 2 5 3 No";
         IOHelper io = new IOHelper(oneGameSequence);
         GameRunner gameRunner = setupGameRunner(io);
 
@@ -28,7 +30,13 @@ public class GameRunnerTest {
 
     @Test
     public void runTwoGames() {
-        String twoGameSequence = "1 1 4 2 5 3 YES 1 4 1 5 2 7 3 NO";
+        String twoGameSequence = String.join(
+                " ",
+                human3by3Game,
+                "1 4 2 5 3 YES ",
+                human3by3Game,
+                "4 1 5 2 7 3 NO"
+        );
         IOHelper io = new IOHelper(twoGameSequence);
         GameRunner gameRunner = setupGameRunner(io);
 

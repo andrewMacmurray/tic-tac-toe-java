@@ -34,6 +34,12 @@ public class Console implements UI {
     }
 
     @Override
+    public int requestBoardSize() {
+        io.println(Messages.boardSize);
+        return io.readIntInRange(3, 4, Messages.unrecognised);
+    }
+
+    @Override
     public boolean requestPlayAgain() {
         io.println(Messages.playAgain);
         return io.readYesNoWithRetry(Messages.unrecognised);

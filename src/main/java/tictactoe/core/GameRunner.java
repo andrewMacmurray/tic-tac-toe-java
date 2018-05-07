@@ -19,8 +19,9 @@ public class GameRunner {
     private void gameLoop() {
         ui.showInstructions();
         Players players = ui.requestPlayers();
+        int boardSize = ui.requestBoardSize();
 
-        Game game = new Game(3, ui, players);
+        Game game = new Game(boardSize, ui, players);
         game.play();
         playAgain();
     }

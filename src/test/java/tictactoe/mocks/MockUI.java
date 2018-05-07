@@ -24,6 +24,11 @@ public class MockUI implements UI {
     }
 
     @Override
+    public int requestBoardSize() {
+        return 0;
+    }
+
+    @Override
     public void showBoard(Board board) {
 
     }

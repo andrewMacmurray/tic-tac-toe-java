@@ -12,6 +12,8 @@ public interface UI {
 
     boolean requestPlayAgain();
 
+    int requestBoardSize();
+
     void showBoard(Board board);
 
     void showWin(PlayerSymbol playerSymbol);
