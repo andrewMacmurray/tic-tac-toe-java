@@ -37,9 +37,4 @@ public class IOHelper {
     public void reset() {
         out.reset();
     }
-
-    public void setIn(String input) {
-        ByteArrayInputStream newIn = new ByteArrayInputStream(input.getBytes());
-        this.in = newIn;
-    }
 }

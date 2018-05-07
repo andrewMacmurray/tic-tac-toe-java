@@ -2,11 +2,8 @@ package tictactoe.core.players;
 
 import tictactoe.core.Board;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 public class MiniMax {
 

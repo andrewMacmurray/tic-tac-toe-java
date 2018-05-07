@@ -1,10 +1,10 @@
 package tictactoe.cli;
 
 import tictactoe.core.Board;
+import tictactoe.core.UI;
+import tictactoe.core.players.PlayerSymbol;
 import tictactoe.core.players.Players;
 import tictactoe.core.players.PlayersFactory;
-import tictactoe.core.players.PlayerSymbol;
-import tictactoe.core.UI;
 
 import java.io.InputStream;
 import java.io.PrintStream;

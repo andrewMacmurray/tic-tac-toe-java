@@ -1,6 +1,5 @@
 package tictactoe.cli;
 
-import tictactoe.cli.Console;
 import tictactoe.core.GameRunner;
 
 public class Main {
