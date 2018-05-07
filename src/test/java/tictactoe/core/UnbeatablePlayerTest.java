@@ -1,7 +1,6 @@
 package tictactoe.core;
 
 import org.junit.Test;
-import tictactoe.cli.BoardSerializer;
 import tictactoe.core.players.Player;
 import tictactoe.core.players.PlayerSymbol;
 import tictactoe.core.players.UnbeatablePlayer;
