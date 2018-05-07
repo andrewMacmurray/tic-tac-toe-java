@@ -21,7 +21,7 @@ public class WinStatesTest {
 
         for (int i = 0; i < expectedStates.size(); i++) {
             assertTrue(
-                    "should be the same",
+                    "should contain all winning states for a 3x3 board",
                     expectedStates.get(i).equals(actualStates.get(i))
             );
         }
@@ -46,7 +46,7 @@ public class WinStatesTest {
 
         for (int i = 0; i < expectedStates.size(); i++) {
             assertTrue(
-                    "should be the same",
+                    "should contain all winning states for a 4x4 board",
                     expectedStates.get(i).equals(actualStates.get(i))
             );
         }
