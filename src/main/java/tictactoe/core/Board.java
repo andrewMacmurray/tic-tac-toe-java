@@ -2,10 +2,7 @@ package tictactoe.core;
 
 import tictactoe.core.players.PlayerSymbol;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -16,15 +13,17 @@ public class Board {
 
     private final Map<Integer, Tile> tiles;
     private final int boardSize;
+    private final List<List<Integer>> winStates;
 
     public Board(int boardSize) {
         this.tiles = createEmptyTiles(boardSize);
         this.boardSize = boardSize;
+        this.winStates = new WinStates(boardSize).generate();
     }
 
     public Board makeMove(int tile, PlayerSymbol player) {
         Map<Integer, Tile> nextTiles = insertPlayerAt(tile, player);
-        return new Board(nextTiles, boardSize);
+        return new Board(nextTiles, this);
     }
 
     Tile getTile(int tile) {
@@ -64,9 +63,10 @@ public class Board {
     }
 
     // Creates a new Board based on the existing board
-    private Board(Map<Integer, Tile> currentTiles, int boardSize) {
+    private Board(Map<Integer, Tile> currentTiles, Board currentBoard) {
         this.tiles = currentTiles;
-        this.boardSize = boardSize;
+        this.boardSize = currentBoard.boardSize;
+        this.winStates = currentBoard.winStates;
     }
 
     private Map<Integer, Tile> insertPlayerAt(int tile, PlayerSymbol player) {
@@ -96,13 +96,10 @@ public class Board {
     }
 
     public boolean hasWon(PlayerSymbol player) {
-        Predicate<Stream<Integer>> isWinningState =
-                st -> st.allMatch(i -> getTile(i).isTakenBy(player));
+        Predicate<List<Integer>> isWinningState =
+                st -> st.stream().allMatch(i -> getTile(i).isTakenBy(player));
 
-        return winningStates().anyMatch(isWinningState);
+        return winStates.stream().anyMatch(isWinningState);
     }
 
-    private Stream<Stream<Integer>> winningStates() {
-        return new WinStates(boardSize).generate();
-    }
 }

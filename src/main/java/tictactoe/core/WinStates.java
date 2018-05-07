@@ -1,6 +1,9 @@
 package tictactoe.core;
 
+import java.util.List;
 import java.util.function.UnaryOperator;
+import java.util.stream.Collectors;
+import static java.util.stream.Collectors.toList;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -12,13 +15,15 @@ public class WinStates {
         this.boardSize = boardSize;
     }
 
-    public Stream<Stream<Integer>> generate() {
+    public List<List<Integer>> generate() {
         return Stream.of(
                 rows(),
                 columns(),
                 Stream.of(bottomLeftDiagonal(), topLeftDiagonal())
         )
-                .flatMap(x -> x);
+                .flatMap(x -> x)
+                .map(x -> x.collect(toList()))
+                .collect(toList());
     }
 
     private Stream<Stream<Integer>> columns() {
