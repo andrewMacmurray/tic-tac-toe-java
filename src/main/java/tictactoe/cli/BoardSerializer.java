@@ -7,23 +7,28 @@ import java.util.stream.Collectors;
 
 class BoardSerializer {
 
-    static String divider = "-----------";
+    private int boardSize;
+    private Board board;
 
-    static String render(Board board) {
-        return board
-                .tilesStream()
-                .map(v -> renderTileWithPadding(v.getValue(), v.getKey(), board.getBoardSize()))
-                .collect(Collectors.joining(""));
-
+    public BoardSerializer(Board board) {
+        this.board = board;
+        this.boardSize = board.getBoardSize();
     }
 
-    private static String renderTileWithPadding(Tile tile, int index, int boardSize) {
+    public String render() {
+        return board
+                .tilesStream()
+                .map(v -> renderTileWithPadding(v.getValue(), v.getKey()))
+                .collect(Collectors.joining(""));
+    }
+
+    private String renderTileWithPadding(Tile tile, int index) {
         String tileString = colorize(tile.toString(index));
         boolean isEndOfRow = index % boardSize == 0;
         boolean isLastTile = index == (boardSize * boardSize);
 
         if (isLastTile) {
-            return " " + tileString;
+            return lastTile(tileString);
         } else if (isEndOfRow) {
             return endOfRow(tileString);
         } else {
@@ -31,22 +36,51 @@ class BoardSerializer {
         }
     }
 
-    private static String endOfRow(String tileString) {
-        return String.format(" %s\n%s\n", tileString, divider);
+    private String divider() {
+        int n = boardSize * boardSize + (boardSize - 1);
+        return repeat("-", n);
     }
 
-    private static String midRow(String tileString) {
-        return String.format(" %s |", tileString);
+    private String lastTile(String tileString) {
+        return String.format(" %s", tileString);
     }
 
-    private static String colorize(String tile) {
+    private String endOfRow(String tileString) {
+        return String.format(" " + digitTileSpacing() + "\n%s\n", tileString, divider());
+    }
+
+    private String midRow(String tileString) {
+        return String.format(" " + digitTileSpacing() + " |", tileString);
+    }
+
+    private String digitTileSpacing() {
+        if (boardSize > 3) {
+            return "%-2s";
+        } else {
+            return "%s";
+        }
+    }
+
+    private String colorize(String tile) {
         switch (tile) {
             case "X":
-                return Colors.toLightBlue(tile);
+                return coloredTileSpacing(Colors.toLightBlue(tile));
             case "O":
-                return Colors.toGreen(tile);
+                return coloredTileSpacing(Colors.toGreen(tile));
             default:
                 return tile;
         }
+    }
+
+    private String coloredTileSpacing(String tileString) {
+        if (boardSize > 3) {
+            return String.format("%s ", tileString);
+        } else {
+            return tileString;
+        }
+    }
+
+    private String repeat(String str, int times) {
+        return new String(new char[times]).replace("\0", str);
     }
 }

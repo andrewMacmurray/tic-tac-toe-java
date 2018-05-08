@@ -69,7 +69,7 @@ public class ConsoleShowTest {
         console.showBoard(board);
         assertTrue(
                 "renders board to output",
-                io.output().contains(BoardSerializer.render(board))
+                io.output().contains(new BoardSerializer(board).render())
         );
     }
 

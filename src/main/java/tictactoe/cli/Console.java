@@ -69,7 +69,8 @@ public class Console implements UI {
 
     @Override
     public void showBoard(Board board) {
-        io.println(BoardSerializer.render(board));
+        String boardString = new BoardSerializer(board).render();
+        io.println(boardString);
     }
 
     @Override
