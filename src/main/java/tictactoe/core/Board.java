@@ -66,8 +66,8 @@ public class Board {
     }
 
     // Creates a new Board based on the existing board
-    private Board(Map<Integer, Tile> currentTiles, Board currentBoard) {
-        this.tiles = currentTiles;
+    private Board(Map<Integer, Tile> newTiles, Board currentBoard) {
+        this.tiles = newTiles;
         this.boardSize = currentBoard.boardSize;
         this.winStates = currentBoard.winStates;
     }
@@ -87,7 +87,7 @@ public class Board {
     }
 
     public Stream<Map.Entry<Integer, Tile>> tilesStream() {
-       return tiles.entrySet().stream();
+        return tiles.entrySet().stream();
     }
 
     boolean xWin() {
@@ -100,9 +100,13 @@ public class Board {
 
     public boolean hasWon(PlayerSymbol player) {
         Predicate<List<Integer>> isWinningState =
-                st -> st.stream().allMatch(i -> getTile(i).isTakenBy(player));
+                winState -> winState
+                        .stream()
+                        .allMatch(i -> getTile(i).isTakenBy(player));
 
-        return winStates.stream().anyMatch(isWinningState);
+        return winStates
+                .stream()
+                .anyMatch(isWinningState);
     }
 
 }
