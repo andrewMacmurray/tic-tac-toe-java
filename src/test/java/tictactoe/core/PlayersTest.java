@@ -75,7 +75,7 @@ public class PlayersTest {
 
     private Players setupPlayers() {
         Player human = new HumanPlayer(PlayerSymbol.X, new MockUI(1));
-        Player computer = new ComputerPlayer(PlayerSymbol.O, new MockTime());
+        Player computer = new RandomPlayer(PlayerSymbol.O, new MockTime());
         return new Players(human, computer);
     }
 

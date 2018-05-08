@@ -34,14 +34,14 @@ public class PlayersFactory {
     private static Players humanVsComputer(UI ui) {
         return new Players(
                 new HumanPlayer(X, ui),
-                new UnbeatablePlayer(O)
+                new UnbeatablePlayer(O, time)
         );
     }
 
     private static Players computerVsComputer() {
         return new Players(
-                new UnbeatablePlayer(X),
-                new UnbeatablePlayer(O)
+                new UnbeatablePlayer(X, time),
+                new UnbeatablePlayer(O, time)
         );
     }
 }

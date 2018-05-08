@@ -4,6 +4,7 @@ import org.junit.Test;
 import tictactoe.core.players.Player;
 import tictactoe.core.players.PlayerSymbol;
 import tictactoe.core.players.UnbeatablePlayer;
+import tictactoe.mocks.MockTime;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,7 +17,7 @@ public class UnbeatablePlayerTest {
 
     @Test
     public void playerSymbol() {
-        Player unbeatablePlayer = new UnbeatablePlayer(PlayerSymbol.O);
+        Player unbeatablePlayer = new UnbeatablePlayer(PlayerSymbol.O, new MockTime());
 
         assertEquals(
                 "can retrieve player symbol",
@@ -27,7 +28,7 @@ public class UnbeatablePlayerTest {
 
     @Test
     public void takeCenter() {
-        Player unbeatablePlayer = new UnbeatablePlayer(PlayerSymbol.O);
+        Player unbeatablePlayer = new UnbeatablePlayer(PlayerSymbol.O, new MockTime());
         Board board = sequence(
                 PlayerSymbol.X,
                 Arrays.asList(1)
@@ -42,7 +43,7 @@ public class UnbeatablePlayerTest {
 
     @Test
     public void blockWin() {
-        Player unbeatablePlayer = new UnbeatablePlayer(PlayerSymbol.O);
+        Player unbeatablePlayer = new UnbeatablePlayer(PlayerSymbol.O, new MockTime());
         Board board = sequence(
                 PlayerSymbol.X,
                 Arrays.asList(1, 2, 4)
@@ -56,9 +57,9 @@ public class UnbeatablePlayerTest {
     }
 
     @Test
-    public void bruteForcePlay() {
+    public void bruteForce3by3Play() {
         for (int i = 0; i < 100; i++) {
-            Board randomGame = playRandomGame();
+            Board randomGame = playRandomGame(3);
             assertFalse(
                     "Player X should never win",
                     randomGame.xWin()
@@ -66,9 +67,20 @@ public class UnbeatablePlayerTest {
         }
     }
 
-    private Board playRandomGame() {
-        Board board = new Board(3);
-        Player unbeatablePlayer  = new UnbeatablePlayer(PlayerSymbol.O);
+    @Test
+    public void bruteForce4by4Play() {
+        for (int i = 0; i < 10; i++) {
+            Board randomGame = playRandomGame(4);
+            assertFalse(
+                    "Player X should never win",
+                    randomGame.xWin()
+            );
+        }
+    }
+
+    private Board playRandomGame(int boardSize) {
+        Board board = new Board(boardSize);
+        Player unbeatablePlayer  = new UnbeatablePlayer(PlayerSymbol.O, new MockTime());
         boolean isUnbeatableTurn = false;
 
         while (!board.isTerminal()) {

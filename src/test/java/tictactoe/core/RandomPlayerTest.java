@@ -1,22 +1,22 @@
 package tictactoe.core;
 
-
 import org.junit.Test;
-import tictactoe.core.players.ComputerPlayer;
 import tictactoe.core.players.Player;
 import tictactoe.core.players.PlayerSymbol;
+import tictactoe.core.players.RandomPlayer;
 import tictactoe.mocks.MockTime;
 
 import java.util.ArrayList;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 
-public class ComputerPlayerTest {
+public class RandomPlayerTest {
 
     @Test
     public void playerSymbol() {
-        Player computer = new ComputerPlayer(PlayerSymbol.O, new MockTime());
+        Player computer = new RandomPlayer(PlayerSymbol.O, new MockTime());
 
         assertEquals(
                 "can retrieve the player symbol for computer player",
@@ -27,7 +27,7 @@ public class ComputerPlayerTest {
 
     @Test
     public void chooseMove() {
-        Player computer = new ComputerPlayer(PlayerSymbol.X, new MockTime());
+        Player computer = new RandomPlayer(PlayerSymbol.X, new MockTime());
         Board board = new Board(3);
         ArrayList<Integer> allAvailableMoves = board.allAvailableMoves();
 
@@ -41,7 +41,7 @@ public class ComputerPlayerTest {
     @Test
     public void delayedMove() {
         MockTime time = new MockTime();
-        Player computer = new ComputerPlayer(PlayerSymbol.X, time);
+        Player computer = new RandomPlayer(PlayerSymbol.X, time);
         Board board = new Board(3);
 
         computer.chooseNextMove(board);
