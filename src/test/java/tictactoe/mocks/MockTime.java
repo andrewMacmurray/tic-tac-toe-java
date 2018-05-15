@@ -1,8 +1,8 @@
 package tictactoe.mocks;
 
-import tictactoe.core.util.ThreadControl;
+import tictactoe.core.util.Time;
 
-public class MockTime implements ThreadControl {
+public class MockTime implements Time {
 
     public String timeLog = "";
 

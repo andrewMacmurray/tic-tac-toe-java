@@ -4,7 +4,6 @@ import org.junit.Test;
 import tictactoe.core.Board;
 import tictactoe.core.players.PlayerSymbol;
 import tictactoe.core.players.Players;
-import tictactoe.core.UI;
 
 import static org.junit.Assert.*;
 
@@ -13,7 +12,7 @@ public class ConsoleRequestTest {
     @Test
     public void requestMove() {
         IOHelper io = new IOHelper("3");
-        UI console = new Console(io.in, io.print);
+        Console console = new Console(io.in, io.print);
         Board board = new Board(3);
 
         assertEquals(
@@ -26,7 +25,7 @@ public class ConsoleRequestTest {
     @Test
     public void notifyUnrecognisedMove() {
         IOHelper io = new IOHelper("blah 3");
-        UI console = new Console(io.in, io.print);
+        Console console = new Console(io.in, io.print);
         Board board = new Board(3);
 
         int move = console.requestMove(board, PlayerSymbol.X);
@@ -43,7 +42,7 @@ public class ConsoleRequestTest {
     @Test
     public void notifyInvalidMove() {
         IOHelper io = new IOHelper("1 2");
-        UI console = new Console(io.in, io.print);
+        Console console = new Console(io.in, io.print);
         Board board = new Board(3).makeMove(1, PlayerSymbol.X);
 
         int move = console.requestMove(board, PlayerSymbol.O);
@@ -56,54 +55,54 @@ public class ConsoleRequestTest {
         );
     }
 
-    @Test
-    public void requestPlayers() {
-        IOHelper io = new IOHelper("1");
-        UI console = new Console(io.in, io.print);
+//    @Test
+//    public void requestPlayers() {
+//        IOHelper io = new IOHelper("1");
+//        Console console = new Console(io.in, io.print);
+//
+//        Players players = console.requestPlayers();
+//        assertEquals(
+//                "choosing option1 should return two players",
+//                PlayerSymbol.X,
+//                players.currentPlayerSymbol()
+//        );
+//    }
 
-        Players players = console.requestPlayers();
-        assertEquals(
-                "choosing option1 should return two players",
-                PlayerSymbol.X,
-                players.currentPlayerSymbol()
-        );
-    }
+//    @Test
+//    public void requestPlayers2() {
+//        IOHelper io = new IOHelper("2");
+//        Console console = new Console(io.in, io.print);
+//
+//        Players players = console.requestPlayers();
+//        assertEquals(
+//                "choosing option 2 should return two players",
+//                PlayerSymbol.X,
+//                players.currentPlayerSymbol()
+//        );
+//    }
 
-    @Test
-    public void requestPlayers2() {
-        IOHelper io = new IOHelper("2");
-        UI console = new Console(io.in, io.print);
-
-        Players players = console.requestPlayers();
-        assertEquals(
-                "choosing option 2 should return two players",
-                PlayerSymbol.X,
-                players.currentPlayerSymbol()
-        );
-    }
-
-    @Test
-    public void requestInvalidOption() {
-        IOHelper io = new IOHelper("8 5 blah 3");
-        UI console = new Console(io.in, io.print);
-
-        Players players = console.requestPlayers();
-        assertEquals(
-                "consumes invalid input until a valid option between 1 and 3 is read",
-                PlayerSymbol.X,
-                players.currentPlayerSymbol()
-        );
-
-        assertTrue(
-                "console notifies user of invalid options",
-                io.output().contains("I didn't recognise that")
-        );
-    }
+//    @Test
+//    public void requestInvalidOption() {
+//        IOHelper io = new IOHelper("8 5 blah 3");
+//        Console console = new Console(io.in, io.print);
+//
+//        Players players = console.requestPlayers();
+//        assertEquals(
+//                "consumes invalid input until a valid option between 1 and 3 is read",
+//                PlayerSymbol.X,
+//                players.currentPlayerSymbol()
+//        );
+//
+//        assertTrue(
+//                "console notifies user of invalid options",
+//                io.output().contains("I didn't recognise that")
+//        );
+//    }
 
     @Test
     public void requestBoardSize() {
         IOHelper io = new IOHelper("3");
-        UI console = new Console(io.in, io.print);
+        Console console = new Console(io.in, io.print);
 
         int boardSize = console.requestBoardSize();
         assertEquals(
@@ -116,7 +115,7 @@ public class ConsoleRequestTest {
     @Test
     public void requestInvalidBoardSize() {
         IOHelper io = new IOHelper("wut? 5 4");
-        UI console = new Console(io.in, io.print);
+        Console console = new Console(io.in, io.print);
 
         int finalBoardSize = console.requestBoardSize();
         assertTrue(

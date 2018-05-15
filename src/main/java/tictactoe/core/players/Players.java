@@ -14,8 +14,8 @@ public class Players {
         this.currentPlayer = player1;
     }
 
-    public int chooseNextMove(Board board) {
-        return currentPlayer.chooseNextMove(board);
+    public void chooseNextMove(Board board) {
+        currentPlayer.requestMove(board);
     }
 
     public PlayerSymbol currentPlayerSymbol() {

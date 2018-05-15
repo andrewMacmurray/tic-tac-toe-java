@@ -1,21 +1,21 @@
 package tictactoe.core.players;
 
 import tictactoe.core.Board;
-import tictactoe.core.UI;
+import tictactoe.core.Mediator;
 
 public class HumanPlayer implements Player {
 
     private final PlayerSymbol playerSymbol;
-    private final UI ui;
+    private final Mediator mediator;
 
-    public HumanPlayer(PlayerSymbol playerSymbol, UI ui) {
+    public HumanPlayer(PlayerSymbol playerSymbol, Mediator mediator) {
         this.playerSymbol = playerSymbol;
-        this.ui = ui;
+        this.mediator = mediator;
     }
 
     @Override
-    public int chooseNextMove(Board board) {
-        return ui.requestMove(board, playerSymbol);
+    public void requestMove(Board board) {
+        mediator.requestMove(board, playerSymbol);
     }
 
     @Override

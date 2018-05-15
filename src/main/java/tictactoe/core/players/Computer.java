@@ -1,15 +1,15 @@
 package tictactoe.core.players;
 
-import tictactoe.core.util.ThreadControl;
+import tictactoe.core.util.Time;
 
 import java.util.ArrayList;
 import java.util.Random;
 
 public abstract class Computer {
 
-    private ThreadControl time;
+    private Time time;
 
-    public Computer(ThreadControl time) {
+    public Computer(Time time) {
         this.time = time;
     }
 

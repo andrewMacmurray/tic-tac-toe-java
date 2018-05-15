@@ -6,48 +6,49 @@ import tictactoe.core.players.Players;
 public class Game {
 
     private Board board;
-    private final Players players;
-    private final UI ui;
+    private Players players;
+    private Mediator mediator;
 
-    public Game(int boardSize, UI ui, Players players) {
-        this.board = new Board(boardSize);
-        this.ui = ui;
+    public Game(Mediator mediator) {
+        this.mediator = mediator;
+    }
+
+    public void playGame() {
+        mediator.requestPlayers();
+    }
+
+    public void setPlayers(Players players) {
         this.players = players;
+        mediator.requestBoardSize();
     }
 
-    public void play() {
-        initialBoard();
-        playMoves();
-        summary();
+    public void setBoardSize(int boardSize) {
+        this.board = new Board(boardSize);
+        mediator.requestMove(this.board, players.currentPlayerSymbol());
     }
 
-    private void initialBoard() {
-        ui.clear();
-        ui.showBoard(board);
-        ui.showMoveInstructions(board.getBoardSize(), players.currentPlayerSymbol());
-    }
-
-    private void summary() {
-        ui.clear();
-        ui.showBoard(board);
-        if (board.xWin()) {
-            ui.showWin(PlayerSymbol.X);
-        } else if (board.oWin()) {
-            ui.showWin(PlayerSymbol.O);
-        } else if (board.isFull()) {
-            ui.showDraw();
-        }
-    }
-
-    private void playMoves() {
-        while (!board.isTerminal()) {
-            playMove();
-        }
-    }
-
-    private void playMove() {
-        Board newBoard = evalNextMove();
+    public void playMove(int move) {
+        Board newBoard = evalNextMove(move);
         nextState(newBoard);
+        nextMove(newBoard);
+    }
+
+    private void nextMove(Board board) {
+        if (!board.isTerminal()) {
+            players.chooseNextMove(board);
+        } else {
+            terminus(board);
+        }
+    }
+
+    private void terminus(Board board) {
+        if (board.xWin()) {
+            mediator.announceWin(PlayerSymbol.X, board);
+        } else if (board.oWin()) {
+            mediator.announceWin(PlayerSymbol.O, board);
+        } else {
+            mediator.announceDraw(board);
+        }
     }
 
     private void nextState(Board board) {
@@ -55,15 +56,11 @@ public class Game {
         players.switchPlayers();
     }
 
-    private Board evalNextMove() {
-        Integer move = players.chooseNextMove(board);
-        Board newBoard = board.makeMove(move, players.currentPlayerSymbol());
-
-        ui.clear();
-        ui.showBoard(newBoard);
-        ui.showMoveSummary(move, board, players.currentPlayerSymbol());
-
-        return newBoard;
+    private Board evalNextMove(int move) {
+        Board nextBoard = board.makeMove(move, players.currentPlayerSymbol());
+        mediator.refreshBoard(nextBoard);
+        mediator.moveSummary(move, board, players.currentPlayerSymbol());
+        return nextBoard;
     }
 
 }

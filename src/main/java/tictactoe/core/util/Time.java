@@ -1,14 +1,7 @@
 package tictactoe.core.util;
 
-public class Time implements ThreadControl {
+public interface Time {
 
-    @Override
-    public void pause(int ms) {
-        try {
-            Thread.sleep(ms);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
-    }
+    void pause(int ms);
 
 }

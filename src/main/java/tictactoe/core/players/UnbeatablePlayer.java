@@ -1,21 +1,24 @@
 package tictactoe.core.players;
 
 import tictactoe.core.Board;
-import tictactoe.core.util.ThreadControl;
+import tictactoe.core.Mediator;
+import tictactoe.core.util.Time;
 
 public class UnbeatablePlayer extends Computer implements Player {
 
-    private PlayerSymbol playerSymbol;
+    private final PlayerSymbol playerSymbol;
+    private final Mediator mediator;
 
-    public UnbeatablePlayer(PlayerSymbol playerSymbol, ThreadControl time) {
+    public UnbeatablePlayer(PlayerSymbol playerSymbol, Time time, Mediator mediator) {
         super(time);
         this.playerSymbol = playerSymbol;
+        this.mediator = mediator;
     }
 
     @Override
-    public int chooseNextMove(Board board) {
+    public void requestMove(Board board) {
         super.waitOneSecond();
-        return strategicMove(board);
+        mediator.receiveMove(strategicMove(board));
     }
 
     @Override
