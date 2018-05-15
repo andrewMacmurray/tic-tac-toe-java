@@ -7,29 +7,27 @@ public abstract class Mediator {
 
     private final Game game = new Game(this);
 
-    public abstract void runGame();
-
-    public abstract void gameInstructions(Board board, PlayerSymbol playerSymbol);
-
     public abstract void requestMoveFromUI(Board board, PlayerSymbol playerSymbol);
+
+    public abstract void requestBoardSizeFromUI();
+
+    public abstract void requestPlayersFromUI();
 
     public void receiveMove(int move) {
         game.receiveMove(move);
     }
 
-    public abstract void moveSummary(int move, Board board, PlayerSymbol playerSymbol);
-
-    public abstract void requestBoardSizeFromUI();
-
     public void receiveBoardSize(int boardSize) {
         game.receiveBoardSize(boardSize);
     }
 
-    public abstract void requestPlayersFromUI();
-
     public void receivePlayers(Players players) {
         game.receivePlayers(players);
     }
+
+    public abstract void moveSummary(int move, Board board, PlayerSymbol playerSymbol);
+
+    public abstract void gameInstructions(Board board, PlayerSymbol playerSymbol);
 
     public abstract void currentBoard(Board board);
 
