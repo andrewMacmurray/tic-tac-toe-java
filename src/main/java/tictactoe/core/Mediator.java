@@ -7,7 +7,7 @@ public abstract class Mediator {
 
     private final Game game = new Game(this);
 
-    public abstract void startGame();
+    public abstract void runGame();
 
     public abstract void gameInstructions(Board board, PlayerSymbol playerSymbol);
 

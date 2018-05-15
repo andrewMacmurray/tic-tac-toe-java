@@ -12,7 +12,7 @@ public class ConsoleMediatorTest {
     @Test
     public void playOneGame() {
         setIoHelperInput("1 3 1 4 2 5 3 N");
-        consoleMediator.startGame();
+        consoleMediator.runGame();
         String output = ioHelper.output();
 
         assertTrue(output.contains("Welcome to Tic Tac Toe"));
@@ -22,7 +22,7 @@ public class ConsoleMediatorTest {
     @Test
     public void playTwoGames() {
         setIoHelperInput("1 3 1 4 2 5 3 Y 1 3 4 1 5 2 7 3 N");
-        consoleMediator.startGame();
+        consoleMediator.runGame();
         String output = ioHelper.output();
 
         assertTrue("Player X wins the first game", output.contains("Player X won!"));
@@ -32,7 +32,7 @@ public class ConsoleMediatorTest {
     @Test
     public void handleDraw() {
         setIoHelperInput("1 3 1 2 3 5 8 4 6 9 7 N");
-        consoleMediator.startGame();
+        consoleMediator.runGame();
 
         assertTrue(ioHelper.output().contains("It's a draw!"));
     }

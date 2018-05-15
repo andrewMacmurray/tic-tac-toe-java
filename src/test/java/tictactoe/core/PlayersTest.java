@@ -3,7 +3,6 @@ package tictactoe.core;
 import org.junit.Before;
 import org.junit.Test;
 import tictactoe.core.players.HumanPlayer;
-import tictactoe.core.players.Player;
 import tictactoe.core.players.PlayerSymbol;
 import tictactoe.core.players.Players;
 import tictactoe.mocks.MockMediator;

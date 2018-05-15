@@ -13,7 +13,7 @@ public class ConsoleMediator extends Mediator {
     }
 
     @Override
-    public void startGame() {
+    public void runGame() {
         console.clear();
         console.greetUser();
         console.showGameOptions();
@@ -39,7 +39,7 @@ public class ConsoleMediator extends Mediator {
 
     public void playAgain() {
         if (console.requestPlayAgain()) {
-            startGame();
+            runGame();
         } else {
             console.goodbye();
         }

@@ -23,8 +23,13 @@ public class MockMediator extends Mediator {
     }
 
     @Override
-    public void startGame() {
+    public void runGame() {
         mediatorLog = "play game";
+    }
+
+    @Override
+    public void gameInstructions(Board board, PlayerSymbol playerSymbol) {
+        mediatorLog = "game instructions";
     }
 
     @Override

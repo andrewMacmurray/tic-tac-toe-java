@@ -2,16 +2,13 @@ package tictactoe.core;
 
 import org.junit.Before;
 import org.junit.Test;
-import tictactoe.core.players.Player;
 import tictactoe.core.players.PlayerSymbol;
 import tictactoe.core.players.UnbeatablePlayer;
 import tictactoe.mocks.MockMediator;
 import tictactoe.mocks.MockTime;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
 
 import static org.junit.Assert.*;
 

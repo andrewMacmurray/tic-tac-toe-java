@@ -1,6 +1,5 @@
 package tictactoe.core;
 
-import tictactoe.core.players.Player;
 import tictactoe.core.players.PlayerSymbol;
 
 import java.util.Optional;
