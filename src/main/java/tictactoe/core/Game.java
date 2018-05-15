@@ -14,17 +14,18 @@ public class Game {
     }
 
     public void playGame() {
-        mediator.requestPlayers();
+        mediator.requestPlayersFromUI();
     }
 
     public void setPlayers(Players players) {
         this.players = players;
-        mediator.requestBoardSize();
+        mediator.requestBoardSizeFromUI();
     }
 
     public void setBoardSize(int boardSize) {
         this.board = new Board(boardSize);
-        mediator.requestMove(this.board, players.currentPlayerSymbol());
+        mediator.gameInstructions(board, players.currentPlayerSymbol());
+        players.chooseNextMove(board);
     }
 
     public void playMove(int move) {
@@ -58,7 +59,7 @@ public class Game {
 
     private Board evalNextMove(int move) {
         Board nextBoard = board.makeMove(move, players.currentPlayerSymbol());
-        mediator.refreshBoard(nextBoard);
+        mediator.currentBoard(nextBoard);
         mediator.moveSummary(move, board, players.currentPlayerSymbol());
         return nextBoard;
     }

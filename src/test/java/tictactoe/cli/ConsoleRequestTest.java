@@ -1,13 +1,22 @@
 package tictactoe.cli;
 
+import org.junit.Before;
 import org.junit.Test;
 import tictactoe.core.Board;
 import tictactoe.core.players.PlayerSymbol;
 import tictactoe.core.players.Players;
+import tictactoe.mocks.MockMediator;
 
 import static org.junit.Assert.*;
 
 public class ConsoleRequestTest {
+
+    private MockMediator mockMediator;
+
+    @Before
+    public void setup() {
+        mockMediator = new MockMediator();
+    }
 
     @Test
     public void requestMove() {
@@ -55,49 +64,49 @@ public class ConsoleRequestTest {
         );
     }
 
-//    @Test
-//    public void requestPlayers() {
-//        IOHelper io = new IOHelper("1");
-//        Console console = new Console(io.in, io.print);
-//
-//        Players players = console.requestPlayers();
-//        assertEquals(
-//                "choosing option1 should return two players",
-//                PlayerSymbol.X,
-//                players.currentPlayerSymbol()
-//        );
-//    }
+    @Test
+    public void requestPlayers() {
+        IOHelper io = new IOHelper("1");
+        Console console = new Console(io.in, io.print);
 
-//    @Test
-//    public void requestPlayers2() {
-//        IOHelper io = new IOHelper("2");
-//        Console console = new Console(io.in, io.print);
-//
-//        Players players = console.requestPlayers();
-//        assertEquals(
-//                "choosing option 2 should return two players",
-//                PlayerSymbol.X,
-//                players.currentPlayerSymbol()
-//        );
-//    }
+        Players players = console.requestPlayers(mockMediator);
+        assertEquals(
+                "choosing option1 should return two players",
+                PlayerSymbol.X,
+                players.currentPlayerSymbol()
+        );
+    }
 
-//    @Test
-//    public void requestInvalidOption() {
-//        IOHelper io = new IOHelper("8 5 blah 3");
-//        Console console = new Console(io.in, io.print);
-//
-//        Players players = console.requestPlayers();
-//        assertEquals(
-//                "consumes invalid input until a valid option between 1 and 3 is read",
-//                PlayerSymbol.X,
-//                players.currentPlayerSymbol()
-//        );
-//
-//        assertTrue(
-//                "console notifies user of invalid options",
-//                io.output().contains("I didn't recognise that")
-//        );
-//    }
+    @Test
+    public void requestPlayers2() {
+        IOHelper io = new IOHelper("2");
+        Console console = new Console(io.in, io.print);
+
+        Players players = console.requestPlayers(mockMediator);
+        assertEquals(
+                "choosing option 2 should return two players",
+                PlayerSymbol.X,
+                players.currentPlayerSymbol()
+        );
+    }
+
+    @Test
+    public void requestInvalidOption() {
+        IOHelper io = new IOHelper("8 5 blah 3");
+        Console console = new Console(io.in, io.print);
+
+        Players players = console.requestPlayers(mockMediator);
+        assertEquals(
+                "consumes invalid input until a valid option between 1 and 3 is read",
+                PlayerSymbol.X,
+                players.currentPlayerSymbol()
+        );
+
+        assertTrue(
+                "console notifies user of invalid options",
+                io.output().contains("I didn't recognise that")
+        );
+    }
 
     @Test
     public void requestBoardSize() {

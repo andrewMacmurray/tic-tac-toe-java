@@ -15,7 +15,7 @@ public class HumanPlayer implements Player {
 
     @Override
     public void requestMove(Board board) {
-        mediator.requestMove(board, playerSymbol);
+        mediator.requestMoveFromUI(board, playerSymbol);
     }
 
     @Override

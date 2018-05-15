@@ -23,12 +23,12 @@ public class MockMediator extends Mediator {
     }
 
     @Override
-    public void playGame() {
+    public void startGame() {
         mediatorLog = "play game";
     }
 
     @Override
-    public void requestMove(Board board, PlayerSymbol playerSymbol) {
+    public void requestMoveFromUI(Board board, PlayerSymbol playerSymbol) {
         mediatorLog = "request move";
     }
 
@@ -45,17 +45,17 @@ public class MockMediator extends Mediator {
     }
 
     @Override
-    public void requestBoardSize() {
+    public void requestBoardSizeFromUI() {
         mediatorLog = "request board size";
     }
 
     @Override
-    public void requestPlayers() {
+    public void requestPlayersFromUI() {
         mediatorLog = "request players";
     }
 
     @Override
-    public void refreshBoard(Board board) {
+    public void currentBoard(Board board) {
         currentBoard = board;
     }
 

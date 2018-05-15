@@ -27,7 +27,6 @@ public class Console {
         }
     }
 
-
     public Players requestPlayers(Mediator mediator) {
         return new PlayersFactory(mediator).createPlayers(readPlayerOption());
     }
@@ -83,7 +82,7 @@ public class Console {
     }
 
 
-    public void showInstructions() {
+    public void showGameOptions() {
         Messages.gameTypeOptions()
                 .forEach(io::println);
     }
