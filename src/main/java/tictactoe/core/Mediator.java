@@ -14,7 +14,7 @@ public abstract class Mediator {
     public abstract void requestMoveFromUI(Board board, PlayerSymbol playerSymbol);
 
     public void receiveMove(int move) {
-        game.playMove(move);
+        game.receiveMove(move);
     }
 
     public abstract void moveSummary(int move, Board board, PlayerSymbol playerSymbol);
@@ -22,13 +22,13 @@ public abstract class Mediator {
     public abstract void requestBoardSizeFromUI();
 
     public void receiveBoardSize(int boardSize) {
-        game.setBoardSize(boardSize);
+        game.receiveBoardSize(boardSize);
     }
 
     public abstract void requestPlayersFromUI();
 
     public void receivePlayers(Players players) {
-        game.setPlayers(players);
+        game.receivePlayers(players);
     }
 
     public abstract void currentBoard(Board board);

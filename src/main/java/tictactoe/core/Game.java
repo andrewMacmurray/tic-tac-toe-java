@@ -13,22 +13,18 @@ public class Game {
         this.mediator = mediator;
     }
 
-    public void playGame() {
-        mediator.requestPlayersFromUI();
-    }
-
-    public void setPlayers(Players players) {
+    public void receivePlayers(Players players) {
         this.players = players;
         mediator.requestBoardSizeFromUI();
     }
 
-    public void setBoardSize(int boardSize) {
+    public void receiveBoardSize(int boardSize) {
         this.board = new Board(boardSize);
         mediator.gameInstructions(board, players.currentPlayerSymbol());
         players.chooseNextMove(board);
     }
 
-    public void playMove(int move) {
+    public void receiveMove(int move) {
         Board newBoard = evalNextMove(move);
         nextState(newBoard);
         nextMove(newBoard);

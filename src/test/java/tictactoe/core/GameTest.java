@@ -23,17 +23,8 @@ public class GameTest {
     }
 
     @Test
-    public void playGame() {
-        game.playGame();
-        assertEquals("starting the game should request the players",
-                "request players",
-                mockMediator.getLog()
-        );
-    }
-
-    @Test
-    public void setPlayers() {
-        game.setPlayers(players);
+    public void receivePlayers() {
+        game.receivePlayers(players);
         assertEquals(
                 "setting players prompts the game to request boardSize",
                 "request board size",
@@ -42,9 +33,9 @@ public class GameTest {
     }
 
     @Test
-    public void setBoardSize() {
-        game.setPlayers(players);
-        game.setBoardSize(3);
+    public void receiveBoardSize() {
+        game.receivePlayers(players);
+        game.receiveBoardSize(3);
         assertEquals(
                 "after setting the board size the mediator will ask for a move",
                 "request move",
@@ -53,9 +44,9 @@ public class GameTest {
     }
 
     @Test
-    public void playMove() {
+    public void recieveMove() {
         setupGameOptions();
-        game.playMove(1);
+        game.receiveMove(1);
         assertEquals("move 1 has been played", 1, mockMediator.getCurrentMove());
         assertFalse("board has been updated correctly", mockMediator.getCurrentBoard().isMoveAvailable(1));
     }
@@ -82,13 +73,13 @@ public class GameTest {
     }
 
     private void setupGameOptions() {
-        game.setPlayers(players);
-        game.setBoardSize(3);
+        game.receivePlayers(players);
+        game.receiveBoardSize(3);
     }
 
     private void playMoves(int... moves) {
         for (int move : moves) {
-            game.playMove(move);
+            game.receiveMove(move);
         }
     }
 }
