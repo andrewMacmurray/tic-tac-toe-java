@@ -39,8 +39,8 @@ public class Board {
 
     public ArrayList<Integer> allAvailableMoves() {
         return tilesStream()
-                .filter(entry -> entry.getValue().isEmpty())
-                .map(Map.Entry::getKey)
+                .filter(Tile::isEmpty)
+                .map(Tile::getIndex)
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
@@ -62,7 +62,7 @@ public class Board {
     }
 
     boolean isFull() {
-        return tilesStream().noneMatch(t -> t.getValue().isEmpty());
+        return tilesStream().noneMatch(Tile::isEmpty);
     }
 
     // Creates a new Board based on the existing board
@@ -72,9 +72,9 @@ public class Board {
         this.winStates = currentBoard.winStates;
     }
 
-    private Map<Integer, Tile> insertPlayerAt(int tile, PlayerSymbol player) {
+    private Map<Integer, Tile> insertPlayerAt(int tileIndex, PlayerSymbol player) {
         Map<Integer, Tile> newTiles = new HashMap<>(this.tiles);
-        newTiles.put(tile, new Tile(player));
+        newTiles.put(tileIndex, new Tile(tileIndex, player));
         return newTiles;
     }
 
@@ -83,11 +83,14 @@ public class Board {
         return IntStream
                 .range(1, lastTile)
                 .boxed()
-                .collect(Collectors.toMap(Function.identity(), x -> new Tile()));
+                .collect(Collectors.toMap(Function.identity(), Tile::new));
     }
 
-    public Stream<Map.Entry<Integer, Tile>> tilesStream() {
-        return tiles.entrySet().stream();
+    public Stream<Tile> tilesStream() {
+        return tiles
+                .entrySet()
+                .stream()
+                .map(Map.Entry::getValue);
     }
 
     boolean xWin() {

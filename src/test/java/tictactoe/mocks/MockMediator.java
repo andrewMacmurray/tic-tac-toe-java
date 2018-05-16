@@ -22,7 +22,6 @@ public class MockMediator extends Mediator {
         return currentBoard;
     }
 
-    @Override
     public void runGame() {
         mediatorLog = "play game";
     }

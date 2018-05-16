@@ -6,13 +6,17 @@ import java.util.Optional;
 import java.util.function.Function;
 
 public class Tile {
-    private Optional<PlayerSymbol> playerSymbol;
 
-    Tile() {
+    private Optional<PlayerSymbol> playerSymbol;
+    private int index;
+
+    Tile(int index) {
+        this.index = index;
         this.playerSymbol = Optional.empty();
     }
 
-    Tile(PlayerSymbol playerSymbol) {
+    Tile(int index, PlayerSymbol playerSymbol) {
+        this.index = index;
         this.playerSymbol = Optional.of(playerSymbol);
     }
 
@@ -24,13 +28,14 @@ public class Tile {
         return !playerSymbol.isPresent();
     }
 
-    public String toString(int index) {
-        return toStringWith(PlayerSymbol::toString, index);
+    public int getIndex() {
+        return index;
     }
 
-    public String toStringWith(Function<PlayerSymbol, String> toStringF, int index) {
+    public String toString() {
         return playerSymbol
-                .map(toStringF)
+                .map(PlayerSymbol::toString)
                 .orElse(Integer.toString(index));
     }
+
 }
