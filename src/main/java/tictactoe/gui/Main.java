@@ -10,7 +10,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         GuiMediator guiMediator = new GuiMediator();
 
-        guiMediator.playGame();
+        guiMediator.runGame();
         Scene scene = guiMediator.getCurrentScene();
 
         primaryStage.setScene(scene);

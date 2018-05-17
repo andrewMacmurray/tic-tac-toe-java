@@ -7,6 +7,8 @@ public abstract class Mediator {
 
     private final Game game = new Game(this);
 
+    public abstract void runGame();
+
     public abstract void requestPlayersFromUI();
 
     public abstract void requestBoardSizeFromUI();

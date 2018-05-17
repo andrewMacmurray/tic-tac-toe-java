@@ -21,7 +21,7 @@ public class GuiMediatorTest extends ApplicationTest {
     public void start(Stage stage) {
         GuiMediator guiMediator = new GuiMediator();
         currentScene = guiMediator.getCurrentScene();
-        guiMediator.playGame();
+        guiMediator.runGame();
 
         stage.setScene(currentScene);
         stage.show();

@@ -12,6 +12,7 @@ public class ConsoleMediator extends Mediator {
         this.console = console;
     }
 
+    @Override
     public void runGame() {
         console.clear();
         console.greetUser();

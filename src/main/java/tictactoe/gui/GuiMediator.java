@@ -29,7 +29,8 @@ public class GuiMediator extends Mediator {
         return currentScene;
     }
 
-    public void playGame() {
+    @Override
+    public void runGame() {
         requestPlayersFromUI();
     }
 
