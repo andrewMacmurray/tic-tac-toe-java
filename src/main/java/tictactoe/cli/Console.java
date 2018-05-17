@@ -31,18 +31,15 @@ public class Console {
         return new PlayersFactory(mediator).createPlayers(readPlayerOption());
     }
 
-
     public int requestBoardSize() {
         io.println(Messages.boardSize);
         return io.readIntInRange(3, 4, Messages.unrecognised);
     }
 
-
     public boolean requestPlayAgain() {
         io.println(Messages.playAgain);
         return io.readYesNoWithRetry(Messages.unrecognised);
     }
-
 
     public void showMoveSummary(Integer move, Board board, PlayerSymbol playerSymbol) {
         if (board.isMoveOutOfBounds(move)) {
@@ -54,44 +51,35 @@ public class Console {
         }
     }
 
-
     public void showMoveInstructions(Integer boardSize, PlayerSymbol playerSymbol) {
         io.println(Messages.enterNumbers(boardSize, playerSymbol));
     }
 
-
     public void clear() {
         io.clearScreen();
     }
-
-
 
     public void showBoard(Board board) {
         String boardString = new BoardSerializer(board).render();
         io.println(boardString);
     }
 
-
     public void greetUser() {
         io.println(Messages.welcome);
     }
 
-
     public void goodbye() {
         io.println(Messages.goodbye);
     }
-
 
     public void showGameOptions() {
         Messages.gameTypeOptions()
                 .forEach(io::println);
     }
 
-
     public void showWin(PlayerSymbol playerSymbol) {
         io.println(Messages.winner(playerSymbol));
     }
-
 
     public void showDraw() {
         io.println(Messages.draw);

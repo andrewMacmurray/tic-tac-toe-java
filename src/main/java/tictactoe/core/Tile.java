@@ -24,7 +24,7 @@ public class Tile {
         return playerSymbol.map(s -> s == p).orElse(false);
     }
 
-    boolean isEmpty() {
+    public boolean isEmpty() {
         return !playerSymbol.isPresent();
     }
 
@@ -33,9 +33,18 @@ public class Tile {
     }
 
     public String toString() {
-        return playerSymbol
-                .map(PlayerSymbol::toString)
-                .orElse(Integer.toString(index));
+        return toStringWithDefault().apply(Integer.toString(index));
+    }
+
+    public String toString(String emptyTile) {
+        return toStringWithDefault().apply(emptyTile);
+    }
+
+    private Function<String, String> toStringWithDefault() {
+        return defaultTileString ->
+                playerSymbol
+                        .map(PlayerSymbol::toString)
+                        .orElse(defaultTileString);
     }
 
 }
