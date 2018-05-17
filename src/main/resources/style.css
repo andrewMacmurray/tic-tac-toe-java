@@ -34,6 +34,14 @@
     -fx-border-width: 0;
 }
 
+.tile.player-x Text {
+    -fx-fill: #FF5B5B;
+}
+
+.tile.player-o Text {
+    -fx-fill: #0B54B0;
+}
+
 .tile.player-o {
     -fx-background-color: #D390FF;
     -fx-border-width: 0;

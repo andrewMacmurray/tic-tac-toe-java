@@ -15,11 +15,10 @@ public class GuiMediator extends Mediator {
     private BoardUI boardUI = new BoardUI(this);
 
     public GuiMediator() {
-        StackPane stackPane = new StackPane();
         currentScene = initScene();
     }
 
-    public Scene initScene() {
+    private Scene initScene() {
         Scene scene = new Scene(new StackPane(), 800, 800);
         new StylesheetLoader(scene).load();
         return scene;
@@ -67,7 +66,7 @@ public class GuiMediator extends Mediator {
     @Override
     public void announceWin(PlayerSymbol playerSymbol, Board board) {
         boardUI.disableClicks();
-        boardUI.setStatusText("Player " + playerSymbol.toString() + " Won!");
+        boardUI.setStatusText("Player " + playerSymbol + " Won!");
     }
 
     @Override
