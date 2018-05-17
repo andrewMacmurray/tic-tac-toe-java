@@ -37,23 +37,23 @@ public class GuiMediator extends Mediator {
     @Override
     public void requestPlayersFromUI() {
         Players players = new PlayersFactory(this).createPlayers(1);
-        receivePlayers(players);
+        super.receivePlayers(players);
     }
 
     @Override
     public void requestBoardSizeFromUI() {
-        receiveBoardSize(3);
+        super.receiveBoardSize(3);
     }
 
     @Override
     public void requestMoveFromUI(Board board, PlayerSymbol playerSymbol) {
         boardUI.renderBoard(board);
-        currentScene.setRoot(boardUI);
     }
 
     @Override
-    public void moveSummary(int move, Board board, PlayerSymbol playerSymbol) {
+    public void moveSummary(int move, Board prevBoard, Board nextBoard, PlayerSymbol playerSymbol) {
         String statusText = "Your turn player " + playerSymbol.getAlternate();
+        boardUI.renderBoard(nextBoard);
         boardUI.setStatusText(statusText);
     }
 
@@ -61,11 +61,6 @@ public class GuiMediator extends Mediator {
     public void gameInstructions(Board board, PlayerSymbol playerSymbol) {
         String instructions = "Your turn player " + playerSymbol;
         boardUI.setStatusText(instructions);
-    }
-
-    @Override
-    public void currentBoard(Board board) {
-        boardUI.renderBoard(board);
         currentScene.setRoot(boardUI);
     }
 

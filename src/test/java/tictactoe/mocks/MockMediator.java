@@ -43,8 +43,9 @@ public class MockMediator extends Mediator {
     }
 
     @Override
-    public void moveSummary(int move, Board board, PlayerSymbol playerSymbol) {
+    public void moveSummary(int move, Board prevBoard, Board nextBoard, PlayerSymbol playerSymbol) {
         currentMove = move;
+        currentBoard = nextBoard;
         mediatorLog = "player " + playerSymbol.toString() + " played move " + move;
     }
 
@@ -56,11 +57,6 @@ public class MockMediator extends Mediator {
     @Override
     public void requestPlayersFromUI() {
         mediatorLog = "request players";
-    }
-
-    @Override
-    public void currentBoard(Board board) {
-        currentBoard = board;
     }
 
     @Override

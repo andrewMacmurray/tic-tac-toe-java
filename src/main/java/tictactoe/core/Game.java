@@ -19,18 +19,19 @@ public class Game {
     }
 
     public void receiveBoardSize(int boardSize) {
-        this.board = new Board(boardSize);
+        board = new Board(boardSize);
         mediator.gameInstructions(board, players.currentPlayerSymbol());
         players.chooseNextMove(board);
     }
 
     public void receiveMove(int move) {
         Board newBoard = evalNextMove(move);
-        nextState(newBoard);
-        nextMove(newBoard);
+        mediator.moveSummary(move, board, newBoard, players.currentPlayerSymbol());
+        setNextState(newBoard);
+        playNextMove(newBoard);
     }
 
-    private void nextMove(Board board) {
+    private void playNextMove(Board board) {
         if (!board.isTerminal()) {
             players.chooseNextMove(board);
         } else {
@@ -48,16 +49,13 @@ public class Game {
         }
     }
 
-    private void nextState(Board board) {
+    private void setNextState(Board board) {
         this.board = board;
         players.switchPlayers();
     }
 
     private Board evalNextMove(int move) {
-        Board nextBoard = board.makeMove(move, players.currentPlayerSymbol());
-        mediator.currentBoard(nextBoard);
-        mediator.moveSummary(move, board, players.currentPlayerSymbol());
-        return nextBoard;
+        return board.makeMove(move, players.currentPlayerSymbol());
     }
 
 }

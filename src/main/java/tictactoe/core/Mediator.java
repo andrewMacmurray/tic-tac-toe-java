@@ -27,11 +27,9 @@ public abstract class Mediator {
         game.receiveMove(move);
     }
 
-    public abstract void moveSummary(int move, Board board, PlayerSymbol playerSymbol);
-
     public abstract void gameInstructions(Board board, PlayerSymbol playerSymbol);
 
-    public abstract void currentBoard(Board board);
+    public abstract void moveSummary(int move, Board prevBoard, Board nextBoard, PlayerSymbol playerSymbol);
 
     public abstract void announceWin(PlayerSymbol playerSymbol, Board board);
 

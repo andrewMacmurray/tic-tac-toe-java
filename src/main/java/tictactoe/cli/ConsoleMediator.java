@@ -29,12 +29,14 @@ public class ConsoleMediator extends Mediator {
 
     @Override
     public void requestMoveFromUI(Board board, PlayerSymbol playerSymbol) {
-        receiveMove(console.requestMove(board, playerSymbol));
+        super.receiveMove(console.requestMove(board, playerSymbol));
     }
 
     @Override
-    public void moveSummary(int move, Board board, PlayerSymbol playerSymbol) {
-        console.showMoveSummary(move, board, playerSymbol);
+    public void moveSummary(int move, Board prevBoard, Board nextBoard, PlayerSymbol playerSymbol) {
+        console.clear();
+        console.showBoard(nextBoard);
+        console.showMoveSummary(move, prevBoard, playerSymbol);
     }
 
     public void playAgain() {
@@ -47,18 +49,12 @@ public class ConsoleMediator extends Mediator {
 
     @Override
     public void requestBoardSizeFromUI() {
-        receiveBoardSize(console.requestBoardSize());
+        super.receiveBoardSize(console.requestBoardSize());
     }
 
     @Override
     public void requestPlayersFromUI() {
-        receivePlayers(console.requestPlayers(this));
-    }
-
-    @Override
-    public void currentBoard(Board board) {
-        console.clear();
-        console.showBoard(board);
+        super.receivePlayers(console.requestPlayers(this));
     }
 
     @Override
