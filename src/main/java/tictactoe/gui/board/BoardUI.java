@@ -1,15 +1,12 @@
 package tictactoe.gui.board;
 
 import javafx.scene.Node;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import tictactoe.core.Board;
 import tictactoe.core.Mediator;
 import tictactoe.core.Tile;
-
-import java.util.function.Consumer;
 
 public class BoardUI extends VBox {
 
@@ -34,7 +31,7 @@ public class BoardUI extends VBox {
 
     private void setupTile(Tile tile) {
         PlayerTile playerTile = new PlayerTile(tile);
-        playerTile.makeMoveOnClick(mediator::receiveMove);
+        playerTile.onClick(mediator::receiveMove);
         boardTiles.getChildren().add(playerTile);
     }
 

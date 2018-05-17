@@ -9,10 +9,9 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         GuiMediator guiMediator = new GuiMediator();
-
         guiMediator.runGame();
-        Scene scene = guiMediator.getCurrentScene();
 
+        Scene scene = guiMediator.getCurrentScene();
         primaryStage.setScene(scene);
         primaryStage.show();
     }

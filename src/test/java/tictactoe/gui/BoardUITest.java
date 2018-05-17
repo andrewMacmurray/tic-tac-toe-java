@@ -56,8 +56,7 @@ public class BoardUITest extends ApplicationTest {
 
     @Test
     public void clickTile() {
-        Set<Node> tiles = lookup(".tile").queryAll();
-        List<Node> tilesList = new ArrayList<>(tiles);
+        List<Node> tilesList = new ArrayList<>(lookup(".tile").queryAll());
         Node tile1 = tilesList.get(0);
         clickOn(tile1);
 

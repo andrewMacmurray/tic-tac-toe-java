@@ -16,7 +16,7 @@ public class PlayerTile extends StackPane {
         setupTile();
     }
 
-    public void makeMoveOnClick(Consumer<Integer> moveReceiver) {
+    public void onClick(Consumer<Integer> moveReceiver) {
         this.setOnMouseClicked(e -> {
             if (tile.isEmpty()) {
                 moveReceiver.accept(tile.getIndex());
