@@ -6,21 +6,23 @@ import tictactoe.core.util.Time;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.function.Consumer;
 
 public class UnbeatablePlayer extends Player {
 
     private Time time;
+    private Consumer<Integer> moveResponder;
 
-    public UnbeatablePlayer(PlayerSymbol playerSymbol, Time time, Mediator mediator) {
+    public UnbeatablePlayer(PlayerSymbol playerSymbol, Time time, Consumer<Integer> moveResponder) {
         this.time = time;
         this.playerSymbol = playerSymbol;
-        this.mediator = mediator;
+        this.moveResponder = moveResponder;
     }
 
     @Override
     public void requestMove(Board board) {
         waitOneSecond();
-        mediator.receiveMove(strategicMove(board));
+        moveResponder.accept(strategicMove(board));
     }
 
     private int strategicMove(Board board) {

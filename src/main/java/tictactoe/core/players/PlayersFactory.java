@@ -31,22 +31,22 @@ public class PlayersFactory {
 
     private Players humanVsHuman() {
         return new Players(
-                new HumanPlayer(X, mediator),
-                new HumanPlayer(O, mediator)
+                new HumanPlayer(X, mediator::requestMoveFromUI),
+                new HumanPlayer(O, mediator::requestMoveFromUI)
         );
     }
 
     private Players humanVsComputer() {
         return new Players(
-                new HumanPlayer(X, mediator),
-                new UnbeatablePlayer(O, time, mediator)
+                new HumanPlayer(X, mediator::requestMoveFromUI),
+                new UnbeatablePlayer(O, time, mediator::receiveMove)
         );
     }
 
     private Players computerVsComputer() {
         return new Players(
-                new UnbeatablePlayer(X, time, mediator),
-                new UnbeatablePlayer(O, time, mediator)
+                new UnbeatablePlayer(X, time, mediator::receiveMove),
+                new UnbeatablePlayer(O, time, mediator::receiveMove)
         );
     }
 }

@@ -6,7 +6,6 @@ import tictactoe.core.Mediator;
 public abstract class Player {
 
     PlayerSymbol playerSymbol;
-    Mediator mediator;
 
     public PlayerSymbol getSymbol() {
         return playerSymbol;

@@ -20,7 +20,7 @@ public class HumanPlayerTest {
 
     @Test
     public void playerSymbol() {
-        Player human = new HumanPlayer(PlayerSymbol.O, mockMediator);
+        Player human = new HumanPlayer(PlayerSymbol.O, mockMediator::requestMoveFromUI);
 
         assertEquals(
                 "can retrieve the player symbol from human player",
@@ -31,7 +31,7 @@ public class HumanPlayerTest {
 
     @Test
     public void chooseMove() {
-        Player human = new HumanPlayer(PlayerSymbol.X, mockMediator);
+        Player human = new HumanPlayer(PlayerSymbol.X, mockMediator::requestMoveFromUI);
         Board board = new Board(3);
 
         human.requestMove(board);

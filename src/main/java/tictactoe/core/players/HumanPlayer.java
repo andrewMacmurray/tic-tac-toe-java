@@ -3,16 +3,20 @@ package tictactoe.core.players;
 import tictactoe.core.Board;
 import tictactoe.core.Mediator;
 
+import java.util.function.BiConsumer;
+
 public class HumanPlayer extends Player {
 
-    public HumanPlayer(PlayerSymbol playerSymbol, Mediator mediator) {
+    private BiConsumer<Board, PlayerSymbol> moveResponder;
+
+    public HumanPlayer(PlayerSymbol playerSymbol, BiConsumer<Board, PlayerSymbol> moveResponder) {
         this.playerSymbol = playerSymbol;
-        this.mediator = mediator;
+        this.moveResponder = moveResponder;
     }
 
     @Override
     public void requestMove(Board board) {
-        mediator.requestMoveFromUI(board, playerSymbol);
+        moveResponder.accept(board, playerSymbol);
     }
 
 }

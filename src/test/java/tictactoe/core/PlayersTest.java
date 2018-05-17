@@ -17,8 +17,8 @@ public class PlayersTest {
     @Before
     public void setup() {
         mockMediator = new MockMediator();
-        HumanPlayer player1 = new HumanPlayer(PlayerSymbol.X, mockMediator);
-        HumanPlayer player2 = new HumanPlayer(PlayerSymbol.O, mockMediator);
+        HumanPlayer player1 = new HumanPlayer(PlayerSymbol.X, mockMediator::requestMoveFromUI);
+        HumanPlayer player2 = new HumanPlayer(PlayerSymbol.O, mockMediator::requestMoveFromUI);
         players = new Players(player1, player2);
     }
 

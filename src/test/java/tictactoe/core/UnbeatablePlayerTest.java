@@ -20,7 +20,7 @@ public class UnbeatablePlayerTest {
     @Before
     public void setup() {
         mockMediator = new MockMediator();
-        unbeatablePlayer = new UnbeatablePlayer(PlayerSymbol.O, new MockTime(), mockMediator);
+        unbeatablePlayer = new UnbeatablePlayer(PlayerSymbol.O, new MockTime(), mockMediator::receiveMove);
     }
 
     @Test
