@@ -11,9 +11,8 @@ import tictactoe.core.Tile;
 
 import java.util.function.Consumer;
 
-public class BoardUI {
+public class BoardUI extends VBox {
 
-    private VBox rootNode = new VBox();
     private Text statusText = new Text();
     private TilePane boardTiles = new TilePane();
     private Mediator mediator;
@@ -22,10 +21,6 @@ public class BoardUI {
         this.mediator = mediator;
         assembleSceneGraph();
         addCssClasses();
-    }
-
-    public VBox getRootNode() {
-        return rootNode;
     }
 
     public void setStatusText(String text) {
@@ -52,7 +47,7 @@ public class BoardUI {
     }
 
     private void assembleSceneGraph() {
-        rootNode.getChildren().addAll(
+        this.getChildren().addAll(
                 boardTiles,
                 statusText
         );
@@ -61,7 +56,7 @@ public class BoardUI {
     private void addCssClasses() {
         addCssClass(statusText, "status-text");
         addCssClass(boardTiles, "board-container");
-        addCssClass(rootNode, "main-container");
+        addCssClass(this, "main-container");
     }
 
     private void addCssClass(Node node, String cssClass) {

@@ -26,11 +26,10 @@ public class BoardUITest extends ApplicationTest {
 
     private MockMediator mockMediator = new MockMediator();
     private BoardUI boardUI = new BoardUI(mockMediator);
-    private Parent rootNode = boardUI.getRootNode();
 
     @Override
     public void start(Stage stage) {
-        Scene scene = new Scene(rootNode, 800, 800);
+        Scene scene = new Scene(boardUI, 800, 800);
         boardUI.renderBoard(new Board(3));
         new StylesheetLoader(scene).load();
         stage.setScene(scene);
@@ -46,13 +45,13 @@ public class BoardUITest extends ApplicationTest {
 
     @Test
     public void setStatusText() {
-        boardUI.setStatusText("your turn player X");
-        verifyThat(".status-text", hasText("your turn player X"));
+        boardUI.setStatusText("your turn player O");
+        verifyThat(".status-text", hasText("your turn player O"));
     }
 
     @Test
     public void renderBoard() {
-        verifyThat(rootNode, hasChildren(9, ".tile"));
+        verifyThat(boardUI, hasChildren(9, ".tile"));
     }
 
     @Test
@@ -76,7 +75,8 @@ public class BoardUITest extends ApplicationTest {
                 .makeMove(2, PlayerSymbol.X);
         new FxRobot().interact(() -> boardUI.renderBoard(currentBoard));
 
-        verifyThat(rootNode, hasChildren(1, ".player-o"));
-        verifyThat(rootNode, hasChildren(1, ".player-x"));
+        verifyThat(boardUI, hasChildren(1, ".player-o"));
+        verifyThat(boardUI, hasChildren(1, ".player-x"));
     }
+
 }

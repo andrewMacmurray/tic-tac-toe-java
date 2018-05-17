@@ -48,7 +48,7 @@ public class GuiMediator extends Mediator {
     @Override
     public void requestMoveFromUI(Board board, PlayerSymbol playerSymbol) {
         boardUI.renderBoard(board);
-        currentScene.setRoot(boardUI.getRootNode());
+        currentScene.setRoot(boardUI);
     }
 
     @Override
@@ -59,13 +59,14 @@ public class GuiMediator extends Mediator {
 
     @Override
     public void gameInstructions(Board board, PlayerSymbol playerSymbol) {
-
+        String instructions = "Your turn player " + playerSymbol;
+        boardUI.setStatusText(instructions);
     }
 
     @Override
     public void currentBoard(Board board) {
         boardUI.renderBoard(board);
-        currentScene.setRoot(boardUI.getRootNode());
+        currentScene.setRoot(boardUI);
     }
 
     @Override
