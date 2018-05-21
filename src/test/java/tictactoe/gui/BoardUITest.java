@@ -29,7 +29,7 @@ public class BoardUITest extends ApplicationTest {
     public void start(Stage stage) {
         Scene scene = new Scene(boardUI, 800, 800);
         boardUI.renderBoard(new Board(3));
-        new StylesheetLoader(scene).load();
+        Stylesheet.load(scene);
         stage.setScene(scene);
         stage.show();
     }

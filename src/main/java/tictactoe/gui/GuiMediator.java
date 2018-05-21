@@ -20,7 +20,7 @@ public class GuiMediator extends Mediator {
 
     private Scene initScene() {
         Scene scene = new Scene(new StackPane(), 800, 800);
-        new StylesheetLoader(scene).load();
+        Stylesheet.load(scene);
         return scene;
     }
 
@@ -36,12 +36,12 @@ public class GuiMediator extends Mediator {
     @Override
     public void requestPlayersFromUI() {
         Players players = new PlayersFactory(this).createPlayers(1);
-        super.receivePlayers(players);
+        receivePlayers(players);
     }
 
     @Override
     public void requestBoardSizeFromUI() {
-        super.receiveBoardSize(3);
+        receiveBoardSize(3);
     }
 
     @Override

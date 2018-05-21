@@ -29,7 +29,7 @@ public class ConsoleMediator extends Mediator {
 
     @Override
     public void requestMoveFromUI(Board board, PlayerSymbol playerSymbol) {
-        super.receiveMove(console.requestMove(board, playerSymbol));
+        receiveMove(console.requestMove(board, playerSymbol));
     }
 
     @Override
@@ -49,12 +49,12 @@ public class ConsoleMediator extends Mediator {
 
     @Override
     public void requestBoardSizeFromUI() {
-        super.receiveBoardSize(console.requestBoardSize());
+        receiveBoardSize(console.requestBoardSize());
     }
 
     @Override
     public void requestPlayersFromUI() {
-        super.receivePlayers(console.requestPlayers(this));
+        receivePlayers(console.requestPlayers(this));
     }
 
     @Override
