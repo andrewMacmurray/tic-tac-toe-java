@@ -51,6 +51,7 @@ public class GuiMediatorTest extends ApplicationTest {
     }
 
     private void runXWinSequence(GuiMediator guiMediator) {
+        guiMediator.receiveBoardSize(3);
         guiMediator.receiveMove(1);
         guiMediator.receiveMove(4);
         guiMediator.receiveMove(2);

@@ -9,9 +9,11 @@ import java.util.function.Consumer;
 public class PlayerTile extends StackPane {
 
     private Tile tile;
+    private int boardSize;
 
-    public PlayerTile(Tile tile) {
+    public PlayerTile(Tile tile, int boardSize) {
         this.tile = tile;
+        this.boardSize = boardSize;
         setupTile();
     }
 
@@ -24,27 +26,35 @@ public class PlayerTile extends StackPane {
     }
 
     private void setupTile() {
-        addPlayerCssClasses();
-        addCss("tile");
+        addCss();
         this.getChildren().add(innerText());
     }
 
-    private void addPlayerCssClasses() {
-        switch (tile.toString()) {
-            case "X":
-                addCss("player-x");
-                break;
-            case "O":
-                addCss("player-o");
-                break;
-            default:
-                addCss("empty");
-                break;
+    private void addCss() {
+        this.getStyleClass().addAll(
+                tileSizeCss(),
+                playerCss(),
+                "tile"
+        );
+    }
+
+    private String tileSizeCss() {
+        if (boardSize == 3) {
+            return "tile-3x3";
+        } else {
+            return "tile-4x4";
         }
     }
 
-    private void addCss(String cssClass) {
-        this.getStyleClass().add(cssClass);
+    private String playerCss() {
+        switch (tile.toString()) {
+            case "X":
+                return "player-x";
+            case "O":
+                return "player-o";
+            default:
+                return "empty";
+        }
     }
 
     private Text innerText() {

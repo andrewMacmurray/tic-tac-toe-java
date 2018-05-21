@@ -1,5 +1,6 @@
 package tictactoe.gui;
 
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import tictactoe.core.Board;
@@ -14,13 +15,14 @@ public class GuiMediator extends Mediator {
 
     private Scene currentScene;
     private BoardUI boardUI = new BoardUI(this::receiveMove);
+    private OptionsUI optionsUI = new OptionsUI(this::receiveBoardSize);
 
     public GuiMediator() {
         currentScene = initScene();
     }
 
     private Scene initScene() {
-        Scene scene = new Scene(new OptionsUI(this::receiveBoardSize), 800, 700);
+        Scene scene = new Scene(optionsUI, 800, 700);
         Stylesheet.load(scene);
         return scene;
     }
@@ -42,7 +44,7 @@ public class GuiMediator extends Mediator {
 
     @Override
     public void requestBoardSizeFromUI() {
-        receiveBoardSize(3);
+        setScene(optionsUI);
     }
 
     @Override
@@ -74,6 +76,10 @@ public class GuiMediator extends Mediator {
     public void announceDraw(Board board) {
         boardUI.disableClicks();
         boardUI.setStatusText("It's a draw!");
+    }
+
+    private void setScene(Parent rootNode) {
+        currentScene.setRoot(rootNode);
     }
 
 }

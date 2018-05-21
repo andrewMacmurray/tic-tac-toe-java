@@ -12,7 +12,7 @@ import java.util.function.Consumer;
 
 public class BoardUI extends VBox {
 
-    private Text statusText = new Text();
+    private StatusText statusText = new StatusText();
     private TilePane boardTiles = new TilePane();
     private Consumer<Integer> sendMove;
 
@@ -28,11 +28,11 @@ public class BoardUI extends VBox {
 
     public void renderBoard(Board board) {
         clearTiles();
-        board.tilesStream().forEach(this::setupTile);
+        board.tilesStream().forEach(tile -> setupTile(tile, board.getBoardSize()));
     }
 
-    private void setupTile(Tile tile) {
-        PlayerTile playerTile = new PlayerTile(tile);
+    private void setupTile(Tile tile, int boardSize) {
+        PlayerTile playerTile = new PlayerTile(tile, boardSize);
         playerTile.onClick(sendMove);
         boardTiles.getChildren().add(playerTile);
     }
@@ -53,7 +53,6 @@ public class BoardUI extends VBox {
     }
 
     private void addCssClasses() {
-        addCssClass(statusText, "status-text");
         addCssClass(boardTiles, "board-container");
         addCssClass(this, "board-ui-container");
     }

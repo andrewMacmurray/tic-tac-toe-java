@@ -49,6 +49,7 @@ public class BoardUITest extends ApplicationTest {
     @Test
     public void renderBoard() {
         verifyThat(boardUI, hasChildren(9, ".tile"));
+        verifyThat(boardUI, hasChildren(9, ".tile-3x3"));
     }
 
     @Test

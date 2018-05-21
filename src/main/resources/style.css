@@ -116,7 +116,21 @@
     -fx-border-width: 0;
 }
 
-.tile {
+.tile-4x4 {
+    -fx-font-size: 50;
+    -fx-border-color: #D4FFE5;
+    -fx-border-insets: 10;
+    -fx-background-radius: 5;
+    -fx-border-radius: 5;
+    -fx-background-insets: 10;
+    -fx-border-width: 3;
+    -fx-pref-width: 120;
+    -fx-pref-height: 120;
+    -fx-max-width: 120;
+    -fx-max-height: 120;
+}
+
+.tile-3x3 {
     -fx-font-size: 70;
     -fx-border-color: #D4FFE5;
     -fx-border-insets: 10;
@@ -129,3 +143,4 @@
     -fx-max-width: 166;
     -fx-max-height: 166;
 }
+
