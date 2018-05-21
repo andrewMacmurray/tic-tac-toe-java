@@ -11,12 +11,25 @@ public class OptionsUI extends VBox {
     private AnimatedLogo animatedLogo;
     private TitleText titleText;
     private BoardSizeOptions boardSizeOptions;
+    private GameTypeOptions gameTypeOptions;
 
-    public OptionsUI(Consumer<Integer> sendBoardSize) {
+    public OptionsUI(Consumer<Integer> sendBoardSize, Consumer<Integer> sendGameType) {
         this.animatedLogo = new AnimatedLogo();
         this.titleText = new TitleText();
         this.boardSizeOptions = new BoardSizeOptions(sendBoardSize);
+        this.gameTypeOptions = new GameTypeOptions(sendGameType);
         setup();
+    }
+
+    public void reset() {
+        this.getChildren().clear();
+        assembleSceneGraph();
+        animate();
+    }
+
+    public void showBoardSizeOptions() {
+        this.getChildren().remove(gameTypeOptions);
+        this.getChildren().add(boardSizeOptions);
     }
 
     private void setup() {
@@ -29,7 +42,7 @@ public class OptionsUI extends VBox {
         this.getChildren().addAll(
                 animatedLogo,
                 titleText,
-                boardSizeOptions
+                gameTypeOptions
         );
     }
 
@@ -38,7 +51,7 @@ public class OptionsUI extends VBox {
     }
 
     private void animate() {
-        animatedLogo.animateAndThen(() -> titleText.animateAndThen(() -> {}));
+        animatedLogo.animateAndThen(() -> titleText.animateAndThen(() -> gameTypeOptions.animate()));
     }
 
 }

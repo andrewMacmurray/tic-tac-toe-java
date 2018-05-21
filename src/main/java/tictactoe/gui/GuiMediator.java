@@ -15,7 +15,7 @@ public class GuiMediator extends Mediator {
 
     private Scene currentScene;
     private BoardUI boardUI = new BoardUI(this::receiveMove);
-    private OptionsUI optionsUI = new OptionsUI(this::receiveBoardSize);
+    private OptionsUI optionsUI = new OptionsUI(this::receiveBoardSize, this::receiveGameTypeOption);
 
     public GuiMediator() {
         currentScene = initScene();
@@ -38,12 +38,18 @@ public class GuiMediator extends Mediator {
 
     @Override
     public void requestPlayersFromUI() {
-        Players players = new PlayersFactory(this).createPlayers(1);
+        optionsUI.reset();
+        setScene(optionsUI);
+    }
+
+    public void receiveGameTypeOption(int option) {
+        Players players = new PlayersFactory(this).createPlayers(option);
         receivePlayers(players);
     }
 
     @Override
     public void requestBoardSizeFromUI() {
+        optionsUI.showBoardSizeOptions();
         setScene(optionsUI);
     }
 

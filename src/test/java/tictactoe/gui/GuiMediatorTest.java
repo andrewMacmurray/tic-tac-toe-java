@@ -27,7 +27,6 @@ public class GuiMediatorTest extends ApplicationTest {
         runXWinSequence(guiMediator);
 
         rootNode = scene.getRoot();
-
         stage.setScene(scene);
         stage.show();
     }
@@ -51,6 +50,7 @@ public class GuiMediatorTest extends ApplicationTest {
     }
 
     private void runXWinSequence(GuiMediator guiMediator) {
+        guiMediator.receiveGameTypeOption(1);
         guiMediator.receiveBoardSize(3);
         guiMediator.receiveMove(1);
         guiMediator.receiveMove(4);

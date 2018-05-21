@@ -3,6 +3,7 @@ package tictactoe.gui;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.junit.Test;
+import org.testfx.api.FxRobot;
 import org.testfx.framework.junit.ApplicationTest;
 import tictactoe.gui.options.OptionsUI;
 
@@ -13,12 +14,11 @@ import static org.testfx.matcher.base.NodeMatchers.hasChildren;
 public class OptionsUITest extends ApplicationTest {
 
     private OptionsUI optionsUI;
-    private int boardSize;
 
     @Override
     public void start(Stage stage) {
-        optionsUI = new OptionsUI(this::setBoardSize);
-        Scene scene = new Scene(optionsUI, 800, 700);
+        optionsUI = new OptionsUI(n -> {}, n -> {});
+        Scene scene = new Scene(optionsUI, 800, 1000);
 
         Stylesheet.load(scene);
         stage.setScene(scene);
@@ -26,20 +26,21 @@ public class OptionsUITest extends ApplicationTest {
     }
 
     @Test
-    public void allElements() {
+    public void initialElements() {
         verifyThat(optionsUI, hasChildren(1, ".logo-container"));
+        verifyThat(optionsUI, hasChildren(1, ".option-button-1"));
+        verifyThat(optionsUI, hasChildren(1, ".option-button-2"));
         verifyThat(optionsUI, hasChildren(1, ".option-button-3"));
-        verifyThat(optionsUI, hasChildren(1, ".option-button-4"));
+        verifyThat(optionsUI, hasChildren(0, ".option-button-4"));
     }
 
     @Test
-    public void selectBoardSize() {
-        clickOn(".option-button-4");
-        assertEquals(4, boardSize);
-    }
-
-    private void setBoardSize(int boardSize) {
-        this.boardSize = boardSize;
+    public void boardSizeOptions() {
+        new FxRobot().interact(() -> optionsUI.showBoardSizeOptions());
+        verifyThat(optionsUI, hasChildren(1, ".option-button-3"));
+        verifyThat(optionsUI, hasChildren(1, ".option-button-4"));
+        verifyThat(optionsUI, hasChildren(0, ".option-button-2"));
+        verifyThat(optionsUI, hasChildren(0, ".option-button-1"));
     }
 
 }
