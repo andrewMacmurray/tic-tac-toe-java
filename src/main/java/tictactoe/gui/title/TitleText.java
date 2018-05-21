@@ -26,8 +26,8 @@ public class TitleText extends StackPane {
         this.getChildren().add(text);
     }
 
-    public void animateAndThen(Runnable finish) {
-        transition.setOnEnd(finish);
+    public void animateAndThen(Runnable nextTask) {
+        transition.setOnEnd(nextTask);
         transition.play();
     }
 

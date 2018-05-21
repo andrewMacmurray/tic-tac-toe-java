@@ -17,10 +17,10 @@ public class SlideUpTransition {
     }
 
     public SlideUpTransition setFrom(int from) {
-        TranslateTransition ts = new TranslateTransition(duration, node);
+        TranslateTransition transition = new TranslateTransition(duration, node);
         node.setTranslateY(from);
-        ts.setToY(0);
-        transition = ts;
+        transition.setToY(0);
+        this.transition = transition;
         return this;
     }
 
@@ -30,8 +30,8 @@ public class SlideUpTransition {
         }
     }
 
-    public void setOnEnd(Runnable finish) {
-        transition.setOnFinished(e -> finish.run());
+    public void setOnEnd(Runnable nextTask) {
+        transition.setOnFinished(e -> nextTask.run());
     }
 
 }

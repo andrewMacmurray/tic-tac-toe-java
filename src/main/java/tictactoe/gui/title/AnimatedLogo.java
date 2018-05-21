@@ -38,7 +38,7 @@ public class AnimatedLogo extends HBox {
                 .collect(Collectors.toList());
     }
 
-    public void animateAndThen(Runnable onFinish) {
+    public void animateAndThen(Runnable nextTask) {
         hidePieces();
         Timeline timeline = new Timeline();
         for (int i = 0; i < pieces.size(); i++) {
@@ -48,7 +48,7 @@ public class AnimatedLogo extends HBox {
             );
         }
         timeline.play();
-        timeline.setOnFinished(e -> onFinish.run());
+        timeline.setOnFinished(e -> nextTask.run());
     }
 
     private void hidePieces() {

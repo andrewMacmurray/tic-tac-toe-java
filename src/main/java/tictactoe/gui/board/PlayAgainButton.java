@@ -6,16 +6,18 @@ import javafx.scene.layout.StackPane;
 public class PlayAgainButton extends StackPane {
 
     private Button playAgainButton;
+    private Runnable clickHandler;
 
-    public PlayAgainButton(Runnable task) {
+    public PlayAgainButton(Runnable clickHandler) {
         playAgainButton = new Button("Play Again?");
-        setup(task);
+        this.clickHandler = clickHandler;
+        setup();
     }
 
-    private void setup(Runnable task) {
+    private void setup() {
         this.getChildren().add(playAgainButton);
         addCss();
-        addListener(task);
+        addListener();
     }
 
     private void addCss() {
@@ -25,8 +27,8 @@ public class PlayAgainButton extends StackPane {
         );
     }
 
-    private void addListener(Runnable task) {
-        playAgainButton.setOnMouseClicked(e -> task.run());
+    private void addListener() {
+        playAgainButton.setOnMouseClicked(e -> clickHandler.run());
     }
 
 }
