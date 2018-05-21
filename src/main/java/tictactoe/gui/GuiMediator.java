@@ -8,18 +8,19 @@ import tictactoe.core.players.PlayerSymbol;
 import tictactoe.core.players.Players;
 import tictactoe.core.players.PlayersFactory;
 import tictactoe.gui.board.BoardUI;
+import tictactoe.gui.options.OptionsUI;
 
 public class GuiMediator extends Mediator {
 
     private Scene currentScene;
-    private BoardUI boardUI = new BoardUI(this);
+    private BoardUI boardUI = new BoardUI(this::receiveMove);
 
     public GuiMediator() {
         currentScene = initScene();
     }
 
     private Scene initScene() {
-        Scene scene = new Scene(new StackPane(), 800, 700);
+        Scene scene = new Scene(new OptionsUI(this::receiveBoardSize), 800, 700);
         Stylesheet.load(scene);
         return scene;
     }

@@ -6,11 +6,9 @@ import javafx.stage.Stage;
 import org.junit.Test;
 import org.testfx.api.FxRobot;
 import org.testfx.framework.junit.ApplicationTest;
-import org.testfx.matcher.base.NodeMatchers;
 import tictactoe.core.Board;
 import tictactoe.core.players.PlayerSymbol;
 import tictactoe.gui.board.BoardUI;
-import tictactoe.mocks.MockMediator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,12 +16,13 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.testfx.api.FxAssert.verifyThat;
 import static org.testfx.matcher.base.NodeMatchers.hasChildren;
+import static org.testfx.matcher.base.NodeMatchers.isNotNull;
 import static org.testfx.matcher.control.TextMatchers.hasText;
 
 public class BoardUITest extends ApplicationTest {
 
-    private MockMediator mockMediator = new MockMediator();
-    private BoardUI boardUI = new BoardUI(mockMediator);
+    private int currentMove;
+    private BoardUI boardUI = new BoardUI(this::setCurrentMove);
 
     @Override
     public void start(Stage stage) {
@@ -36,9 +35,9 @@ public class BoardUITest extends ApplicationTest {
 
     @Test
     public void checkLayout() {
-        verifyThat(".status-text", NodeMatchers.isNotNull());
-        verifyThat(".board-container", NodeMatchers.isNotNull());
-        verifyThat(".board-ui-container", NodeMatchers.isNotNull());
+        verifyThat(".status-text", isNotNull());
+        verifyThat(".board-container", isNotNull());
+        verifyThat(".board-ui-container", isNotNull());
     }
 
     @Test
@@ -61,7 +60,7 @@ public class BoardUITest extends ApplicationTest {
         assertEquals(
                 "mediator receives correct move",
                 1,
-                mockMediator.getCurrentMove()
+                currentMove
         );
     }
 
@@ -74,6 +73,10 @@ public class BoardUITest extends ApplicationTest {
 
         verifyThat(boardUI, hasChildren(1, ".player-o"));
         verifyThat(boardUI, hasChildren(1, ".player-x"));
+    }
+
+    private void setCurrentMove(int move) {
+        this.currentMove = move;
     }
 
 }

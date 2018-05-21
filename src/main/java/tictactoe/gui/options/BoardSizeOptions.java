@@ -9,9 +9,9 @@ public class BoardSizeOptions extends VBox {
     private OptionButton threeByThree;
     private OptionButton fourByFour;
 
-    public BoardSizeOptions(Consumer<Integer> sendOption) {
-        threeByThree = setupButton("3x3", 3, sendOption);
-        fourByFour = setupButton("4x4", 4, sendOption);
+    public BoardSizeOptions(Consumer<Integer> sendBoardSize) {
+        threeByThree = setupButton("3x3", 3, sendBoardSize);
+        fourByFour = setupButton("4x4", 4, sendBoardSize);
         setup();
     }
 
@@ -22,9 +22,9 @@ public class BoardSizeOptions extends VBox {
         );
     }
 
-    private OptionButton setupButton(String name, int option, Consumer<Integer> sendOption) {
+    private OptionButton setupButton(String name, int option, Consumer<Integer> sendBoardSize) {
         OptionButton optionButton = new OptionButton(name, option);
-        optionButton.onClick(sendOption);
+        optionButton.onClick(sendBoardSize);
         return optionButton;
     }
 

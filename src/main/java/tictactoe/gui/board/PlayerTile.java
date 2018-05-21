@@ -2,7 +2,6 @@ package tictactoe.gui.board;
 
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
-import tictactoe.core.Mediator;
 import tictactoe.core.Tile;
 
 import java.util.function.Consumer;
@@ -16,35 +15,35 @@ public class PlayerTile extends StackPane {
         setupTile();
     }
 
-    public void onClick(Consumer<Integer> moveReceiver) {
+    public void onClick(Consumer<Integer> sendMove) {
         this.setOnMouseClicked(e -> {
             if (tile.isEmpty()) {
-                moveReceiver.accept(tile.getIndex());
+                sendMove.accept(tile.getIndex());
             }
         });
     }
 
     private void setupTile() {
         addPlayerCssClasses();
-        addCssClass("tile");
+        addCss("tile");
         this.getChildren().add(innerText());
     }
 
     private void addPlayerCssClasses() {
         switch (tile.toString()) {
             case "X":
-                addCssClass("player-x");
+                addCss("player-x");
                 break;
             case "O":
-                addCssClass("player-o");
+                addCss("player-o");
                 break;
             default:
-                addCssClass("empty");
+                addCss("empty");
                 break;
         }
     }
 
-    private void addCssClass(String cssClass) {
+    private void addCss(String cssClass) {
         this.getStyleClass().add(cssClass);
     }
 

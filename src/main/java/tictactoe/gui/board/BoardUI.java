@@ -8,14 +8,16 @@ import tictactoe.core.Board;
 import tictactoe.core.Mediator;
 import tictactoe.core.Tile;
 
+import java.util.function.Consumer;
+
 public class BoardUI extends VBox {
 
     private Text statusText = new Text();
     private TilePane boardTiles = new TilePane();
-    private Mediator mediator;
+    private Consumer<Integer> sendMove;
 
-    public BoardUI(Mediator mediator) {
-        this.mediator = mediator;
+    public BoardUI(Consumer<Integer> sendMove) {
+        this.sendMove = sendMove;
         assembleSceneGraph();
         addCssClasses();
     }
@@ -31,7 +33,7 @@ public class BoardUI extends VBox {
 
     private void setupTile(Tile tile) {
         PlayerTile playerTile = new PlayerTile(tile);
-        playerTile.onClick(mediator::receiveMove);
+        playerTile.onClick(sendMove);
         boardTiles.getChildren().add(playerTile);
     }
 
