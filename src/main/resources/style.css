@@ -1,0 +1,61 @@
+// board styles
+
+.board-container {
+    -fx-pref-width: 500;
+    -fx-pref-height: 500;
+    -fx-max-width: 500;
+    -fx-max-height: 500;
+}
+
+.main-container {
+    -fx-background-color: #02F9C8;
+    -fx-font-family: Futura;
+    -fx-padding: 80 0 0 0;
+    -fx-alignment: top-center;
+    -fx-pref-width: 800;
+    -fx-pref-height: 800;
+}
+
+.status-text {
+    -fx-translate-y: 30;
+    -fx-font-size: 20;
+    -fx-fill: #2A628F;
+}
+
+
+// tile styles
+
+.tile {
+    -fx-font-size: 70;
+}
+
+.tile.player-x {
+    -fx-background-color: #FFE849;
+    -fx-border-width: 0;
+}
+
+.tile.player-x Text {
+    -fx-fill: #FF5B5B;
+}
+
+.tile.player-o Text {
+    -fx-fill: #0B54B0;
+}
+
+.tile.player-o {
+    -fx-background-color: #D390FF;
+    -fx-border-width: 0;
+}
+
+.tile {
+    -fx-border-color: #D4FFE5;
+    -fx-border-insets: 10;
+    -fx-background-radius: 5;
+    -fx-border-radius: 5;
+    -fx-background-insets: 10;
+    -fx-border-width: 3;
+    -fx-pref-width: 160;
+    -fx-pref-height: 160;
+    -fx-max-width: 160;
+    -fx-max-height: 160;
+}

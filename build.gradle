@@ -14,6 +14,25 @@ repositories {
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
+    testCompile 'org.testfx:testfx-junit:4.0+'
+    testRuntime 'org.testfx:openjfx-monocle:1.8.0_20'
+}
+
+if (project.hasProperty('headless') ? project.headless : false) {
+    test {
+        jvmArgs = [
+                "-Dtestfx.robot=glass",
+                "-Dtestfx.headless=true",
+                "-Dtestfx.prism.order=sw",
+                "-Dtestfx.prism.text=t2k"
+        ]
+    }
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'tictactoe.cli.Main'
+    }
 }
 
 run {

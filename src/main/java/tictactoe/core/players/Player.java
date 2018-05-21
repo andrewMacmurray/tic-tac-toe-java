@@ -1,11 +1,16 @@
 package tictactoe.core.players;
 
 import tictactoe.core.Board;
+import tictactoe.core.Mediator;
 
-public interface Player {
+public abstract class Player {
 
-    int chooseNextMove(Board board);
+    PlayerSymbol playerSymbol;
 
-    PlayerSymbol getSymbol();
+    public PlayerSymbol getSymbol() {
+        return playerSymbol;
+    }
+
+    public abstract void requestMove(Board board);
 
 }

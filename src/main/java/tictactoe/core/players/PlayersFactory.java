@@ -1,8 +1,8 @@
 package tictactoe.core.players;
 
-import tictactoe.core.UI;
-import tictactoe.core.util.ThreadControl;
+import tictactoe.core.Mediator;
 import tictactoe.core.util.Time;
+import tictactoe.core.util.SimpleTime;
 
 import static tictactoe.core.players.PlayerSymbol.O;
 import static tictactoe.core.players.PlayerSymbol.X;
@@ -11,37 +11,42 @@ public class PlayersFactory {
 
     public static int minOption = 1;
     public static int maxOption = 3;
-    private static ThreadControl time = new Time();
+    private static Time time = new SimpleTime();
+    private Mediator mediator;
 
-    public static Players createPlayers(int option, UI ui) {
+    public PlayersFactory(Mediator mediator) {
+        this.mediator = mediator;
+    }
+
+    public Players createPlayers(int option) {
         switch (option) {
             case 1:
-                return humanVsHuman(ui);
+                return humanVsHuman();
             case 2:
-                return humanVsComputer(ui);
+                return humanVsComputer();
             default:
                 return computerVsComputer();
         }
     }
 
-    private static Players humanVsHuman(UI ui) {
+    private Players humanVsHuman() {
         return new Players(
-                new HumanPlayer(X, ui),
-                new HumanPlayer(O, ui)
+                new HumanPlayer(X, mediator::requestMoveFromUI),
+                new HumanPlayer(O, mediator::requestMoveFromUI)
         );
     }
 
-    private static Players humanVsComputer(UI ui) {
+    private Players humanVsComputer() {
         return new Players(
-                new HumanPlayer(X, ui),
-                new UnbeatablePlayer(O, time)
+                new HumanPlayer(X, mediator::requestMoveFromUI),
+                new UnbeatablePlayer(O, time, mediator::receiveMove)
         );
     }
 
-    private static Players computerVsComputer() {
+    private Players computerVsComputer() {
         return new Players(
-                new UnbeatablePlayer(X, time),
-                new UnbeatablePlayer(O, time)
+                new UnbeatablePlayer(X, time, mediator::receiveMove),
+                new UnbeatablePlayer(O, time, mediator::receiveMove)
         );
     }
 }

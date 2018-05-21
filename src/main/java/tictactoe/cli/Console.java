@@ -1,7 +1,7 @@
 package tictactoe.cli;
 
 import tictactoe.core.Board;
-import tictactoe.core.UI;
+import tictactoe.core.Mediator;
 import tictactoe.core.players.PlayerSymbol;
 import tictactoe.core.players.Players;
 import tictactoe.core.players.PlayersFactory;
@@ -9,7 +9,7 @@ import tictactoe.core.players.PlayersFactory;
 import java.io.InputStream;
 import java.io.PrintStream;
 
-public class Console implements UI {
+public class Console {
 
     private final IO io;
 
@@ -17,7 +17,6 @@ public class Console implements UI {
         io = new IO(in, print);
     }
 
-    @Override
     public int requestMove(Board board, PlayerSymbol playerSymbol) {
         int move = readIntWithMessage();
         if (!board.isValidMove(move)) {
@@ -28,24 +27,20 @@ public class Console implements UI {
         }
     }
 
-    @Override
-    public Players requestPlayers() {
-        return PlayersFactory.createPlayers(readPlayerOption(), this);
+    public Players requestPlayers(Mediator mediator) {
+        return new PlayersFactory(mediator).createPlayers(readPlayerOption());
     }
 
-    @Override
     public int requestBoardSize() {
         io.println(Messages.boardSize);
         return io.readIntInRange(3, 4, Messages.unrecognised);
     }
 
-    @Override
     public boolean requestPlayAgain() {
         io.println(Messages.playAgain);
         return io.readYesNoWithRetry(Messages.unrecognised);
     }
 
-    @Override
     public void showMoveSummary(Integer move, Board board, PlayerSymbol playerSymbol) {
         if (board.isMoveOutOfBounds(move)) {
             printOutOfBounds(move);
@@ -56,45 +51,36 @@ public class Console implements UI {
         }
     }
 
-    @Override
     public void showMoveInstructions(Integer boardSize, PlayerSymbol playerSymbol) {
         io.println(Messages.enterNumbers(boardSize, playerSymbol));
     }
 
-    @Override
     public void clear() {
         io.clearScreen();
     }
 
-
-    @Override
     public void showBoard(Board board) {
         String boardString = new BoardSerializer(board).render();
         io.println(boardString);
     }
 
-    @Override
     public void greetUser() {
         io.println(Messages.welcome);
     }
 
-    @Override
     public void goodbye() {
         io.println(Messages.goodbye);
     }
 
-    @Override
-    public void showInstructions() {
+    public void showGameOptions() {
         Messages.gameTypeOptions()
                 .forEach(io::println);
     }
 
-    @Override
     public void showWin(PlayerSymbol playerSymbol) {
         io.println(Messages.winner(playerSymbol));
     }
 
-    @Override
     public void showDraw() {
         io.println(Messages.draw);
     }

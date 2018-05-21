@@ -1,77 +1,85 @@
 package tictactoe.core;
 
+import org.junit.Before;
 import org.junit.Test;
-import tictactoe.cli.Console;
-import tictactoe.cli.IOHelper;
 import tictactoe.core.players.Players;
 import tictactoe.core.players.PlayersFactory;
+import tictactoe.mocks.MockMediator;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 public class GameTest {
 
-    @Test
-    public void runGame() {
-        IOHelper io = new IOHelper("1 2 3 4 5 6 7");
-        Game game = setupGame(io);
+    MockMediator mockMediator;
+    Players players;
+    Game game;
 
-        game.play();
-        assertTrue(
-                "player X should have won the game",
-                io.output().contains("Player X won!")
+    @Before
+    public void setup() {
+        mockMediator = new MockMediator();
+        players = new PlayersFactory(mockMediator).createPlayers(1);
+        game = new Game(mockMediator);
+    }
+
+    @Test
+    public void receivePlayers() {
+        game.receivePlayers(players);
+        assertEquals(
+                "setting players prompts the game to request boardSize",
+                "request board size",
+                mockMediator.getLog()
         );
     }
 
     @Test
-    public void handleInvalidInputs() {
-        IOHelper io = new IOHelper("1 1 2 blah 3 4 5 6 7");
-        Game game = setupGame(io);
-
-        game.play();
-        assertTrue(
-                "prints unrecognised inputs",
-                io.output().contains("I didn't recognise that")
+    public void receiveBoardSize() {
+        game.receivePlayers(players);
+        game.receiveBoardSize(3);
+        assertEquals(
+                "after setting the board size the mediator will ask for a move",
+                "request move",
+                mockMediator.getLog()
         );
+    }
 
-        assertTrue(
-                "prints already taken moves",
-                io.output().contains("1 is already taken!")
-        );
+    @Test
+    public void recieveMove() {
+        setupGameOptions();
+        game.receiveMove(1);
+        assertEquals("move 1 has been played", 1, mockMediator.getCurrentMove());
+        assertFalse("board has been updated correctly", mockMediator.getCurrentBoard().isMoveAvailable(1));
+    }
 
-        assertTrue(
-                "player X should have won the game",
-                io.output().contains("Player X won!")
-        );
+    @Test
+    public void xWin() {
+        setupGameOptions();
+        playMoves(1, 4, 2, 5, 3);
+        assertEquals("X won", mockMediator.getLog());
     }
 
     @Test
     public void oWin() {
-        IOHelper io = new IOHelper("1 2 3 5 4 8");
-        Game game = setupGame(io);
-
-        game.play();
-        assertTrue(
-                "player O should have won",
-                io.output().contains("Player O won!")
-        );
+        setupGameOptions();
+        playMoves(4, 1, 7, 2, 9, 3);
+        assertEquals("O won", mockMediator.getLog());
     }
 
     @Test
     public void draw() {
-        IOHelper io = new IOHelper("1 2 3 5 4 6 8 7 9");
-        Game game = setupGame(io);
-
-        game.play();
-        assertTrue(
-                "should be a draw",
-                io.output().contains("It's a draw!")
-        );
+        setupGameOptions();
+        playMoves(1, 2, 3, 5, 8, 4, 6, 9, 7);
+        assertEquals("it's a draw", mockMediator.getLog());
     }
 
-    private Game setupGame(IOHelper io) {
-        Console console = new Console(io.in, io.print);
-        Players players = PlayersFactory.createPlayers(1, console);
+    private void setupGameOptions() {
+        game.receivePlayers(players);
+        game.receiveBoardSize(3);
+    }
 
-        return new Game(3, console, players);
+    private void playMoves(int... moves) {
+        for (int move : moves) {
+            game.receiveMove(move);
+        }
     }
 }

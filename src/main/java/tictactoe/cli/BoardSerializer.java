@@ -18,12 +18,13 @@ class BoardSerializer {
     public String render() {
         return board
                 .tilesStream()
-                .map(v -> renderTileWithPadding(v.getValue(), v.getKey()))
+                .map(this::renderTileWithPadding)
                 .collect(Collectors.joining(""));
     }
 
-    private String renderTileWithPadding(Tile tile, int index) {
-        String tileString = colorize(tile.toString(index));
+    private String renderTileWithPadding(Tile tile) {
+        int index = tile.getIndex();
+        String tileString = colorize(tile.toString());
         boolean isEndOfRow = index % boardSize == 0;
         boolean isLastTile = index == (boardSize * boardSize);
 

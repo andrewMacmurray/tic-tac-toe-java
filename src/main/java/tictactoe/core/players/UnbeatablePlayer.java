@@ -1,34 +1,46 @@
 package tictactoe.core.players;
 
 import tictactoe.core.Board;
-import tictactoe.core.util.ThreadControl;
+import tictactoe.core.Mediator;
+import tictactoe.core.util.Time;
 
-public class UnbeatablePlayer extends Computer implements Player {
+import java.util.ArrayList;
+import java.util.Random;
+import java.util.function.Consumer;
 
-    private PlayerSymbol playerSymbol;
+public class UnbeatablePlayer extends Player {
 
-    public UnbeatablePlayer(PlayerSymbol playerSymbol, ThreadControl time) {
-        super(time);
+    private Time time;
+    private Consumer<Integer> moveResponder;
+
+    public UnbeatablePlayer(PlayerSymbol playerSymbol, Time time, Consumer<Integer> moveResponder) {
+        this.time = time;
         this.playerSymbol = playerSymbol;
+        this.moveResponder = moveResponder;
     }
 
     @Override
-    public int chooseNextMove(Board board) {
-        super.waitOneSecond();
-        return strategicMove(board);
-    }
-
-    @Override
-    public PlayerSymbol getSymbol() {
-        return playerSymbol;
+    public void requestMove(Board board) {
+        waitOneSecond();
+        moveResponder.accept(strategicMove(board));
     }
 
     private int strategicMove(Board board) {
         if (board.allAvailableMoves().size() > 12) {
-            return super.randomMove(board.allAvailableMoves());
+            return randomMove(board.allAvailableMoves());
         } else {
             return new MiniMax(playerSymbol).execute(board);
         }
     }
-    
+
+    private void waitOneSecond() {
+        time.pause(1000);
+    }
+
+    private int randomMove(ArrayList<Integer> moves) {
+        Random random = new Random();
+        int i = random.nextInt(moves.size());
+        return moves.get(i);
+    }
+
 }

@@ -26,7 +26,7 @@ public class BoardTest {
                 .makeMove(1, PlayerSymbol.X)
                 .getTile(1);
 
-        assertTrue("Tile at 1 should be X", tile.isTakenBy(PlayerSymbol.X));
+        assertTrue("PlayerTile at 1 should be X", tile.isTakenBy(PlayerSymbol.X));
     }
 
     @Test
@@ -35,8 +35,8 @@ public class BoardTest {
                 .makeMove(1, PlayerSymbol.X)
                 .makeMove(2, PlayerSymbol.O);
 
-        assertTrue("Tile at 1 should be X", board.getTile(1).isTakenBy(PlayerSymbol.X));
-        assertTrue("Tile at 2 should be O", board.getTile(2).isTakenBy(PlayerSymbol.O));
+        assertTrue("PlayerTile at 1 should be X", board.getTile(1).isTakenBy(PlayerSymbol.X));
+        assertTrue("PlayerTile at 2 should be O", board.getTile(2).isTakenBy(PlayerSymbol.O));
     }
 
     @Test

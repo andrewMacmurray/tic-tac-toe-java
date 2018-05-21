@@ -1,26 +1,22 @@
 package tictactoe.core.players;
 
 import tictactoe.core.Board;
-import tictactoe.core.UI;
+import tictactoe.core.Mediator;
 
-public class HumanPlayer implements Player {
+import java.util.function.BiConsumer;
 
-    private final PlayerSymbol playerSymbol;
-    private final UI ui;
+public class HumanPlayer extends Player {
 
-    public HumanPlayer(PlayerSymbol playerSymbol, UI ui) {
+    private BiConsumer<Board, PlayerSymbol> moveResponder;
+
+    public HumanPlayer(PlayerSymbol playerSymbol, BiConsumer<Board, PlayerSymbol> moveResponder) {
         this.playerSymbol = playerSymbol;
-        this.ui = ui;
+        this.moveResponder = moveResponder;
     }
 
     @Override
-    public int chooseNextMove(Board board) {
-        return ui.requestMove(board, playerSymbol);
-    }
-
-    @Override
-    public PlayerSymbol getSymbol() {
-        return playerSymbol;
+    public void requestMove(Board board) {
+        moveResponder.accept(board, playerSymbol);
     }
 
 }

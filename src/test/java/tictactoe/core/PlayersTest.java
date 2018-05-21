@@ -1,18 +1,29 @@
 package tictactoe.core;
 
+import org.junit.Before;
 import org.junit.Test;
-import tictactoe.core.players.*;
-import tictactoe.mocks.MockTime;
-import tictactoe.mocks.MockUI;
+import tictactoe.core.players.HumanPlayer;
+import tictactoe.core.players.PlayerSymbol;
+import tictactoe.core.players.Players;
+import tictactoe.mocks.MockMediator;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class PlayersTest {
 
+    private Players players;
+    private MockMediator mockMediator;
+
+    @Before
+    public void setup() {
+        mockMediator = new MockMediator();
+        HumanPlayer player1 = new HumanPlayer(PlayerSymbol.X, mockMediator::requestMoveFromUI);
+        HumanPlayer player2 = new HumanPlayer(PlayerSymbol.O, mockMediator::requestMoveFromUI);
+        players = new Players(player1, player2);
+    }
+
     @Test
     public void currentPlayerSymbol() {
-        Players players = setupPlayers();
-
         assertEquals(
                 "current player should be X",
                 PlayerSymbol.X,
@@ -23,7 +34,6 @@ public class PlayersTest {
 
     @Test
     public void nextPlayerSymbol() {
-        Players players = setupPlayers();
         players.switchPlayers();
 
         assertEquals(
@@ -34,56 +44,27 @@ public class PlayersTest {
     }
 
     @Test
-    public void chooseHumanMove() {
-        Players players = setupPlayers();
-        Board board = new Board(3);
-
-        assertEquals(
-                "human player should choose the first move",
-                1,
-                players.chooseNextMove(board)
-        );
-    }
-
-    @Test
-    public void chooseComputerMove() {
-        Players players = setupPlayers();
-        Board board = almostFullBoard();
-
-        players.switchPlayers();
-
-        int computerChoice = players.chooseNextMove(board);
-        assertTrue(
-                "computer should make one of two moves",
-                computerChoice == 8 || computerChoice == 9
-        );
-
-    }
-
-    @Test
     public void switchBack() {
-        Players players = setupPlayers();
         players.switchPlayers();
         players.switchPlayers();
 
         assertEquals(
-                "should switch back to player X",
+                "Players switch back correctly",
                 PlayerSymbol.X,
                 players.currentPlayerSymbol()
         );
     }
 
-    private Players setupPlayers() {
-        Player human = new HumanPlayer(PlayerSymbol.X, new MockUI(1));
-        Player computer = new RandomPlayer(PlayerSymbol.O, new MockTime());
-        return new Players(human, computer);
+    @Test
+    public void chooseHumanMove() {
+        Board board = new Board(3);
+
+        players.chooseNextMove(board);
+        assertEquals(
+                "current player can request a move",
+                "request move",
+                mockMediator.getLog()
+        );
     }
 
-    private Board almostFullBoard() {
-        Board board = new Board(3);
-        for (int i = 1; i <= 7; i++) {
-            board = board.makeMove(i, PlayerSymbol.X);
-        }
-        return board;
-    }
 }
