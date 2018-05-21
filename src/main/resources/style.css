@@ -7,8 +7,42 @@
     -fx-faint-focus-color: transparent;
 }
 
+// title styles
+
+.logo-container {
+    -fx-max-width: 400;
+    -fx-pref-height: 200;
+}
+
+.logo-piece {
+    -fx-font-size: 70;
+    -fx-pref-width: 100;
+    -fx-alignment: bottom-center;
+}
+
+.logo-piece.x Text {
+    -fx-fill: #FF5B5B;
+}
+
+.logo-piece.o Text {
+    -fx-fill: #0B54B0;
+}
+
+.title-text-container {
+    -fx-pref-height: 150;
+}
+
+.title-text {
+    -fx-font-size: 25;
+    -fx-fill: #2A628F;
+}
+
 
 // options styles
+
+.options-container {
+    -fx-alignment: top-center;
+}
 
 .option {
     -fx-pref-height: 60;

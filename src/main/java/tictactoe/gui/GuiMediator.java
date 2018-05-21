@@ -19,7 +19,7 @@ public class GuiMediator extends Mediator {
     }
 
     private Scene initScene() {
-        Scene scene = new Scene(new StackPane(), 800, 800);
+        Scene scene = new Scene(new StackPane(), 800, 700);
         Stylesheet.load(scene);
         return scene;
     }

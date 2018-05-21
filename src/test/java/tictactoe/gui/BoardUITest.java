@@ -27,7 +27,7 @@ public class BoardUITest extends ApplicationTest {
 
     @Override
     public void start(Stage stage) {
-        Scene scene = new Scene(boardUI, 800, 800);
+        Scene scene = new Scene(boardUI, 800, 700);
         boardUI.renderBoard(new Board(3));
         Stylesheet.load(scene);
         stage.setScene(scene);
@@ -38,7 +38,7 @@ public class BoardUITest extends ApplicationTest {
     public void checkLayout() {
         verifyThat(".status-text", NodeMatchers.isNotNull());
         verifyThat(".board-container", NodeMatchers.isNotNull());
-        verifyThat(".main-container", NodeMatchers.isNotNull());
+        verifyThat(".board-ui-container", NodeMatchers.isNotNull());
     }
 
     @Test
