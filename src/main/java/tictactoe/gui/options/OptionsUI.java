@@ -21,12 +21,6 @@ public class OptionsUI extends VBox {
         setup();
     }
 
-    public void reset() {
-        this.getChildren().clear();
-        assembleSceneGraph();
-        animate();
-    }
-
     public void showBoardSizeOptions() {
         this.getChildren().remove(gameTypeOptions);
         this.getChildren().add(boardSizeOptions);

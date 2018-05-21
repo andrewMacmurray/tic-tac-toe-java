@@ -21,8 +21,8 @@ public class GuiMediator extends Mediator {
     }
 
     private void setup() {
-        createBoardUI();
-        createOptionsUI();
+        initBoardUI();
+        initOptionsUI();
         initScene();
     }
 
@@ -36,11 +36,11 @@ public class GuiMediator extends Mediator {
         return currentScene;
     }
 
-    private void createBoardUI() {
+    private void initBoardUI() {
         boardUI = new BoardUI(this::receiveMove, this::requestPlayersFromUI);
     }
 
-    private void createOptionsUI() {
+    private void initOptionsUI() {
         optionsUI = new OptionsUI(this::prepareEmptyBoard, this::receiveGameTypeOption);
     }
 
@@ -51,7 +51,7 @@ public class GuiMediator extends Mediator {
 
     @Override
     public void requestPlayersFromUI() {
-        optionsUI.reset();
+        initOptionsUI();
         setScene(optionsUI);
     }
 
