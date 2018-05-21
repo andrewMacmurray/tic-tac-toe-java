@@ -41,7 +41,7 @@ public class GuiMediator extends Mediator {
     }
 
     private void initOptionsUI() {
-        optionsUI = new OptionsUI(this::prepareEmptyBoard, this::receiveGameTypeOption);
+        optionsUI = new OptionsUI(this::prepareEmptyBoard, this::preparePlayersFromOption);
     }
 
     @Override
@@ -55,7 +55,7 @@ public class GuiMediator extends Mediator {
         setScene(optionsUI);
     }
 
-    public void receiveGameTypeOption(int option) {
+    public void preparePlayersFromOption(int option) {
         Players players = new PlayersFactory(this, new FxTime()).createPlayers(option);
         receivePlayers(players);
     }
