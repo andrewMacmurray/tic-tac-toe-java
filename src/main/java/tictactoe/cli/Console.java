@@ -28,7 +28,7 @@ public class Console {
     }
 
     public Players requestPlayers(Mediator mediator) {
-        return new PlayersFactory(mediator).createPlayers(readPlayerOption());
+        return new PlayersFactory(mediator, new SimpleTime()).createPlayers(readPlayerOption());
     }
 
     public int requestBoardSize() {

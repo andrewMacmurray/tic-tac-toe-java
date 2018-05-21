@@ -2,7 +2,6 @@ package tictactoe.gui;
 
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.StackPane;
 import tictactoe.core.Board;
 import tictactoe.core.Mediator;
 import tictactoe.core.players.PlayerSymbol;
@@ -43,7 +42,7 @@ public class GuiMediator extends Mediator {
     }
 
     public void receiveGameTypeOption(int option) {
-        Players players = new PlayersFactory(this).createPlayers(option);
+        Players players = new PlayersFactory(this, new FxTime()).createPlayers(option);
         receivePlayers(players);
     }
 
@@ -62,6 +61,7 @@ public class GuiMediator extends Mediator {
     public void moveSummary(int move, Board prevBoard, Board nextBoard, PlayerSymbol playerSymbol) {
         String statusText = "Your turn player " + playerSymbol.getAlternate();
         boardUI.renderBoard(nextBoard);
+        boardUI.disableClicks();
         boardUI.setStatusText(statusText);
     }
 

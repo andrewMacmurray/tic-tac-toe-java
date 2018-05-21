@@ -5,6 +5,7 @@ import org.junit.Test;
 import tictactoe.core.players.Players;
 import tictactoe.core.players.PlayersFactory;
 import tictactoe.mocks.MockMediator;
+import tictactoe.mocks.MockTime;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -12,13 +13,15 @@ import static org.junit.Assert.assertFalse;
 public class GameTest {
 
     MockMediator mockMediator;
+    MockTime mockTime;
     Players players;
     Game game;
 
     @Before
     public void setup() {
         mockMediator = new MockMediator();
-        players = new PlayersFactory(mockMediator).createPlayers(1);
+        mockTime =  new MockTime();
+        players = new PlayersFactory(mockMediator, mockTime).createPlayers(1);
         game = new Game(mockMediator);
     }
 

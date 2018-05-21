@@ -1,8 +1,6 @@
 package tictactoe.core.players;
 
 import tictactoe.core.Board;
-import tictactoe.core.Mediator;
-import tictactoe.core.util.Time;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -21,8 +19,7 @@ public class UnbeatablePlayer extends Player {
 
     @Override
     public void requestMove(Board board) {
-        waitOneSecond();
-        moveResponder.accept(strategicMove(board));
+        time.pauseAndThen(1000, () -> moveResponder.accept(strategicMove(board)));
     }
 
     private int strategicMove(Board board) {
@@ -31,10 +28,6 @@ public class UnbeatablePlayer extends Player {
         } else {
             return new MiniMax(playerSymbol).execute(board);
         }
-    }
-
-    private void waitOneSecond() {
-        time.pause(1000);
     }
 
     private int randomMove(ArrayList<Integer> moves) {
