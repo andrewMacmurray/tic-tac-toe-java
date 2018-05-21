@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.testfx.api.FxAssert.verifyThat;
 import static org.testfx.matcher.base.NodeMatchers.hasChildren;
 import static org.testfx.matcher.base.NodeMatchers.isNotNull;
@@ -22,15 +23,22 @@ import static org.testfx.matcher.control.TextMatchers.hasText;
 public class BoardUITest extends ApplicationTest {
 
     private int currentMove;
-    private BoardUI boardUI = new BoardUI(this::setCurrentMove);
+    private boolean playAgain = false;
+    private BoardUI boardUI;
 
     @Override
     public void start(Stage stage) {
+        Scene scene = setupScene();
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    private Scene setupScene() {
+        boardUI = new BoardUI(this::setCurrentMove, this::triggerPlayAgain);
         Scene scene = new Scene(boardUI, 800, 700);
         boardUI.renderBoard(new Board(3));
         Stylesheet.load(scene);
-        stage.setScene(scene);
-        stage.show();
+        return scene;
     }
 
     @Test
@@ -76,8 +84,20 @@ public class BoardUITest extends ApplicationTest {
         verifyThat(boardUI, hasChildren(1, ".player-x"));
     }
 
+    @Test
+    public void playAgain() {
+        new FxRobot().interact(() -> boardUI.playAgain());
+
+        clickOn(".play-again");
+        assertTrue(playAgain);
+    }
+
     private void setCurrentMove(int move) {
         this.currentMove = move;
+    }
+
+    private void triggerPlayAgain() {
+        playAgain = true;
     }
 
 }

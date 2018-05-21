@@ -17,12 +17,13 @@ public class PlayerTile extends StackPane {
         setupTile();
     }
 
-    public void onClick(Consumer<Integer> sendMove) {
+    public PlayerTile onClick(Consumer<Integer> sendMove) {
         this.setOnMouseClicked(e -> {
             if (tile.isEmpty()) {
                 sendMove.accept(tile.getIndex());
             }
         });
+        return this;
     }
 
     private void setupTile() {

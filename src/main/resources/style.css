@@ -56,6 +56,10 @@
     -fx-cursor: hand;
 }
 
+.play-again {
+    -fx-background-color: #FF4C4C;
+}
+
 .option-button-1 {
     -fx-background-color: #0B54B0;
 }
@@ -86,9 +90,13 @@
 }
 
 .status-text {
-    -fx-translate-y: 30;
     -fx-font-size: 20;
     -fx-fill: #2A628F;
+}
+
+.status-text-container {
+    -fx-alignment: center;
+    -fx-pref-height: 60;
 }
 
 

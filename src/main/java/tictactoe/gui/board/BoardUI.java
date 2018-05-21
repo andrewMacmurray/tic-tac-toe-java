@@ -1,25 +1,21 @@
 package tictactoe.gui.board;
 
-import javafx.scene.Node;
-import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import tictactoe.core.Board;
-import tictactoe.core.Mediator;
-import tictactoe.core.Tile;
 
 import java.util.function.Consumer;
 
 public class BoardUI extends VBox {
 
     private StatusText statusText = new StatusText();
-    private TilePane boardTiles = new TilePane();
-    private Consumer<Integer> sendMove;
+    private BoardTiles boardTiles;
+    private PlayAgainButton playAgainButtonButton;
 
-    public BoardUI(Consumer<Integer> sendMove) {
-        this.sendMove = sendMove;
-        assembleSceneGraph();
-        addCssClasses();
+    public BoardUI(Consumer<Integer> sendMove, Runnable triggerNewGame) {
+        createBoardTiles(sendMove);
+        createPlayAgainButton(triggerNewGame);
+        addCss();
+        assembleInitialSceneGraph();
     }
 
     public void setStatusText(String text) {
@@ -27,38 +23,38 @@ public class BoardUI extends VBox {
     }
 
     public void renderBoard(Board board) {
-        clearTiles();
-        board.tilesStream().forEach(tile -> setupTile(tile, board.getBoardSize()));
+        boardTiles.render(board);
     }
 
-    private void setupTile(Tile tile, int boardSize) {
-        PlayerTile playerTile = new PlayerTile(tile, boardSize);
-        playerTile.onClick(sendMove);
-        boardTiles.getChildren().add(playerTile);
+    public void playAgain() {
+        this.getChildren().add(playAgainButtonButton);
+    }
+
+    private void createPlayAgainButton(Runnable triggerNewGame) {
+        playAgainButtonButton = new PlayAgainButton(() -> {
+            triggerNewGame.run();
+            assembleInitialSceneGraph();
+        });
+    }
+
+    private void createBoardTiles(Consumer<Integer> sendMove) {
+        boardTiles = new BoardTiles(sendMove);
     }
 
     public void disableClicks() {
-        boardTiles.getChildren().forEach(node -> node.setOnMouseClicked(null));
+        boardTiles.disableClicks();
     }
 
-    private void clearTiles() {
-        boardTiles.getChildren().clear();
-    }
-
-    private void assembleSceneGraph() {
+    private void assembleInitialSceneGraph() {
+        this.getChildren().clear();
         this.getChildren().addAll(
                 boardTiles,
                 statusText
         );
     }
 
-    private void addCssClasses() {
-        addCssClass(boardTiles, "board-container");
-        addCssClass(this, "board-ui-container");
-    }
-
-    private void addCssClass(Node node, String cssClass) {
-        node.getStyleClass().add(cssClass);
+    private void addCss() {
+        this.getStyleClass().add("board-ui-container");
     }
 
 }
