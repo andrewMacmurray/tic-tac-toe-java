@@ -53,7 +53,7 @@ public class BoardUI extends VBox {
     private void addCssClasses() {
         addCssClass(statusText, "status-text");
         addCssClass(boardTiles, "board-container");
-        addCssClass(this, "main-container");
+        addCssClass(this, "board-ui-container");
     }
 
     private void addCssClass(Node node, String cssClass) {
