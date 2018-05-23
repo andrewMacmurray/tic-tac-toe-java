@@ -35,10 +35,8 @@ public class BoardUITest extends ApplicationTest {
 
     private Scene setupScene() {
         boardUI = new BoardUI(this::setCurrentMove, this::triggerPlayAgain);
-        Scene scene = new Scene(boardUI, 800, 700);
         boardUI.renderBoard(new Board(3));
-        Stylesheet.load(scene);
-        return scene;
+        return new BaseScene(boardUI);
     }
 
     @Test

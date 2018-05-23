@@ -19,7 +19,7 @@ public class TitleTextTest extends ApplicationTest {
         TitleText titleText = new TitleText();
         this.titleText = titleText;
 
-        Scene scene = buildScene(titleText);
+        Scene scene = new BaseScene(titleText);
         stage.setScene(scene);
         stage.show();
     }
@@ -35,12 +35,6 @@ public class TitleTextTest extends ApplicationTest {
         titleText.animateAndThen(() -> {
             verifyThat(".title-text", node -> node.getTranslateY() == 0);
         });
-    }
-
-    private Scene buildScene(TitleText titleText) {
-        Scene scene = new Scene(titleText, 800, 700);
-        Stylesheet.load(scene);
-        return scene;
     }
 
 }

@@ -16,13 +16,11 @@ import static org.testfx.matcher.base.NodeMatchers.hasChildren;
 
 public class AnimatedLogoTest extends ApplicationTest {
 
-    AnimatedLogo animatedLogo = new AnimatedLogo();
+    private AnimatedLogo animatedLogo = new AnimatedLogo();
 
     @Override
     public void start(Stage stage) {
-        Scene scene = new Scene(animatedLogo, 800, 700);
-        Stylesheet.load(scene);
-
+        Scene scene = new BaseScene(animatedLogo);
         stage.setScene(scene);
         stage.show();
     }

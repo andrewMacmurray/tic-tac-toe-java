@@ -50,7 +50,7 @@ public class GuiMediatorTest extends ApplicationTest {
     }
 
     private void runXWinSequence(GuiMediator guiMediator) {
-        guiMediator.receiveGameTypeOption(1);
+        guiMediator.preparePlayersFromOption(1);
         guiMediator.receiveBoardSize(3);
         guiMediator.receiveMove(1);
         guiMediator.receiveMove(4);

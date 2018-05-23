@@ -17,19 +17,13 @@ public class GuiMediator extends Mediator {
     private OptionsUI optionsUI;
 
     public GuiMediator() {
-        setup();
+        currentScene = new BaseScene();
+        initScenes();
     }
 
-    private void setup() {
+    private void initScenes() {
         initBoardUI();
         initOptionsUI();
-        initScene();
-    }
-
-    private void initScene() {
-        Scene scene = new Scene(optionsUI, 800, 700);
-        Stylesheet.load(scene);
-        currentScene = scene;
     }
 
     public Scene getCurrentScene() {

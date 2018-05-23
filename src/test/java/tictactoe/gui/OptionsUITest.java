@@ -18,9 +18,8 @@ public class OptionsUITest extends ApplicationTest {
     @Override
     public void start(Stage stage) {
         optionsUI = new OptionsUI(n -> {}, n -> {});
-        Scene scene = new Scene(optionsUI, 800, 1000);
+        Scene scene = new BaseScene(optionsUI);
 
-        Stylesheet.load(scene);
         stage.setScene(scene);
         stage.show();
     }

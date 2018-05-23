@@ -18,9 +18,8 @@ public class GameTypeOptionsTest extends ApplicationTest {
     @Override
     public void start(Stage stage) {
         gameTypeOptions = new GameTypeOptions(this::setGameTypeIndex);
-        Scene scene = new Scene(gameTypeOptions, 800, 700);
+        Scene scene = new BaseScene(gameTypeOptions);
 
-        Stylesheet.load(scene);
         stage.setScene(scene);
         stage.show();
     }

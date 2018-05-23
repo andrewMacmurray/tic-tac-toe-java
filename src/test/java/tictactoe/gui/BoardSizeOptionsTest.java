@@ -18,8 +18,7 @@ public class BoardSizeOptionsTest extends ApplicationTest {
     @Override
     public void start(Stage stage) {
         boardSizeOptions = new BoardSizeOptions(this::setCurrentOption);
-        Scene scene = new Scene(boardSizeOptions, 800, 700);
-        Stylesheet.load(scene);
+        Scene scene = new BaseScene(boardSizeOptions);
 
         stage.setScene(scene);
         stage.show();
