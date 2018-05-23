@@ -9,14 +9,14 @@ public class FxTime implements Time {
 
     @Override
     public void pauseAndThen(int ms, Runnable task) {
-        FutureTask<Void> sleeper = new FutureTask<>(() -> {
+        FutureTask<Void> delayedTask = new FutureTask<>(() -> {
             Thread.sleep(ms);
-            Platform.runLater(task::run);
+            Platform.runLater(task);
             return null;
         });
 
         try {
-            new Thread(sleeper).start();
+            new Thread(delayedTask).start();
         } catch (Exception e) {
             System.out.println("Fx Time interrupted");
         }
