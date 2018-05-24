@@ -23,56 +23,40 @@ public class GuiMediatorTest extends ApplicationTest {
         GuiMediator guiMediator = new GuiMediator();
         Scene scene = guiMediator.getCurrentScene();
         guiMediator.runGame();
-        rootNode = scene.getRoot();
 
+        runXWinSequence(guiMediator);
+
+        rootNode = scene.getRoot();
         stage.setScene(scene);
         stage.show();
     }
 
     @Test
-    public void clickOnTile() {
-        clickOnTile(0);
-        verifyThat(rootNode, hasChildren(1, ".player-x"));
-        verifyThat(rootNode, hasChildren(0, ".player-o"));
-    }
-
-    @Test
-    public void makeMultipleMoves() {
-        clickOnTiles(0, 1, 2, 3);
-        verifyThat(rootNode, hasChildren(2, ".player-x"));
+    public void tilesPresent() {
+        verifyThat(rootNode, hasChildren(3, ".player-x"));
         verifyThat(rootNode, hasChildren(2, ".player-o"));
+        verifyThat(rootNode, hasChildren(4, ".empty"));
     }
 
     @Test
-    public void disabledClickOnExistingMove() {
-        clickOnTiles(0, 0);
-        verifyThat(rootNode, hasChildren(1, ".player-x"));
-        verifyThat(rootNode, hasChildren(0, ".player-o"));
-    }
-
-    @Test
-    public void xWin() {
-        clickOnTiles(0, 3, 1, 4, 2);
-        verifyThat(".status-text", hasText("Player X Won!"));
-    }
-
-    @Test
-    public void oWin() {
-        clickOnTiles(3, 0, 4, 1, 6, 2);
-        verifyThat(".status-text", hasText("Player O Won!"));
-    }
-
-    @Test
-    public void disabledClicksAfterGame() {
-        clickOnTiles(0, 3, 1, 4, 2, 8);
+    public void disabledClicks() {
+        clickOnTile(0);
         verifyThat(rootNode, hasChildren(3, ".player-x"));
         verifyThat(rootNode, hasChildren(2, ".player-o"));
     }
+    @Test
+    public void xWin() {
+        verifyThat(".status-text", hasText("Player X Won!"));
+    }
 
-    private void clickOnTiles(int... tiles) {
-        for (int tileIndex : tiles) {
-            clickOnTile(tileIndex);
-        }
+    private void runXWinSequence(GuiMediator guiMediator) {
+        guiMediator.preparePlayersFromOption(1);
+        guiMediator.receiveBoardSize(3);
+        guiMediator.receiveMove(1);
+        guiMediator.receiveMove(4);
+        guiMediator.receiveMove(2);
+        guiMediator.receiveMove(5);
+        guiMediator.receiveMove(3);
     }
 
     private void clickOnTile(int index) {

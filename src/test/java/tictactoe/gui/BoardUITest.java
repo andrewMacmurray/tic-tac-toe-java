@@ -6,39 +6,44 @@ import javafx.stage.Stage;
 import org.junit.Test;
 import org.testfx.api.FxRobot;
 import org.testfx.framework.junit.ApplicationTest;
-import org.testfx.matcher.base.NodeMatchers;
 import tictactoe.core.Board;
 import tictactoe.core.players.PlayerSymbol;
 import tictactoe.gui.board.BoardUI;
-import tictactoe.mocks.MockMediator;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.testfx.api.FxAssert.verifyThat;
 import static org.testfx.matcher.base.NodeMatchers.hasChildren;
+import static org.testfx.matcher.base.NodeMatchers.isNotNull;
 import static org.testfx.matcher.control.TextMatchers.hasText;
 
 public class BoardUITest extends ApplicationTest {
 
-    private MockMediator mockMediator = new MockMediator();
-    private BoardUI boardUI = new BoardUI(mockMediator);
+    private int currentMove;
+    private boolean playAgain = false;
+    private BoardUI boardUI;
 
     @Override
     public void start(Stage stage) {
-        Scene scene = new Scene(boardUI, 800, 800);
-        boardUI.renderBoard(new Board(3));
-        new StylesheetLoader(scene).load();
+        Scene scene = setupScene();
         stage.setScene(scene);
         stage.show();
     }
 
+    private Scene setupScene() {
+        boardUI = new BoardUI(this::setCurrentMove, this::triggerPlayAgain);
+        boardUI.renderBoard(new Board(3));
+        return new BaseScene(boardUI);
+    }
+
     @Test
     public void checkLayout() {
-        verifyThat(".status-text", NodeMatchers.isNotNull());
-        verifyThat(".board-container", NodeMatchers.isNotNull());
-        verifyThat(".main-container", NodeMatchers.isNotNull());
+        verifyThat(".status-text", isNotNull());
+        verifyThat(".board-container", isNotNull());
+        verifyThat(".board-ui-container", isNotNull());
     }
 
     @Test
@@ -50,6 +55,7 @@ public class BoardUITest extends ApplicationTest {
     @Test
     public void renderBoard() {
         verifyThat(boardUI, hasChildren(9, ".tile"));
+        verifyThat(boardUI, hasChildren(9, ".tile-3x3"));
     }
 
     @Test
@@ -61,7 +67,7 @@ public class BoardUITest extends ApplicationTest {
         assertEquals(
                 "mediator receives correct move",
                 1,
-                mockMediator.getCurrentMove()
+                currentMove
         );
     }
 
@@ -74,6 +80,22 @@ public class BoardUITest extends ApplicationTest {
 
         verifyThat(boardUI, hasChildren(1, ".player-o"));
         verifyThat(boardUI, hasChildren(1, ".player-x"));
+    }
+
+    @Test
+    public void playAgain() {
+        new FxRobot().interact(() -> boardUI.playAgain());
+
+        clickOn(".play-again");
+        assertTrue(playAgain);
+    }
+
+    private void setCurrentMove(int move) {
+        this.currentMove = move;
+    }
+
+    private void triggerPlayAgain() {
+        playAgain = true;
     }
 
 }

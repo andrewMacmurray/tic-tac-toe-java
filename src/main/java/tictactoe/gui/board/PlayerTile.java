@@ -2,7 +2,6 @@ package tictactoe.gui.board;
 
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
-import tictactoe.core.Mediator;
 import tictactoe.core.Tile;
 
 import java.util.function.Consumer;
@@ -10,42 +9,53 @@ import java.util.function.Consumer;
 public class PlayerTile extends StackPane {
 
     private Tile tile;
+    private int boardSize;
 
-    public PlayerTile(Tile tile) {
+    public PlayerTile(Tile tile, int boardSize) {
         this.tile = tile;
+        this.boardSize = boardSize;
         setupTile();
     }
 
-    public void onClick(Consumer<Integer> moveReceiver) {
+    public PlayerTile onClick(Consumer<Integer> sendMove) {
         this.setOnMouseClicked(e -> {
             if (tile.isEmpty()) {
-                moveReceiver.accept(tile.getIndex());
+                sendMove.accept(tile.getIndex());
             }
         });
+        return this;
     }
 
     private void setupTile() {
-        addPlayerCssClasses();
-        addCssClass("tile");
+        addCss();
         this.getChildren().add(innerText());
     }
 
-    private void addPlayerCssClasses() {
-        switch (tile.toString()) {
-            case "X":
-                addCssClass("player-x");
-                break;
-            case "O":
-                addCssClass("player-o");
-                break;
-            default:
-                addCssClass("empty");
-                break;
+    private void addCss() {
+        this.getStyleClass().addAll(
+                tileSizeCss(),
+                playerCss(),
+                "tile"
+        );
+    }
+
+    private String tileSizeCss() {
+        if (boardSize == 3) {
+            return "tile-3x3";
+        } else {
+            return "tile-4x4";
         }
     }
 
-    private void addCssClass(String cssClass) {
-        this.getStyleClass().add(cssClass);
+    private String playerCss() {
+        switch (tile.toString()) {
+            case "X":
+                return "player-x";
+            case "O":
+                return "player-o";
+            default:
+                return "empty";
+        }
     }
 
     private Text innerText() {

@@ -1,4 +1,86 @@
+// general
+
+.root {
+    -fx-background-color: #02F9C8;
+    -fx-font-family: Futura;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
+
+// title styles
+
+.logo-container {
+    -fx-max-width: 400;
+    -fx-pref-height: 200;
+}
+
+.logo-piece {
+    -fx-font-size: 70;
+    -fx-pref-width: 100;
+    -fx-alignment: bottom-center;
+}
+
+.logo-piece.x Text {
+    -fx-fill: #FF5B5B;
+}
+
+.logo-piece.o Text {
+    -fx-fill: #0B54B0;
+}
+
+.title-text-container {
+    -fx-pref-height: 150;
+}
+
+.title-text {
+    -fx-font-size: 25;
+    -fx-fill: #2A628F;
+}
+
+
+// options styles
+
+.options-container {
+    -fx-alignment: top-center;
+}
+
+.option {
+    -fx-pref-height: 60;
+}
+
+.option-button {
+    -fx-pref-width: 250;
+    -fx-padding: 10 20;
+    -fx-font-size: 16;
+    -fx-text-fill: white;
+    -fx-cursor: hand;
+}
+
+.play-again {
+    -fx-background-color: #FF4C4C;
+}
+
+.option-button-1 {
+    -fx-background-color: #0B54B0;
+}
+
+.option-button-2, .option-button-4 {
+    -fx-background-color: #FF4C4C;
+}
+
+.option-button-3 {
+    -fx-background-color: #B36DC9;
+}
+
+
 // board styles
+
+.board-ui-container {
+    -fx-padding: 40 0 0 0;
+    -fx-alignment: top-center;
+    -fx-pref-width: 800;
+    -fx-pref-height: 800;
+}
 
 .board-container {
     -fx-pref-width: 500;
@@ -7,19 +89,14 @@
     -fx-max-height: 500;
 }
 
-.main-container {
-    -fx-background-color: #02F9C8;
-    -fx-font-family: Futura;
-    -fx-padding: 80 0 0 0;
-    -fx-alignment: top-center;
-    -fx-pref-width: 800;
-    -fx-pref-height: 800;
-}
-
 .status-text {
-    -fx-translate-y: 30;
     -fx-font-size: 20;
     -fx-fill: #2A628F;
+}
+
+.status-text-container {
+    -fx-alignment: center;
+    -fx-pref-height: 60;
 }
 
 
@@ -47,15 +124,31 @@
     -fx-border-width: 0;
 }
 
-.tile {
+.tile-4x4 {
+    -fx-font-size: 50;
     -fx-border-color: #D4FFE5;
     -fx-border-insets: 10;
     -fx-background-radius: 5;
     -fx-border-radius: 5;
     -fx-background-insets: 10;
     -fx-border-width: 3;
-    -fx-pref-width: 160;
-    -fx-pref-height: 160;
-    -fx-max-width: 160;
-    -fx-max-height: 160;
+    -fx-pref-width: 120;
+    -fx-pref-height: 120;
+    -fx-max-width: 120;
+    -fx-max-height: 120;
 }
+
+.tile-3x3 {
+    -fx-font-size: 70;
+    -fx-border-color: #D4FFE5;
+    -fx-border-insets: 10;
+    -fx-background-radius: 5;
+    -fx-border-radius: 5;
+    -fx-background-insets: 10;
+    -fx-border-width: 3;
+    -fx-pref-width: 166;
+    -fx-pref-height: 166;
+    -fx-max-width: 166;
+    -fx-max-height: 166;
+}
+

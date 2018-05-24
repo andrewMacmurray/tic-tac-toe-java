@@ -1,31 +1,41 @@
 package tictactoe.gui;
 
+import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.StackPane;
 import tictactoe.core.Board;
 import tictactoe.core.Mediator;
 import tictactoe.core.players.PlayerSymbol;
 import tictactoe.core.players.Players;
 import tictactoe.core.players.PlayersFactory;
 import tictactoe.gui.board.BoardUI;
+import tictactoe.gui.options.OptionsUI;
 
 public class GuiMediator extends Mediator {
 
     private Scene currentScene;
-    private BoardUI boardUI = new BoardUI(this);
+    private BoardUI boardUI;
+    private OptionsUI optionsUI;
 
     public GuiMediator() {
-        currentScene = initScene();
+        currentScene = new BaseScene();
+        initScenes();
     }
 
-    private Scene initScene() {
-        Scene scene = new Scene(new StackPane(), 800, 800);
-        new StylesheetLoader(scene).load();
-        return scene;
+    private void initScenes() {
+        initBoardUI();
+        initOptionsUI();
     }
 
     public Scene getCurrentScene() {
         return currentScene;
+    }
+
+    private void initBoardUI() {
+        boardUI = new BoardUI(this::receiveMove, this::requestPlayersFromUI);
+    }
+
+    private void initOptionsUI() {
+        optionsUI = new OptionsUI(this::prepareEmptyBoard, this::preparePlayersFromOption);
     }
 
     @Override
@@ -35,13 +45,24 @@ public class GuiMediator extends Mediator {
 
     @Override
     public void requestPlayersFromUI() {
-        Players players = new PlayersFactory(this).createPlayers(1);
-        super.receivePlayers(players);
+        initOptionsUI();
+        setScene(optionsUI);
+    }
+
+    public void preparePlayersFromOption(int option) {
+        Players players = new PlayersFactory(this, new FxTime()).createPlayers(option);
+        receivePlayers(players);
+    }
+
+    private void prepareEmptyBoard(int boardSize) {
+        boardUI.renderBoard(new Board(boardSize));
+        receiveBoardSize(boardSize);
     }
 
     @Override
     public void requestBoardSizeFromUI() {
-        super.receiveBoardSize(3);
+        optionsUI.showBoardSizeOptions();
+        setScene(optionsUI);
     }
 
     @Override
@@ -53,6 +74,7 @@ public class GuiMediator extends Mediator {
     public void moveSummary(int move, Board prevBoard, Board nextBoard, PlayerSymbol playerSymbol) {
         String statusText = "Your turn player " + playerSymbol.getAlternate();
         boardUI.renderBoard(nextBoard);
+        boardUI.disableClicks();
         boardUI.setStatusText(statusText);
     }
 
@@ -67,12 +89,18 @@ public class GuiMediator extends Mediator {
     public void announceWin(PlayerSymbol playerSymbol, Board board) {
         boardUI.disableClicks();
         boardUI.setStatusText("Player " + playerSymbol + " Won!");
+        boardUI.playAgain();
     }
 
     @Override
     public void announceDraw(Board board) {
         boardUI.disableClicks();
         boardUI.setStatusText("It's a draw!");
+        boardUI.playAgain();
+    }
+
+    private void setScene(Parent rootNode) {
+        currentScene.setRoot(rootNode);
     }
 
 }
