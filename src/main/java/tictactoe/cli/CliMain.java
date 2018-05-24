@@ -1,6 +1,6 @@
 package tictactoe.cli;
 
-public class Main {
+public class CliMain {
 
     public static void main(String[] args) {
         Console console = new Console(System.in, System.out);

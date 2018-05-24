@@ -2,11 +2,8 @@ version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
 apply plugin: 'idea'
-apply plugin: 'application'
 
 sourceCompatibility = 1.8
-
-mainClassName = "tictactoe.cli.Main"
 
 repositories {
     mavenCentral()
@@ -29,12 +26,23 @@ if (project.hasProperty('headless') ? project.headless : false) {
     }
 }
 
-jar {
+task cliJar(type: Jar) {
+    baseName = 'CliTicTacToe'
+    from sourceSets.main.output
     manifest {
-        attributes 'Main-Class': 'tictactoe.cli.Main'
+        attributes 'Main-Class': 'tictactoe.cli.CliMain'
     }
 }
 
-run {
-    standardInput = System.in
+task fxJar(type: Jar) {
+    baseName = 'FxTicTacToe'
+    from sourceSets.main.output
+    from sourceSets.main.resources
+    manifest {
+        attributes 'Main-Class': 'tictactoe.gui.FxMain'
+    }
+}
+
+artifacts {
+    archives fxJar, cliJar
 }

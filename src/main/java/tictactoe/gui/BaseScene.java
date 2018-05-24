@@ -17,7 +17,7 @@ public class BaseScene extends Scene {
     }
 
     private void loadStylesheet() {
-        String stylesheet = Main.class.getResource("/style.css").toExternalForm();
+        String stylesheet = FxMain.class.getResource("/style.css").toExternalForm();
         this.getStylesheets().add(stylesheet);
     }
 
