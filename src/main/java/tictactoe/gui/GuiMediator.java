@@ -72,7 +72,7 @@ public class GuiMediator extends Mediator {
 
     @Override
     public void moveSummary(int move, Board prevBoard, Board nextBoard, PlayerSymbol playerSymbol) {
-        String statusText = "Your turn player " + playerSymbol.getAlternate();
+        String statusText = DragPlayer.turn(playerSymbol.getAlternate());
         boardUI.renderBoard(nextBoard);
         boardUI.disableClicks();
         boardUI.setStatusText(statusText);
@@ -80,7 +80,7 @@ public class GuiMediator extends Mediator {
 
     @Override
     public void gameInstructions(Board board, PlayerSymbol playerSymbol) {
-        String instructions = "Your turn player " + playerSymbol;
+        String instructions = DragPlayer.turn(playerSymbol);
         boardUI.setStatusText(instructions);
         currentScene.setRoot(boardUI);
     }
@@ -88,7 +88,7 @@ public class GuiMediator extends Mediator {
     @Override
     public void announceWin(PlayerSymbol playerSymbol, Board board) {
         boardUI.disableClicks();
-        boardUI.setStatusText("Player " + playerSymbol + " Won!");
+        boardUI.setStatusText(DragPlayer.win(playerSymbol));
         boardUI.playAgain();
     }
 

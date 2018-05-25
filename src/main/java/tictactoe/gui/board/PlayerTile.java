@@ -1,5 +1,6 @@
 package tictactoe.gui.board;
 
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import tictactoe.core.Tile;
@@ -28,7 +29,7 @@ public class PlayerTile extends StackPane {
 
     private void setupTile() {
         addCss();
-        this.getChildren().add(innerText());
+        this.getChildren().add(innerImage());
     }
 
     private void addCss() {
@@ -58,8 +59,15 @@ public class PlayerTile extends StackPane {
         }
     }
 
-    private Text innerText() {
-        return new Text(tile.toString(""));
+    private ImageView innerImage() {
+        switch (tile.toString()) {
+            case "X":
+                return new ImageTile("/rupaul.jpg", boardSize);
+            case "O":
+                return new ImageTile("/michelle.jpg", boardSize);
+            default:
+                return new ImageView();
+        }
     }
 
 }
